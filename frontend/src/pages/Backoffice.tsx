@@ -665,7 +665,7 @@ export const Backoffice: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#ff6ef6] bg-[#fff0fd] px-2.5 py-0.5 rounded-full border border-[#ff6ef6]/30">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#ff63f6] bg-[rgba(255,99,246,0.1)] px-2.5 py-0.5 rounded-full border border-[#ff63f6]/30">
               Painel de Gestão & Administração
             </span>
             {isAdmin && (
@@ -861,10 +861,10 @@ export const Backoffice: React.FC = () => {
                 : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
             }`}
           >
-            <MessagesSquare className="h-4 w-4 text-[#ff6ef6]" />
+            <MessagesSquare className="h-4 w-4 text-[#ff63f6]" />
             <span>Suporte & Dúvidas</span>
             {supportTickets.filter((t) => t.status === 'OPEN' || t.status === 'IN_PROGRESS').length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-[#ff6ef6] text-[#151e33]">
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-[#ff63f6] text-[#151e33]">
                 {supportTickets.filter((t) => t.status === 'OPEN' || t.status === 'IN_PROGRESS').length}
               </span>
             )}
@@ -878,7 +878,7 @@ export const Backoffice: React.FC = () => {
           <CardHeader className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <CardTitle className="text-lg font-bold text-[#151e33] flex items-center gap-2">
-                <Users className="h-5 w-5 text-[#ff6ef6]" />
+                <Users className="h-5 w-5 text-[#ff63f6]" />
                 <span>Diretório & Gestão de Membros</span>
               </CardTitle>
               <CardDescription className="text-slate-500">
@@ -991,7 +991,7 @@ export const Backoffice: React.FC = () => {
         <Card className="border-slate-200 p-6 md:p-8 max-w-3xl">
           <CardHeader className="p-0 pb-6">
             <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-              <Award className="h-5 w-5 text-[#ff6ef6]" />
+              <Award className="h-5 w-5 text-[#ff63f6]" />
               <span>Lançamento de Avaliação SAD</span>
             </CardTitle>
             <CardDescription className="text-slate-500">
@@ -1115,7 +1115,7 @@ export const Backoffice: React.FC = () => {
               className="w-full h-11"
               isLoading={createSadMutation.isPending}
             >
-              <Award className="h-4 w-4 mr-2 text-[#ff6ef6]" />
+              <Award className="h-4 w-4 mr-2 text-[#ff63f6]" />
               <span>Registar Avaliação & Publicar Relatório</span>
             </Button>
           </form>
@@ -1155,7 +1155,7 @@ export const Backoffice: React.FC = () => {
                     : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
                 }`}
               >
-                <Receipt className="h-4 w-4 text-[#ff6ef6]" />
+                <Receipt className="h-4 w-4 text-[#ff63f6]" />
                 <span>Reembolsos YME (Faturas)</span>
                 {pendingReimbursementsCount > 0 && (
                   <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px] font-black animate-pulse">
@@ -1187,7 +1187,7 @@ export const Backoffice: React.FC = () => {
             <CardHeader className="p-0 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                  <HandCoins className="h-5 w-5 text-[#ff6ef6]" />
+                  <HandCoins className="h-5 w-5 text-[#ff63f6]" />
                   <span>Pedidos de Utilização de Saldo</span>
                   {pendingWalletCount > 0 && (
                     <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-xs font-black animate-pulse">
@@ -1426,7 +1426,7 @@ export const Backoffice: React.FC = () => {
               <CardHeader className="p-0 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                    <Receipt className="h-5 w-5 text-[#ff6ef6]" />
+                    <Receipt className="h-5 w-5 text-[#ff63f6]" />
                     <span>Pedidos de Reembolso YME (Faturas)</span>
                     {pendingReimbursementsCount > 0 && (
                       <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-xs font-black animate-pulse">
@@ -1679,7 +1679,7 @@ export const Backoffice: React.FC = () => {
             <Card className="border-slate-200 p-6 md:p-8">
               <CardHeader className="p-0 pb-6">
                 <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                  <Wallet className="h-5 w-5 text-[#ff6ef6]" />
+                  <Wallet className="h-5 w-5 text-[#ff63f6]" />
                   <span>Atribuição & Movimentos Manuais de Carteira</span>
                 </CardTitle>
                 <CardDescription className="text-slate-500">
@@ -1766,7 +1766,7 @@ export const Backoffice: React.FC = () => {
         <Card className="border-slate-200 p-6 md:p-8 max-w-3xl">
           <CardHeader className="p-0 pb-6">
             <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-              <Flag className="h-5 w-5 text-[#ff6ef6]" />
+              <Flag className="h-5 w-5 text-[#ff63f6]" />
               <span>Adicionar Marco à Jornada do Membro</span>
             </CardTitle>
             <CardDescription className="text-slate-500">
@@ -1856,7 +1856,7 @@ export const Backoffice: React.FC = () => {
         <Card className="border-slate-200 p-6 md:p-8 max-w-3xl">
           <CardHeader className="p-0 pb-6">
             <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-[#ff6ef6]" />
+              <Calendar className="h-5 w-5 text-[#ff63f6]" />
               <span>Agendar Novo Evento Associativo</span>
             </CardTitle>
             <CardDescription className="text-slate-500">
@@ -1954,7 +1954,7 @@ export const Backoffice: React.FC = () => {
           <Card className="border-slate-200 p-6 shadow-clean-sm">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                <MessagesSquare className="h-5 w-5 text-[#ff6ef6]" />
+                <MessagesSquare className="h-5 w-5 text-[#ff63f6]" />
                 <span>Fila de Atendimento & Suporte aos Membros</span>
               </CardTitle>
               <CardDescription className="text-slate-500">
@@ -2266,7 +2266,7 @@ export const Backoffice: React.FC = () => {
                               </span>
                             )}
                             {isStaff && (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#ff6ef6]/20 text-[#d81bb0] font-bold">
+                              <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#ff63f6]/20 text-[#151e33] font-bold">
                                 Equipa de Resposta
                               </span>
                             )}
@@ -2321,7 +2321,7 @@ export const Backoffice: React.FC = () => {
                         disabled={!supportReplyMessage.trim() || sendSupportReplyMutation.isPending}
                         isLoading={sendSupportReplyMutation.isPending}
                       >
-                        <Send className="h-4 w-4 mr-1 text-[#ff6ef6]" />
+                        <Send className="h-4 w-4 mr-1 text-[#ff63f6]" />
                         <span>Responder</span>
                       </Button>
                     </form>
@@ -2330,7 +2330,7 @@ export const Backoffice: React.FC = () => {
               ) : (
                 <Card className="border-slate-200 h-full flex flex-col items-center justify-center p-12 text-center bg-slate-50/30">
                   <div className="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-clean-sm flex items-center justify-center text-[#151e33] mb-3">
-                    <MessagesSquare className="h-7 w-7 text-[#ff6ef6]" />
+                    <MessagesSquare className="h-7 w-7 text-[#ff63f6]" />
                   </div>
                   <h3 className="text-sm font-bold text-[#151e33]">Nenhum pedido de suporte selecionado</h3>
                   <p className="text-xs text-slate-500 max-w-sm mt-1">

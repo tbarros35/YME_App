@@ -92,9 +92,9 @@ export const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-[#151e33] flex flex-col selection:bg-[#ff6ef6] selection:text-[#151e33] pb-20 md:pb-6">
+    <div className="min-h-screen bg-[#f8fafc] text-[#151e33] flex flex-col selection:bg-[#ff63f6] selection:text-[#151e33] pb-20 md:pb-6">
       {/* Top Header */}
-      <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-clean-sm">
+      <header className="sticky top-0 z-40 border-b border-[#151e33]/10 bg-white/90 backdrop-blur-md shadow-clean-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo & Brand */}
           <div
@@ -102,23 +102,23 @@ export const Layout: React.FC = () => {
             onClick={() => navigate('/')}
           >
             <YmeLogo className="h-10 sm:h-11 w-auto transition-transform duration-200 group-hover:scale-105" />
-            <div className="border-l border-slate-200 pl-3">
+            <div className="border-l border-[#151e33]/15 pl-3">
               <div className="flex items-center gap-1.5">
                 <span className="font-extrabold text-base tracking-tight text-[#151e33]">
                   APP
                 </span>
-                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-[#fff0fd] text-[#d81bb0] border border-[#ff6ef6]/40">
+                <span className="text-[10px] font-black px-1.5 py-0.2 rounded-full bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/40">
                   v2.0
                 </span>
               </div>
-              <p className="text-[10px] text-slate-500 hidden sm:block font-semibold uppercase tracking-wider">
+              <p className="text-[10px] text-[#151e33]/60 hidden sm:block font-bold uppercase tracking-wider">
                 Gestão de Membros
               </p>
             </div>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80">
+          <nav className="hidden md:flex items-center gap-1.5 bg-[#151e33]/5 p-1.5 rounded-2xl border border-[#151e33]/10">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -129,14 +129,14 @@ export const Layout: React.FC = () => {
                     'relative flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 select-none',
                     isActive
                       ? 'bg-[#151e33] text-white shadow-clean-sm font-bold'
-                      : 'text-slate-600 hover:text-[#151e33] hover:bg-white/80'
+                      : 'text-[#151e33]/70 hover:text-[#151e33] hover:bg-white/80'
                   )
                 }
               >
                 <item.icon className="h-4 w-4" />
                 <span>{item.label}</span>
                 {item.badge !== undefined && (
-                  <span className="ml-1 px-1.5 py-0.2 text-[10px] font-black rounded-full bg-rose-500 text-white animate-pulse">
+                  <span className="ml-1 px-1.5 py-0.2 text-[10px] font-black rounded-full bg-[#ff63f6] text-[#151e33] animate-pulse">
                     {item.badge}
                   </span>
                 )}
@@ -155,17 +155,17 @@ export const Layout: React.FC = () => {
                     </span>
                     <RoleBadge role={user.role} />
                   </div>
-                  <div className="flex items-center justify-end gap-1.5 text-xs text-slate-500 font-medium">
-                    <Building2 className="h-3 w-3 text-slate-400" />
+                  <div className="flex items-center justify-end gap-1.5 text-xs text-[#151e33]/60 font-medium">
+                    <Building2 className="h-3 w-3 text-[#151e33]/40" />
                     <span>
                       {user.department?.name ? `${user.department.name} • ${user.position}` : user.position}
                     </span>
                   </div>
                 </div>
 
-                {/* Avatar with Online Indicator */}
+                {/* Avatar with Stitch Indicator */}
                 <div className="relative">
-                  <div className="h-10 w-10 rounded-full bg-[#151e33] p-0.5 shadow-clean-sm cursor-pointer transition-transform hover:scale-105">
+                  <div className="h-10 w-10 rounded-full bg-[#151e33] p-0.5 shadow-clean-sm cursor-pointer transition-all hover:ring-2 hover:ring-[#ff63f6]">
                     <div className="h-full w-full rounded-full bg-white flex items-center justify-center text-xs font-bold text-[#151e33] border border-slate-100">
                       {user.fullName
                         .split(' ')
@@ -174,23 +174,23 @@ export const Layout: React.FC = () => {
                         .join('')}
                     </div>
                   </div>
-                  <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-white" />
+                  <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-[#ff63f6] border-2 border-white shadow-stitch-subtle" />
                 </div>
 
                 {/* Support Center Quick Button */}
                 <button
                   onClick={() => setIsSupportOpen(true)}
                   title="Centro de Apoio & Dúvidas"
-                  className="p-2 rounded-xl text-slate-500 hover:text-[#151e33] hover:bg-[#fff0fd] border border-transparent hover:border-[#ff6ef6]/30 transition-all group"
+                  className="p-2 rounded-xl text-[#151e33]/70 hover:text-[#151e33] hover:bg-[#ff63f6]/10 border border-transparent hover:border-[#ff63f6]/30 transition-all group"
                 >
-                  <HelpCircle className="h-4 w-4 group-hover:text-[#d81bb0] transition-colors" />
+                  <HelpCircle className="h-4 w-4 group-hover:text-[#ff63f6] transition-colors" />
                 </button>
 
                 {/* Logout Button */}
                 <button
                   onClick={logout}
                   title="Terminar Sessão"
-                  className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors"
+                  className="p-2 rounded-xl text-[#151e33]/50 hover:text-[#151e33] hover:bg-[#151e33]/5 border border-transparent hover:border-[#151e33]/15 transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
                 </button>
@@ -212,7 +212,7 @@ export const Layout: React.FC = () => {
       />
 
       {/* Mobile Bottom Navigation Bar (Impeccable Touch Targets) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/95 backdrop-blur-md px-2 py-2 shadow-lg safe-area-bottom">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[#151e33]/10 bg-white/95 backdrop-blur-md px-2 py-2 shadow-lg safe-area-bottom">
         <div className="grid grid-cols-4 sm:grid-cols-5 gap-1">
           {navItems.map((item) => (
             <NavLink
@@ -223,15 +223,15 @@ export const Layout: React.FC = () => {
                 cn(
                   'flex flex-col items-center justify-center py-2 px-1 rounded-xl text-[10px] font-semibold transition-all min-h-[44px]',
                   isActive
-                    ? 'text-[#151e33] bg-[#fff0fd] font-bold border border-[#ff6ef6]/30'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'text-[#151e33] bg-[#ff63f6]/15 font-bold border border-[#ff63f6]/40'
+                    : 'text-[#151e33]/60 hover:text-[#151e33]'
                 )
               }
             >
               <div className="relative">
                 <item.icon className="h-5 w-5 mb-0.5 text-[#151e33]" />
                 {item.badge !== undefined && (
-                  <span className="absolute -top-1 -right-1 h-3.5 w-3.5 bg-rose-500 text-white rounded-full text-[9px] font-black flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-1 -right-1 h-3.5 w-3.5 bg-[#ff63f6] text-[#151e33] rounded-full text-[9px] font-black flex items-center justify-center animate-pulse">
                     {item.badge}
                   </span>
                 )}

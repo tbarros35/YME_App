@@ -132,7 +132,7 @@ export const Calendar: React.FC = () => {
                 {/* Card Top: Date Tile + Category Badge */}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="h-14 w-14 rounded-2xl bg-[#151e33] text-white flex flex-col items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
-                    <span className="text-[10px] uppercase font-bold text-[#ff6ef6] leading-none">
+                    <span className="text-[10px] uppercase font-bold text-[#ff63f6] leading-none">
                       {new Date(evt.startTime).toLocaleDateString('pt-PT', { month: 'short' })}
                     </span>
                     <span className="text-xl font-extrabold leading-none mt-0.5">

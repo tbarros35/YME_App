@@ -10,8 +10,8 @@ interface AnimatedProgressBarProps {
 
 export const AnimatedProgressBar: React.FC<AnimatedProgressBarProps> = ({
   percentage,
-  className = 'h-1.5 bg-slate-100 rounded-full overflow-hidden',
-  barClassName = 'bg-gradient-to-r from-[#151e33] to-[#ff6ef6] h-full rounded-full',
+  className = 'h-1.5 bg-[#151e33]/10 rounded-full overflow-hidden',
+  barClassName = 'bg-gradient-to-r from-[#151e33] to-[#ff63f6] h-full rounded-full',
   durationMs = 900,
 }) => {
   const [width, setWidth] = useState<number>(0);

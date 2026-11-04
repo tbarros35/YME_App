@@ -56,7 +56,7 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#f8fafc] relative">
       {/* Subtle brand ambient accents */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#ff6ef6]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#ff63f6]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#151e33]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="w-full max-w-md relative z-10 animate-fade-in">
@@ -68,17 +68,17 @@ export const Login: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#151e33]">
             YME APP
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-[#151e33]/60 mt-1 font-medium">
             Plataforma Integrada de Gestão de Membros & Progressão
           </p>
         </div>
 
-        <Card className="bg-white border-slate-200 shadow-clean-lg">
+        <Card className="bg-white border-[#151e33]/15 shadow-clean-lg">
           <CardHeader className="pb-4 text-center sm:text-left">
             <CardTitle className="text-xl font-bold text-[#151e33]">
               Entrar na Conta
             </CardTitle>
-            <CardDescription className="text-slate-500">
+            <CardDescription className="text-[#151e33]/60">
               Utiliza o teu email institucional <span className="text-[#151e33] font-semibold font-mono">@yme.pt</span>
             </CardDescription>
           </CardHeader>
@@ -86,8 +86,8 @@ export const Login: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               {errorMessage && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs animate-fade-in">
-                  <AlertCircle className="h-4 w-4 shrink-0" />
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#ff63f6]/10 border border-[#ff63f6]/40 text-[#151e33] text-xs animate-fade-in">
+                  <AlertCircle className="h-4 w-4 shrink-0 text-[#ff63f6]" />
                   <span className="font-semibold">{errorMessage}</span>
                 </div>
               )}
@@ -98,7 +98,7 @@ export const Login: React.FC = () => {
                 placeholder="nome.apelido@yme.pt"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                icon={<Mail className="h-4 w-4" />}
+                icon={<Mail className="h-4 w-4 text-[#151e33]" />}
                 required
               />
 
@@ -108,7 +108,7 @@ export const Login: React.FC = () => {
                 placeholder="••••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                icon={<Lock className="h-4 w-4" />}
+                icon={<Lock className="h-4 w-4 text-[#151e33]" />}
                 required
               />
 
@@ -125,49 +125,49 @@ export const Login: React.FC = () => {
           </form>
 
           {/* Quick Demo Login Presets */}
-          <CardFooter className="flex flex-col border-t border-slate-100 pt-4 pb-4">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2.5 text-center w-full">
+          <CardFooter className="flex flex-col border-t border-[#151e33]/10 pt-4 pb-4">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#151e33]/50 mb-2.5 text-center w-full">
               ⚡ Acesso Rápido de Demonstração
             </span>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
               <button
                 type="button"
                 onClick={() => handleQuickLogin('admin@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-slate-50 hover:bg-[#fff0fd] border border-slate-200 hover:border-[#ff6ef6] transition-all text-center group"
+                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
               >
-                <Shield className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#d81bb0] transition-colors" />
+                <Shield className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
                 <span className="text-[11px] font-bold text-[#151e33]">Admin</span>
-                <span className="text-[9px] text-slate-400">Board</span>
+                <span className="text-[9px] text-[#151e33]/50">Board</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickLogin('hr.manager@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-slate-50 hover:bg-[#fff0fd] border border-slate-200 hover:border-[#ff6ef6] transition-all text-center group"
+                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
               >
-                <Users className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#d81bb0] transition-colors" />
+                <Users className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
                 <span className="text-[11px] font-bold text-[#151e33]">HR</span>
-                <span className="text-[9px] text-slate-400">SAD</span>
+                <span className="text-[9px] text-[#151e33]/50">SAD</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickLogin('legal.head@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-slate-50 hover:bg-[#fff0fd] border border-slate-200 hover:border-[#ff6ef6] transition-all text-center group"
+                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
               >
-                <Scale className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#d81bb0] transition-colors" />
+                <Scale className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
                 <span className="text-[11px] font-bold text-[#151e33]">Legal</span>
-                <span className="text-[9px] text-slate-400">Carteira</span>
+                <span className="text-[9px] text-[#151e33]/50">Carteira</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickLogin('member@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-slate-50 hover:bg-[#fff0fd] border border-slate-200 hover:border-[#ff6ef6] transition-all text-center group"
+                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
               >
-                <User className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#d81bb0] transition-colors" />
+                <User className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
                 <span className="text-[11px] font-bold text-[#151e33]">Membro</span>
-                <span className="text-[9px] text-slate-400">Consultor</span>
+                <span className="text-[9px] text-[#151e33]/50">Consultor</span>
               </button>
             </div>
           </CardFooter>

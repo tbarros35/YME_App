@@ -21,10 +21,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-[#070B14]">
+      <div className="flex h-screen w-full items-center justify-center bg-[#151e33]">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent shadow-glow-sm" />
-          <p className="text-sm font-medium text-slate-400">A carregar a YME APP...</p>
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#ff63f6] border-t-transparent shadow-stitch-glow" />
+          <p className="text-sm font-medium text-white/70">A carregar a YME APP...</p>
         </div>
       </div>
     );
@@ -38,11 +38,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (requireBackoffice && !canAccessBackoffice) {
     return (
       <div className="flex min-h-[80vh] flex-col items-center justify-center p-6 text-center animate-fade-in">
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 mb-4 text-red-400">
+        <div className="rounded-2xl border border-[#ff63f6]/40 bg-[#ff63f6]/10 p-4 mb-4 text-[#ff63f6]">
           <ShieldAlert className="h-12 w-12" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Acesso Reservado</h2>
-        <p className="max-w-md text-sm text-slate-400 mb-6">
+        <h2 className="text-2xl font-bold text-[#151e33] mb-2">Acesso Reservado</h2>
+        <p className="max-w-md text-sm text-[#151e33]/60 mb-6 font-medium">
           Esta área é restrita a membros da Executive Board, Direção, Recursos Humanos e Legal & Finance.
         </p>
         <Button variant="primary" onClick={() => (window.location.href = '/')}>
@@ -56,11 +56,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     return (
       <div className="flex min-h-[80vh] flex-col items-center justify-center p-6 text-center animate-fade-in">
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 mb-4 text-red-400">
+        <div className="rounded-2xl border border-[#ff63f6]/40 bg-[#ff63f6]/10 p-4 mb-4 text-[#ff63f6]">
           <ShieldAlert className="h-12 w-12" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Acesso Restrito</h2>
-        <p className="max-w-md text-sm text-slate-400 mb-6">
+        <h2 className="text-2xl font-bold text-[#151e33] mb-2">Acesso Restrito</h2>
+        <p className="max-w-md text-sm text-[#151e33]/60 mb-6 font-medium">
           O teu perfil atual não tem permissões para aceder a esta secção.
         </p>
         <Button variant="primary" onClick={() => (window.location.href = '/')}>

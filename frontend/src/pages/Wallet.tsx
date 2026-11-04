@@ -243,9 +243,9 @@ export const Wallet: React.FC = () => {
           <Button
             variant="outline"
             onClick={handleOpenReimbursementModal}
-            className="flex items-center gap-2 border-slate-300 hover:bg-slate-50 text-[#151e33] font-bold shadow-xs hover:scale-[1.02] transition-transform"
+            className="flex items-center gap-2 border-[#151e33]/20 hover:bg-[#ff63f6]/10 text-[#151e33] font-bold shadow-xs hover:scale-[1.02] transition-transform"
           >
-            <Receipt className="h-4 w-4 text-[#ff6ef6]" />
+            <Receipt className="h-4 w-4 text-[#ff63f6]" />
             <span>Pedir Reembolso YME</span>
           </Button>
 
@@ -259,8 +259,8 @@ export const Wallet: React.FC = () => {
             <span>Requisitar Saldo</span>
           </Button>
 
-          <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5 shadow-sm">
-            <CheckCircle2 className="h-3.5 w-3.5" />
+          <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30 flex items-center gap-1.5 shadow-sm">
+            <CheckCircle2 className="h-3.5 w-3.5 text-[#ff63f6]" />
             <span>Conta Regularizada</span>
           </span>
         </div>
@@ -325,24 +325,24 @@ export const Wallet: React.FC = () => {
           {/* Total Inflow */}
           <div className="clean-card p-6 flex flex-col justify-between group hover:scale-[1.01] transition-transform">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#151e33]/70">
                 Total de Créditos & Bolsas
               </span>
-              <div className="h-9 w-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <ArrowUpRight className="h-5 w-5" />
+              <div className="h-9 w-9 rounded-xl bg-[#ff63f6]/15 text-[#151e33] flex items-center justify-center group-hover:scale-110 transition-transform border border-[#ff63f6]/30">
+                <ArrowUpRight className="h-5 w-5 text-[#ff63f6]" />
               </div>
             </div>
 
             <div className="my-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#151e33]">
                 +<AnimatedCounter value={totalCredits} decimals={2} suffix=" €" duration={1000} />
               </div>
-              <p className="text-xs text-slate-500 mt-1 font-medium">
+              <p className="text-xs text-[#151e33]/60 mt-1 font-medium">
                 Reembolsos, prémios de projetos e subsídios
               </p>
             </div>
 
-            <span className="text-xs font-semibold text-slate-400">
+            <span className="text-xs font-semibold text-[#151e33]/50">
               Atribuído pela Gestão Financeira
             </span>
           </div>
@@ -350,24 +350,24 @@ export const Wallet: React.FC = () => {
           {/* Total Outflow */}
           <div className="clean-card p-6 flex flex-col justify-between group hover:scale-[1.01] transition-transform">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#151e33]/70">
                 Total de Débitos & Despesas
               </span>
-              <div className="h-9 w-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <ArrowDownLeft className="h-5 w-5" />
+              <div className="h-9 w-9 rounded-xl bg-[#151e33]/5 text-[#151e33] flex items-center justify-center group-hover:scale-110 transition-transform border border-[#151e33]/15">
+                <ArrowDownLeft className="h-5 w-5 text-[#151e33]" />
               </div>
             </div>
 
             <div className="my-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-rose-600">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#151e33]">
                 -<AnimatedCounter value={totalDebits} decimals={2} suffix=" €" duration={1000} />
               </div>
-              <p className="text-xs text-slate-500 mt-1 font-medium">
+              <p className="text-xs text-[#151e33]/60 mt-1 font-medium">
                 Quotas, eventos, merchandising e utilizações
               </p>
             </div>
 
-            <span className="text-xs font-semibold text-slate-400">
+            <span className="text-xs font-semibold text-[#151e33]/50">
               Liquidações e despesas associativas
             </span>
           </div>
@@ -377,18 +377,18 @@ export const Wallet: React.FC = () => {
       {/* Main Section: Movements / Balance Requests / Reimbursements Switcher (Stagger 3) */}
       <div className="stagger-3 space-y-4">
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 border-b border-slate-200 overflow-x-auto pb-1">
+        <div className="flex items-center gap-2 border-b border-[#151e33]/10 overflow-x-auto pb-1">
           <button
             onClick={() => setActiveViewTab('MOVEMENTS')}
             className={`pb-3 px-4 text-xs sm:text-sm font-bold transition-all relative flex items-center gap-2 shrink-0 ${
               activeViewTab === 'MOVEMENTS'
                 ? 'text-[#151e33] border-b-2 border-[#151e33]'
-                : 'text-slate-500 hover:text-slate-800'
+                : 'text-[#151e33]/50 hover:text-[#151e33]'
             }`}
           >
             <CreditCard className="h-4 w-4" />
             <span>Extrato de Movimentos</span>
-            <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px]">
+            <span className="px-2 py-0.5 rounded-full bg-[#151e33]/5 text-[#151e33] text-[10px] font-bold">
               {transactions.length}
             </span>
           </button>
@@ -398,17 +398,17 @@ export const Wallet: React.FC = () => {
             className={`pb-3 px-4 text-xs sm:text-sm font-bold transition-all relative flex items-center gap-2 shrink-0 ${
               activeViewTab === 'REQUESTS'
                 ? 'text-[#151e33] border-b-2 border-[#151e33]'
-                : 'text-slate-500 hover:text-slate-800'
+                : 'text-[#151e33]/50 hover:text-[#151e33]'
             }`}
           >
             <Send className="h-4 w-4" />
             <span>Pedidos de Saldo</span>
             {pendingRequestsCount > 0 ? (
-              <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold animate-pulse">
+              <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-[#151e33] text-[10px] font-black animate-pulse">
                 {pendingRequestsCount} pendente{pendingRequestsCount > 1 ? 's' : ''}
               </span>
             ) : (
-              <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px]">
+              <span className="px-2 py-0.5 rounded-full bg-[#151e33]/5 text-[#151e33] text-[10px] font-bold">
                 {myRequests.length}
               </span>
             )}
@@ -419,17 +419,17 @@ export const Wallet: React.FC = () => {
             className={`pb-3 px-4 text-xs sm:text-sm font-bold transition-all relative flex items-center gap-2 shrink-0 ${
               activeViewTab === 'REIMBURSEMENTS'
                 ? 'text-[#151e33] border-b-2 border-[#151e33]'
-                : 'text-slate-500 hover:text-slate-800'
+                : 'text-[#151e33]/50 hover:text-[#151e33]'
             }`}
           >
-            <Receipt className="h-4 w-4 text-[#ff6ef6]" />
+            <Receipt className="h-4 w-4 text-[#ff63f6]" />
             <span>Reembolsos YME (Faturas)</span>
             {pendingReimbursementsCount > 0 ? (
-              <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-extrabold animate-pulse">
+              <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-[#151e33] text-[10px] font-black animate-pulse">
                 {pendingReimbursementsCount} pendente{pendingReimbursementsCount > 1 ? 's' : ''}
               </span>
             ) : (
-              <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px]">
+              <span className="px-2 py-0.5 rounded-full bg-[#151e33]/5 text-[#151e33] text-[10px] font-bold">
                 {myReimbursements.length}
               </span>
             )}
@@ -438,13 +438,13 @@ export const Wallet: React.FC = () => {
 
         {/* Tab 1: Movements Table */}
         {activeViewTab === 'MOVEMENTS' && (
-          <Card className="border-slate-200 shadow-clean-sm">
-            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <Card className="border-[#151e33]/10 shadow-clean-sm">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/10">
               <div>
                 <CardTitle className="text-lg font-bold text-[#151e33]">
                   Extrato de Movimentos
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500">
+                <CardDescription className="text-xs text-[#151e33]/60">
                   Histórico detalhado de todas as transações da tua conta YME
                 </CardDescription>
               </div>
@@ -452,25 +452,25 @@ export const Wallet: React.FC = () => {
               {/* Search & Filter Controls */}
               <div className="flex flex-wrap items-center gap-2">
                 <div className="relative">
-                  <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#151e33]/40" />
                   <input
                     type="text"
                     placeholder="Pesquisar movimento..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="h-9 pl-8 pr-3 text-xs rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-1 focus:ring-[#151e33]"
+                    className="h-9 pl-8 pr-3 text-xs rounded-xl border border-[#151e33]/15 bg-white text-[#151e33] focus:outline-none focus:ring-1 focus:ring-[#151e33]"
                   />
                 </div>
 
-                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                <div className="flex items-center gap-1 bg-[#151e33]/5 p-1 rounded-xl border border-[#151e33]/10">
                   {['ALL', 'SAD_REWARD', 'PRESENCE_BONUS', 'EVENT_SPEND', 'ADJUSTMENT'].map((type) => (
                     <button
                       key={type}
                       onClick={() => setFilterType(type)}
                       className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                         filterType === type
-                          ? 'bg-white text-[#151e33] shadow-sm font-bold scale-105'
-                          : 'text-slate-500 hover:text-slate-800'
+                          ? 'bg-[#151e33] text-white shadow-sm font-bold scale-105'
+                          : 'text-[#151e33]/60 hover:text-[#151e33]'
                       }`}
                     >
                       {type === 'ALL'
@@ -492,14 +492,14 @@ export const Wallet: React.FC = () => {
               {isLoading ? (
                 <div className="space-y-3 py-8">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-12 rounded-xl bg-slate-100 animate-pulse" />
+                    <div key={i} className="h-12 rounded-xl bg-[#151e33]/5 animate-pulse" />
                   ))}
                 </div>
               ) : filteredTransactions.length === 0 ? (
                 <div className="text-center py-12">
-                  <CreditCard className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-slate-700">Sem movimentos encontrados</p>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <CreditCard className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
+                  <p className="text-sm font-bold text-[#151e33]">Sem movimentos encontrados</p>
+                  <p className="text-xs text-[#151e33]/50 mt-1">
                     Não existem registos financeiros que correspondam aos filtros selecionados.
                   </p>
                 </div>
@@ -507,21 +507,21 @@ export const Wallet: React.FC = () => {
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
                     <thead>
-                      <tr className="border-b border-slate-200/80 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                      <tr className="border-b border-[#151e33]/10 text-[#151e33]/50 font-bold uppercase tracking-wider text-[10px]">
                         <th className="py-3 px-3">Data</th>
                         <th className="py-3 px-3">Descrição</th>
                         <th className="py-3 px-3">Tipo</th>
                         <th className="py-3 px-3 text-right">Montante</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-[#151e33]/5">
                       {filteredTransactions.map((tx, idx) => (
                         <tr
                           key={tx.id}
-                          className="hover:bg-slate-50/80 transition-colors animate-scale-in"
+                          className="hover:bg-[#151e33]/5 transition-colors animate-scale-in"
                           style={{ animationDelay: `${idx * 0.04}s` }}
                         >
-                          <td className="py-3 px-3 text-slate-500 font-medium whitespace-nowrap">
+                          <td className="py-3 px-3 text-[#151e33]/70 font-medium whitespace-nowrap">
                             {new Date(tx.createdAt).toLocaleDateString('pt-PT', {
                               day: '2-digit',
                               month: 'short',
@@ -536,7 +536,7 @@ export const Wallet: React.FC = () => {
                           </td>
                           <td
                             className={`py-3 px-3 text-right font-extrabold whitespace-nowrap ${
-                              tx.amount > 0 ? 'text-emerald-600' : 'text-rose-600'
+                              tx.amount > 0 ? 'text-[#ff63f6]' : 'text-[#151e33]'
                             }`}
                           >
                             {tx.amount > 0 ? `+${tx.amount.toFixed(2)} €` : `${tx.amount.toFixed(2)} €`}
@@ -553,13 +553,13 @@ export const Wallet: React.FC = () => {
 
         {/* Tab 2: Balance Usage Requests History */}
         {activeViewTab === 'REQUESTS' && (
-          <Card className="border-slate-200 shadow-clean-sm">
-            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <Card className="border-[#151e33]/10 shadow-clean-sm">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/10">
               <div>
                 <CardTitle className="text-lg font-bold text-[#151e33]">
                   Histórico de Pedidos de Utilização de Saldo
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500">
+                <CardDescription className="text-xs text-[#151e33]/60">
                   Acompanha o estado das tuas requisições de saldo para aprovação da Direção / Legal & Finance
                 </CardDescription>
               </div>
@@ -579,14 +579,14 @@ export const Wallet: React.FC = () => {
               {isLoading ? (
                 <div className="space-y-3 py-8">
                   {[1, 2].map((i) => (
-                    <div key={i} className="h-16 rounded-xl bg-slate-100 animate-pulse" />
+                    <div key={i} className="h-16 rounded-xl bg-[#151e33]/5 animate-pulse" />
                   ))}
                 </div>
               ) : myRequests.length === 0 ? (
                 <div className="text-center py-12">
-                  <FileText className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-slate-700">Ainda não realizaste nenhum pedido de saldo</p>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <FileText className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
+                  <p className="text-sm font-bold text-[#151e33]">Ainda não realizaste nenhum pedido de saldo</p>
+                  <p className="text-xs text-[#151e33]/50 mt-1">
                     Podes requisitar a utilização do teu saldo a qualquer momento com a devida justificação.
                   </p>
                   {summary && summary.balance > 0 && (
@@ -601,11 +601,11 @@ export const Wallet: React.FC = () => {
                   )}
                 </div>
               ) : (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-[#151e33]/5">
                   {myRequests.map((req) => (
                     <div
                       key={req.id}
-                      className="py-4 px-2 hover:bg-slate-50/60 rounded-xl transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
+                      className="py-4 px-2 hover:bg-[#151e33]/5 rounded-xl transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
                     >
                       <div className="space-y-1.5 flex-1">
                         <div className="flex items-center gap-2.5 flex-wrap">
@@ -614,27 +614,27 @@ export const Wallet: React.FC = () => {
                           </span>
 
                           {req.status === 'PENDING' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
+                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ff63f6]/15 text-[#151e33] border border-[#ff63f6]/40 flex items-center gap-1">
+                              <Clock className="h-3 w-3 text-[#ff63f6]" />
                               <span>Pendente de Aprovação</span>
                             </span>
                           )}
 
                           {req.status === 'APPROVED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                              <CheckCircle2 className="h-3 w-3" />
+                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#151e33] text-white border border-[#151e33] flex items-center gap-1">
+                              <CheckCircle2 className="h-3 w-3 text-[#ff63f6]" />
                               <span>Aprovado — Debitado da Conta</span>
                             </span>
                           )}
 
                           {req.status === 'REJECTED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1">
-                              <XCircle className="h-3 w-3" />
+                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white text-[#151e33] border border-[#151e33]/30 flex items-center gap-1">
+                              <XCircle className="h-3 w-3 text-[#151e33]" />
                               <span>Recusado — Saldo Mantido</span>
                             </span>
                           )}
 
-                          <span className="text-[11px] text-slate-400">
+                          <span className="text-[11px] text-[#151e33]/50">
                             Submetido em{' '}
                             {new Date(req.createdAt).toLocaleDateString('pt-PT', {
                               day: '2-digit',
@@ -646,14 +646,14 @@ export const Wallet: React.FC = () => {
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-700 font-medium bg-slate-50 p-2.5 rounded-lg border border-slate-200/60">
-                          <span className="font-bold text-slate-500">Justificação: </span>
+                        <p className="text-xs text-[#151e33] font-medium bg-[#151e33]/5 p-2.5 rounded-lg border border-[#151e33]/10">
+                          <span className="font-bold text-[#151e33]">Justificação: </span>
                           {req.justification}
                         </p>
 
                         {req.status === 'REJECTED' && req.rejectionReason && (
-                          <div className="text-xs text-rose-700 bg-rose-50/70 p-2 rounded-lg border border-rose-200/60 flex items-start gap-1.5">
-                            <AlertCircle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                          <div className="text-xs text-[#151e33] bg-[#ff63f6]/10 p-2 rounded-lg border border-[#ff63f6]/30 flex items-start gap-1.5">
+                            <AlertCircle className="h-3.5 w-3.5 text-[#ff63f6] mt-0.5 shrink-0" />
                             <div>
                               <span className="font-bold">Motivo da Recusa: </span>
                               {req.rejectionReason}
@@ -662,8 +662,8 @@ export const Wallet: React.FC = () => {
                         )}
 
                         {req.reviewedBy && (
-                          <p className="text-[10px] text-slate-400">
-                            Revisto por: <span className="font-semibold text-slate-600">{req.reviewedBy.fullName}</span>
+                          <p className="text-[10px] text-[#151e33]/50">
+                            Revisto por: <span className="font-semibold text-[#151e33]">{req.reviewedBy.fullName}</span>
                             {req.reviewedAt && (
                               <span>
                                 {' '}em{' '}
@@ -687,14 +687,14 @@ export const Wallet: React.FC = () => {
 
         {/* Tab 3: Reimbursement Requests History (Compras para a YME) */}
         {activeViewTab === 'REIMBURSEMENTS' && (
-          <Card className="border-slate-200 shadow-clean-sm">
-            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <Card className="border-[#151e33]/10 shadow-clean-sm">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/10">
               <div>
                 <CardTitle className="text-lg font-bold text-[#151e33] flex items-center gap-2">
-                  <Receipt className="h-5 w-5 text-[#ff6ef6]" />
+                  <Receipt className="h-5 w-5 text-[#ff63f6]" />
                   <span>Histórico de Pedidos de Reembolso</span>
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500">
+                <CardDescription className="text-xs text-[#151e33]/60">
                   Despesas e compras que efetuaste para a YME com fundos pessoais. A aprovação e devolução são geridas exclusivamente pela Administração.
                 </CardDescription>
               </div>
@@ -713,14 +713,14 @@ export const Wallet: React.FC = () => {
               {isLoading ? (
                 <div className="space-y-3 py-8">
                   {[1, 2].map((i) => (
-                    <div key={i} className="h-16 rounded-xl bg-slate-100 animate-pulse" />
+                    <div key={i} className="h-16 rounded-xl bg-[#151e33]/5 animate-pulse" />
                   ))}
                 </div>
               ) : myReimbursements.length === 0 ? (
                 <div className="text-center py-12">
-                  <Receipt className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-slate-700">Sem pedidos de reembolso registados</p>
-                  <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
+                  <Receipt className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
+                  <p className="text-sm font-bold text-[#151e33]">Sem pedidos de reembolso registados</p>
+                  <p className="text-xs text-[#151e33]/50 mt-1 max-w-md mx-auto">
                     Fizeste alguma compra para a YME? Submete a fatura com justificação para receberes a devolução do dinheiro.
                   </p>
                   <Button
@@ -733,11 +733,11 @@ export const Wallet: React.FC = () => {
                   </Button>
                 </div>
               ) : (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-[#151e33]/5">
                   {myReimbursements.map((req) => (
                     <div
                       key={req.id}
-                      className="py-4 px-2 hover:bg-slate-50/60 rounded-xl transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
+                      className="py-4 px-2 hover:bg-[#151e33]/5 rounded-xl transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
                     >
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-2.5 flex-wrap">
@@ -746,27 +746,27 @@ export const Wallet: React.FC = () => {
                           </span>
 
                           {req.status === 'PENDING' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
+                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ff63f6]/15 text-[#151e33] border border-[#ff63f6]/40 flex items-center gap-1">
+                              <Clock className="h-3 w-3 text-[#ff63f6]" />
                               <span>Aguardando Validação da Administração</span>
                             </span>
                           )}
 
                           {req.status === 'APPROVED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                              <CheckCircle2 className="h-3 w-3" />
+                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#151e33] text-white border border-[#151e33] flex items-center gap-1">
+                              <CheckCircle2 className="h-3 w-3 text-[#ff63f6]" />
                               <span>Reembolso Aprovado & Devolvido</span>
                             </span>
                           )}
 
                           {req.status === 'REJECTED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1">
-                              <XCircle className="h-3 w-3" />
+                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white text-[#151e33] border border-[#151e33]/30 flex items-center gap-1">
+                              <XCircle className="h-3 w-3 text-[#151e33]" />
                               <span>Reembolso Recusado</span>
                             </span>
                           )}
 
-                          <span className="text-[11px] text-slate-400">
+                          <span className="text-[11px] text-[#151e33]/50">
                             Submetido em{' '}
                             {new Date(req.createdAt).toLocaleDateString('pt-PT', {
                               day: '2-digit',
@@ -778,8 +778,8 @@ export const Wallet: React.FC = () => {
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-700 font-medium bg-slate-50 p-2.5 rounded-lg border border-slate-200/60">
-                          <span className="font-bold text-slate-500">Justificação da Despesa: </span>
+                        <p className="text-xs text-[#151e33] font-medium bg-[#151e33]/5 p-2.5 rounded-lg border border-[#151e33]/10">
+                          <span className="font-bold text-[#151e33]">Justificação da Despesa: </span>
                           {req.justification}
                         </p>
 
@@ -790,11 +790,11 @@ export const Wallet: React.FC = () => {
                               href={req.receiptUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-[#151e33] text-xs font-semibold text-[#151e33] shadow-2xs hover:shadow-xs transition-all"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#151e33]/15 hover:border-[#151e33] text-xs font-semibold text-[#151e33] shadow-2xs hover:shadow-xs transition-all"
                             >
-                              <Paperclip className="h-3.5 w-3.5 text-[#ff6ef6]" />
+                              <Paperclip className="h-3.5 w-3.5 text-[#ff63f6]" />
                               <span>Ver Fatura / Recibo</span>
-                              <ExternalLink className="h-3 w-3 text-slate-400" />
+                              <ExternalLink className="h-3 w-3 text-[#151e33]/40" />
                             </a>
                           )}
 
@@ -803,18 +803,18 @@ export const Wallet: React.FC = () => {
                               href={req.refundProofUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs font-bold text-emerald-800 shadow-2xs hover:bg-emerald-100 transition-all"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff63f6]/10 border border-[#ff63f6]/30 text-xs font-bold text-[#151e33] shadow-2xs hover:bg-[#ff63f6]/20 transition-all"
                             >
-                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                              <CheckCircle2 className="h-3.5 w-3.5 text-[#ff63f6]" />
                               <span>Ver Comprovativo da Devolução</span>
-                              <ExternalLink className="h-3 w-3 text-emerald-600" />
+                              <ExternalLink className="h-3 w-3 text-[#ff63f6]" />
                             </a>
                           )}
                         </div>
 
                         {req.status === 'REJECTED' && req.rejectionReason && (
-                          <div className="text-xs text-rose-700 bg-rose-50/70 p-2.5 rounded-lg border border-rose-200/60 flex items-start gap-1.5">
-                            <AlertCircle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                          <div className="text-xs text-[#151e33] bg-[#ff63f6]/10 p-2.5 rounded-lg border border-[#ff63f6]/30 flex items-start gap-1.5">
+                            <AlertCircle className="h-3.5 w-3.5 text-[#ff63f6] mt-0.5 shrink-0" />
                             <div>
                               <span className="font-bold">Motivo da Recusa: </span>
                               {req.rejectionReason}
@@ -823,7 +823,7 @@ export const Wallet: React.FC = () => {
                         )}
 
                         {req.reviewedBy && (
-                          <p className="text-[10px] text-slate-400">
+                          <p className="text-[10px] text-[#151e33]/50">
                             Revisto pela Administração ({req.reviewedBy.fullName})
                             {req.reviewedAt && (
                               <span>
@@ -858,23 +858,23 @@ export const Wallet: React.FC = () => {
             Como membro com saldo ativo, podes requisitar a utilização do dinheiro da tua conta indicando o valor e justificando a finalidade pretendida.
           </p>
 
-          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500">Saldo Disponível:</span>
-            <span className="text-sm font-extrabold text-emerald-600">
+          <div className="bg-[#151e33]/5 p-3 rounded-xl border border-[#151e33]/10 flex items-center justify-between">
+            <span className="text-xs font-bold text-[#151e33]/70">Saldo Disponível:</span>
+            <span className="text-sm font-extrabold text-[#151e33]">
               {summary ? summary.balance.toFixed(2) : '0.00'} €
             </span>
           </div>
 
           {requestError && (
-            <div className="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl border border-rose-200 flex items-start gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+            <div className="p-3 bg-[#ff63f6]/10 text-[#151e33] text-xs rounded-xl border border-[#ff63f6]/40 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-[#ff63f6]" />
               <span>{requestError}</span>
             </div>
           )}
 
           {requestSuccess && (
-            <div className="p-3 bg-emerald-50 text-emerald-700 text-xs rounded-xl border border-emerald-200 flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 shrink-0" />
+            <div className="p-3 bg-[#151e33] text-white text-xs rounded-xl border border-[#151e33] flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#ff63f6]" />
               <span>{requestSuccess}</span>
             </div>
           )}
@@ -888,7 +888,7 @@ export const Wallet: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setRequestAmount(summary.balance.toString())}
-                  className="text-[11px] font-bold text-[#d81bb0] hover:underline"
+                  className="text-[11px] font-bold text-[#151e33] hover:text-[#ff63f6] underline"
                 >
                   Usar Saldo Total ({summary.balance.toFixed(2)} €)
                 </button>
@@ -919,13 +919,13 @@ export const Wallet: React.FC = () => {
               required
               disabled={isSubmittingRequest}
             />
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-[#151e33]/50">
               Indica claramente o fim ou projeto para o qual os fundos serão alocados.
             </p>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-500 space-y-1">
-            <p className="font-semibold text-slate-700">Como funciona o processo de aprovação?</p>
+          <div className="p-3 rounded-xl bg-[#151e33]/5 border border-[#151e33]/10 text-[11px] text-[#151e33]/70 space-y-1">
+            <p className="font-semibold text-[#151e33]">Como funciona o processo de aprovação?</p>
             <p>
               • Os Administradores e a equipa de Legal & Finance recebem notificação no backoffice.
             </p>
@@ -937,7 +937,7 @@ export const Wallet: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#151e33]/10">
             <Button
               type="button"
               variant="outline"
@@ -960,26 +960,26 @@ export const Wallet: React.FC = () => {
         title="Pedido de Reembolso de Despesa para a YME"
       >
         <form onSubmit={handleSubmitReimbursement} className="space-y-4">
-          <div className="p-3 rounded-xl bg-[#fff0fd] border border-[#ff6ef6]/30 text-xs text-[#151e33] space-y-1">
-            <p className="font-bold flex items-center gap-1 text-[#d81bb0]">
-              <Receipt className="h-4 w-4" />
+          <div className="p-3 rounded-xl bg-[#ff63f6]/10 border border-[#ff63f6]/30 text-xs text-[#151e33] space-y-1">
+            <p className="font-bold flex items-center gap-1 text-[#151e33]">
+              <Receipt className="h-4 w-4 text-[#ff63f6]" />
               <span>Reembolso Independente do Saldo da Carteira</span>
             </p>
-            <p className="text-slate-600 text-[11px]">
+            <p className="text-[#151e33]/80 text-[11px]">
               Se compraste algum material ou pagaste uma despesa com o teu próprio dinheiro para a YME, preenche este formulário e anexa a fatura. A Administração irá rever o pedido e devolver-te o valor com respetivo comprovativo.
             </p>
           </div>
 
           {reimbursementError && (
-            <div className="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl border border-rose-200 flex items-start gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+            <div className="p-3 bg-[#ff63f6]/10 text-[#151e33] text-xs rounded-xl border border-[#ff63f6]/40 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-[#ff63f6]" />
               <span>{reimbursementError}</span>
             </div>
           )}
 
           {reimbursementSuccess && (
-            <div className="p-3 bg-emerald-50 text-emerald-700 text-xs rounded-xl border border-emerald-200 flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 shrink-0" />
+            <div className="p-3 bg-[#151e33] text-white text-xs rounded-xl border border-[#151e33] flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#ff63f6]" />
               <span>{reimbursementSuccess}</span>
             </div>
           )}
@@ -1018,7 +1018,7 @@ export const Wallet: React.FC = () => {
             <label className="text-xs font-bold text-[#151e33]">
               Comprovativo da Fatura / Recibo (Foto ou PDF) *
             </label>
-            <div className="p-4 rounded-xl border-2 border-dashed border-slate-200 hover:border-[#151e33] bg-slate-50/70 transition-colors text-center">
+            <div className="p-4 rounded-xl border-2 border-dashed border-[#151e33]/20 hover:border-[#ff63f6] bg-[#151e33]/5 transition-colors text-center">
               <input
                 ref={receiptFileInputRef}
                 type="file"
@@ -1036,16 +1036,16 @@ export const Wallet: React.FC = () => {
                 htmlFor="reimbursementReceiptInput"
                 className="cursor-pointer flex flex-col items-center justify-center gap-2"
               >
-                <div className="h-10 w-10 rounded-full bg-white shadow-clean-sm border border-slate-200 flex items-center justify-center text-[#151e33]">
+                <div className="h-10 w-10 rounded-full bg-white shadow-clean-sm border border-[#151e33]/15 flex items-center justify-center text-[#151e33]">
                   <Upload className="h-5 w-5" />
                 </div>
                 {reimbursementFile ? (
                   <div className="space-y-1">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      <FileText className="h-3.5 w-3.5" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#151e33] text-white border border-[#151e33]">
+                      <FileText className="h-3.5 w-3.5 text-[#ff63f6]" />
                       {reimbursementFile.name} ({(reimbursementFile.size / 1024 / 1024).toFixed(2)} MB)
                     </span>
-                    <p className="text-[11px] text-slate-500 font-medium">
+                    <p className="text-[11px] text-[#151e33]/60 font-medium">
                       Clica para substituir o ficheiro
                     </p>
                   </div>
@@ -1054,7 +1054,7 @@ export const Wallet: React.FC = () => {
                     <span className="text-xs font-bold text-[#151e33] hover:underline">
                       Clica para carregar a foto ou PDF da fatura
                     </span>
-                    <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    <p className="text-[11px] text-[#151e33]/50 font-medium mt-0.5">
                       Ficheiros PDF ou Imagens PNG/JPG (máx. 25 MB)
                     </p>
                   </div>
@@ -1063,8 +1063,8 @@ export const Wallet: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-500 space-y-1">
-            <p className="font-semibold text-slate-700">Validação Administrativa:</p>
+          <div className="p-3 rounded-xl bg-[#151e33]/5 border border-[#151e33]/10 text-[11px] text-[#151e33]/70 space-y-1">
+            <p className="font-semibold text-[#151e33]">Validação Administrativa:</p>
             <p>
               • Apenas os <strong>Administradores</strong> recebem e aprovam pedidos de reembolso.
             </p>
@@ -1073,7 +1073,7 @@ export const Wallet: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#151e33]/10">
             <Button
               type="button"
               variant="outline"

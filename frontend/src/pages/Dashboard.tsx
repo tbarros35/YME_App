@@ -70,14 +70,14 @@ export const Dashboard: React.FC = () => {
       case 'RECRUITMENT':
         return <Users className="h-4 w-4 text-[#151e33]" />;
       case 'PROJECT':
-        return <Briefcase className="h-4 w-4 text-[#ff6ef6]" />;
+        return <Briefcase className="h-4 w-4 text-[#ff63f6]" />;
       case 'TASKGROUP':
-        return <Compass className="h-4 w-4 text-purple-600" />;
+        return <Compass className="h-4 w-4 text-[#151e33]" />;
       case 'FORMATION':
-        return <BookOpen className="h-4 w-4 text-emerald-600" />;
+        return <BookOpen className="h-4 w-4 text-[#151e33]" />;
       case 'AWARD':
       default:
-        return <Award className="h-4 w-4 text-amber-600" />;
+        return <Award className="h-4 w-4 text-[#ff63f6]" />;
     }
   };
 
@@ -98,13 +98,13 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Hero Welcome Banner (Stagger 1) */}
-      <div className="stagger-1 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#151e33] via-[#1c2742] to-[#151e33] text-white p-6 sm:p-8 shadow-clean-lg">
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-[#ff6ef6]/15 blur-3xl pointer-events-none" />
+      <div className="stagger-1 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#151e33] via-[#1c2742] to-[#151e33] text-white p-6 sm:p-8 shadow-clean-lg border border-[#ff63f6]/20">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-[#ff63f6]/15 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold">
-              <span className="h-2 w-2 rounded-full bg-[#ff6ef6] animate-pulse" />
+              <span className="h-2 w-2 rounded-full bg-[#ff63f6] animate-pulse" />
               <span>{user?.department?.name || 'Membro da YME'}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
@@ -118,7 +118,7 @@ export const Dashboard: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <Button
               variant="accent"
-              className="h-10 text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-transform"
+              className="h-10 text-xs font-bold shadow-stitch-subtle hover:scale-105 active:scale-95 transition-transform"
               onClick={() => navigate('/sad')}
             >
               <TrendingUp className="h-4 w-4 mr-1.5" />
@@ -187,8 +187,8 @@ export const Dashboard: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Saldo YME Wallet
             </span>
-            <div className="h-8 w-8 rounded-xl bg-slate-100 flex items-center justify-center text-[#ff6ef6] group-hover:bg-[#ff6ef6] group-hover:text-[#151e33] transition-all">
-              <Wallet className="h-4 w-4" />
+            <div className="h-8 w-8 rounded-xl bg-[#ff63f6]/10 flex items-center justify-center text-[#151e33] group-hover:bg-[#ff63f6] group-hover:text-[#151e33] transition-all">
+              <Wallet className="h-4 w-4 text-[#ff63f6] group-hover:text-[#151e33]" />
             </div>
           </div>
 
@@ -342,15 +342,15 @@ export const Dashboard: React.FC = () => {
                       style={{ animationDelay: `${idx * 0.08}s` }}
                     >
                       {/* Node Indicator */}
-                      <div className="absolute -left-6 sm:-left-8 top-1 h-6 w-6 rounded-full bg-white border-2 border-[#151e33] flex items-center justify-center shadow-sm group-hover:border-[#ff6ef6] group-hover:scale-125 transition-all">
-                        <div className="h-2 w-2 rounded-full bg-[#151e33] group-hover:bg-[#ff6ef6] transition-colors" />
+                      <div className="absolute -left-6 sm:-left-8 top-1 h-6 w-6 rounded-full bg-white border-2 border-[#151e33] flex items-center justify-center shadow-sm group-hover:border-[#ff63f6] group-hover:scale-125 transition-all">
+                        <div className="h-2 w-2 rounded-full bg-[#151e33] group-hover:bg-[#ff63f6] transition-colors" />
                       </div>
 
                       {/* Content Card */}
-                      <div className="bg-slate-50/80 hover:bg-white p-4 rounded-xl border border-slate-200/70 hover:border-slate-300 hover:shadow-clean-sm group-hover:translate-x-1 transition-all">
+                      <div className="bg-white hover:bg-slate-50/50 p-4 rounded-xl border border-[#151e33]/10 hover:border-[#ff63f6]/40 hover:shadow-clean-sm group-hover:translate-x-1 transition-all">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1.5">
                           <div className="flex items-center gap-2">
-                            <span className="p-1 rounded-md bg-white border border-slate-200">
+                            <span className="p-1 rounded-md bg-[#151e33]/5 border border-[#151e33]/10">
                               {getMilestoneIcon(milestone.category)}
                             </span>
                             <h4 className="text-sm font-bold text-[#151e33]">
@@ -358,7 +358,7 @@ export const Dashboard: React.FC = () => {
                             </h4>
                             <TimelineCategoryBadge category={milestone.category} />
                           </div>
-                          <span className="text-[11px] font-semibold text-slate-500 bg-white px-2 py-0.5 rounded-md border border-slate-200/80 shrink-0">
+                          <span className="text-[11px] font-semibold text-[#151e33]/70 bg-white px-2 py-0.5 rounded-md border border-[#151e33]/10 shrink-0">
                             {new Date(milestone.eventDate).toLocaleDateString('pt-PT', {
                               day: 'numeric',
                               month: 'long',
@@ -383,8 +383,8 @@ export const Dashboard: React.FC = () => {
         {/* Sidebar / Quick Upcoming Events & Fast Links */}
         <div className="space-y-6">
           {/* Upcoming Events Card */}
-          <Card className="border-slate-200 shadow-clean-sm">
-            <CardHeader className="pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+          <Card className="border-[#151e33]/10 shadow-clean-sm bg-white">
+            <CardHeader className="pb-3 border-b border-[#151e33]/10 flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="h-4 w-4 text-[#151e33]" />
                 <CardTitle className="text-sm font-bold text-[#151e33]">
@@ -393,7 +393,7 @@ export const Dashboard: React.FC = () => {
               </div>
               <Button
                 variant="ghost"
-                className="h-7 text-xs text-[#151e33] p-0 font-semibold hover:underline"
+                className="h-7 text-xs text-[#151e33] p-0 font-bold hover:text-[#ff63f6]"
                 onClick={() => navigate('/calendar')}
               >
                 Ver Calendário
@@ -410,16 +410,16 @@ export const Dashboard: React.FC = () => {
                   <div
                     key={evt.id}
                     onClick={() => navigate('/calendar')}
-                    className="p-3 rounded-xl bg-slate-50 hover:bg-white border border-slate-200/80 hover:border-slate-300 hover:shadow-clean-sm hover:-translate-y-0.5 transition-all cursor-pointer group animate-scale-in"
+                    className="p-3 rounded-xl bg-white hover:bg-slate-50/80 border border-[#151e33]/10 hover:border-[#ff63f6]/40 hover:shadow-clean-sm hover:-translate-y-0.5 transition-all cursor-pointer group animate-scale-in"
                     style={{ animationDelay: `${idx * 0.1}s` }}
                   >
                     <div className="flex items-start gap-3">
                       {/* Date Badge */}
-                      <div className="h-12 w-12 rounded-xl bg-[#151e33] text-white flex flex-col items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                        <span className="text-[9px] uppercase font-bold text-[#ff6ef6] leading-none">
+                      <div className="h-12 w-12 rounded-xl bg-[#151e33] text-white flex flex-col items-center justify-center shrink-0 group-hover:scale-105 transition-transform border border-[#ff63f6]/20">
+                        <span className="text-[9px] uppercase font-black text-[#ff63f6] leading-none">
                           {new Date(evt.startTime).toLocaleDateString('pt-PT', { month: 'short' })}
                         </span>
-                        <span className="text-base font-extrabold leading-none mt-0.5">
+                        <span className="text-base font-extrabold leading-none mt-0.5 text-white">
                           {new Date(evt.startTime).getDate()}
                         </span>
                       </div>
@@ -431,7 +431,7 @@ export const Dashboard: React.FC = () => {
                         </h5>
                         <div className="flex items-center gap-2 text-[11px] text-slate-500 mt-1">
                           <span className="flex items-center gap-1 truncate">
-                            <MapPin className="h-3 w-3 shrink-0" />
+                            <MapPin className="h-3 w-3 shrink-0 text-[#ff63f6]" />
                             {evt.location || 'Sede da YME'}
                           </span>
                         </div>
@@ -446,29 +446,30 @@ export const Dashboard: React.FC = () => {
           {/* Interactive Quick Help Card */}
           <div
             onClick={() => setIsSupportOpen(true)}
-            className="rounded-2xl bg-gradient-to-br from-[#fff0fd] via-white to-slate-50 p-5 border border-[#ff6ef6]/40 shadow-clean-sm hover:shadow-md hover:border-[#ff6ef6] hover:scale-[1.01] transition-all cursor-pointer group"
+            className="rounded-2xl bg-white p-5 border border-[#151e33]/10 shadow-clean-sm hover:shadow-md hover:border-[#ff63f6]/60 hover:scale-[1.01] transition-all cursor-pointer group relative overflow-hidden"
           >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#ff63f6]/10 rounded-full blur-xl pointer-events-none" />
             <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2 text-[#d81bb0]">
-                <Sparkles className="h-4 w-4 animate-spin-slow" />
-                <span className="text-xs font-extrabold uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-[#151e33]">
+                <Sparkles className="h-4 w-4 text-[#ff63f6] animate-pulse" />
+                <span className="text-xs font-black uppercase tracking-wider">
                   Dúvidas ou Suporte?
                 </span>
               </div>
-              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#ff6ef6]/20 text-[#d81bb0] border border-[#ff6ef6]/30 group-hover:bg-[#151e33] group-hover:text-white transition-all">
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30 group-hover:bg-[#151e33] group-hover:text-white transition-all">
                 Abrir Chat
               </span>
             </div>
             <p className="text-xs text-slate-600 leading-relaxed font-medium">
               Precisas de ajustar uma avaliação de SAD, esclarecer movimentos na tua carteira ou falar com a Executive Board?
             </p>
-            <div className="mt-3 pt-2.5 border-t border-[#ff6ef6]/20 flex items-center justify-between text-xs font-bold text-[#151e33]">
+            <div className="mt-3 pt-2.5 border-t border-[#151e33]/10 flex items-center justify-between text-xs font-bold text-[#151e33]">
               <span className="flex items-center gap-1.5 text-[11px] text-slate-500">
-                <MessageSquare className="h-3.5 w-3.5 text-[#ff6ef6]" />
+                <MessageSquare className="h-3.5 w-3.5 text-[#ff63f6]" />
                 RH • Legal & Finance • Direção
               </span>
-              <span className="group-hover:translate-x-1 transition-transform flex items-center gap-0.5 text-xs text-[#151e33]">
-                Submeter Dúvida <ChevronRight className="h-3 w-3" />
+              <span className="group-hover:translate-x-1 transition-transform flex items-center gap-0.5 text-xs text-[#151e33] font-bold">
+                Submeter Dúvida <ChevronRight className="h-3 w-3 text-[#ff63f6]" />
               </span>
             </div>
           </div>

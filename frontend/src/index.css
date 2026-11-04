@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,70 +6,73 @@
 
 @layer base {
   :root {
-    --brand-blue: #151e33;
-    --brand-pink: #ff6ef6;
+    --brand-navy: #151e33;
+    --brand-magenta: #ff63f6;
+    --brand-white: #ffffff;
     --brand-canvas: #f8fafc;
     --brand-card: #ffffff;
-    --border-subtle: #e2e8f0;
+    --border-subtle: rgba(21, 30, 51, 0.08);
+    --border-magenta: rgba(255, 99, 246, 0.35);
     --text-primary: #151e33;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
+    --text-secondary: rgba(21, 30, 51, 0.7);
+    --text-muted: rgba(21, 30, 51, 0.45);
   }
 
   body {
     background-color: #f8fafc;
     color: #151e33;
-    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
     overflow-x: hidden;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
   }
 }
 
-/* Polished Card Surfaces (UI/UX Pro Max) */
+/* Polished Card Surfaces (Stitch Design System) */
 .clean-card {
   background-color: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(21, 30, 51, 0.04), 0 1px 2px -1px rgba(21, 30, 51, 0.03);
+  border: 1px solid rgba(21, 30, 51, 0.08);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 3px 0 rgba(21, 30, 51, 0.04), 0 10px 24px -6px rgba(21, 30, 51, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .clean-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 6px 16px -2px rgba(21, 30, 51, 0.07);
+  border-color: rgba(21, 30, 51, 0.16);
+  box-shadow: 0 8px 24px -4px rgba(21, 30, 51, 0.08), 0 0 1px rgba(255, 99, 246, 0.2);
 }
 
 .clean-card-interactive {
   background-color: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 1rem;
+  border: 1px solid rgba(21, 30, 51, 0.08);
+  border-radius: 1.25rem;
   box-shadow: 0 1px 3px 0 rgba(21, 30, 51, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .clean-card-interactive:hover {
-  transform: translateY(-3px) scale-[1.01];
-  border-color: rgba(255, 110, 246, 0.6);
-  box-shadow: 0 12px 28px -4px rgba(21, 30, 51, 0.09), 0 0 0 1px rgba(255, 110, 246, 0.2);
+  transform: translateY(-3px);
+  border-color: rgba(255, 99, 246, 0.6);
+  box-shadow: 0 16px 36px -6px rgba(21, 30, 51, 0.09), 0 0 0 1px rgba(255, 99, 246, 0.25);
 }
 
-/* Holographic Member Card Effect with Shimmer */
+/* Holographic Member Card Effect with Stitch Gradient */
 .holographic-card {
-  background: linear-gradient(135deg, #151e33 0%, #1e2a47 50%, #0e1424 100%);
+  background: linear-gradient(135deg, #151e33 0%, #1e2a47 60%, #111827 100%);
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
-  box-shadow: 0 12px 30px -4px rgba(21, 30, 51, 0.25), 0 4px 12px -2px rgba(21, 30, 51, 0.15);
+  border: 1px solid rgba(255, 99, 246, 0.25);
+  box-shadow: 0 16px 36px -6px rgba(21, 30, 51, 0.3), 0 0 30px -4px rgba(255, 99, 246, 0.15);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .holographic-card:hover {
-  transform: translateY(-2px) scale-[1.008];
-  box-shadow: 0 18px 40px -6px rgba(21, 30, 51, 0.3), 0 0 20px 2px rgba(255, 110, 246, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 48px -6px rgba(21, 30, 51, 0.35), 0 0 35px 2px rgba(255, 99, 246, 0.25);
 }
 
 .holographic-card::before {
@@ -79,7 +82,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 70% 30%, rgba(255, 110, 246, 0.2) 0%, transparent 60%);
+  background: radial-gradient(circle at 75% 25%, rgba(255, 99, 246, 0.25) 0%, transparent 55%);
   pointer-events: none;
 }
 
@@ -103,13 +106,21 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 110, 246, 0.15),
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 99, 246, 0.2),
     transparent
   );
   transform: rotate(25deg);
   animation: shimmerPass 6s infinite ease-in-out;
   pointer-events: none;
+}
+
+/* Glassmorphism Surface */
+.glass-header {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(21, 30, 51, 0.08);
 }
 
 /* Animations & Staggered Enters */
@@ -143,27 +154,6 @@
   animation: fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Stagger Animation Delays */
-.stagger-1 {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
-}
-
-.stagger-2 {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
-}
-
-.stagger-3 {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
-}
-
-.stagger-4 {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
-}
-
-.stagger-5 {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
-}
-
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
@@ -180,5 +170,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #ff63f6;
 }

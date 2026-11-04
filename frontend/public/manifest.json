@@ -1,0 +1,16 @@
+{
+  "short_name": "YME APP",
+  "name": "YME APP - Plataforma Interna de Membros",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#151e33",
+  "display": "standalone",
+  "orientation": "portrait"
+}

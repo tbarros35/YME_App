@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: yme_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: yme_user
+      POSTGRES_PASSWORD: yme_password_secure
+      POSTGRES_DB: yme_portal_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yme_user -d yme_portal_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - yme_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: yme_backend
+    restart: always
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      DATABASE_URL: postgresql://yme_user:yme_password_secure@postgres:5432/yme_portal_db?schema=public
+      JWT_SECRET: super_secret_jwt_access_token_key_yme_2026
+      JWT_REFRESH_SECRET: super_secret_jwt_refresh_token_key_yme_2026
+      CORS_ORIGIN: http://localhost,http://localhost:80,http://localhost:5173
+    ports:
+      - "3001:3001"
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - yme_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: yme_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - yme_network
+
+volumes:
+  postgres_data:
+  backend_uploads:
+
+networks:
+  yme_network:
+    driver: bridge

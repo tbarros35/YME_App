@@ -1,0 +1,216 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  MEMBER
+  DIRECTOR
+  ADMIN
+}
+
+enum Taskgroup {
+  CSR
+  PARTNERSHIPS
+}
+
+enum WalletType {
+  SAD_REWARD
+  PRESENCE_BONUS
+  EVENT_SPEND
+  ADJUSTMENT
+}
+
+enum WalletRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ReimbursementStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum TimelineCategory {
+  RECRUITMENT
+  PROJECT
+  TASKGROUP
+  FORMATION
+  AWARD
+}
+
+enum CalendarCategory {
+  GENERAL_ASSEMBLY
+  FORMATION
+  TEAMBUILDING
+  DEADLINE
+  HR_ACTIVITY
+  CSR_ACTIVITY
+  OPEN_DAY
+}
+
+enum SupportCategory {
+  SAD_EVALUATION
+  WALLET
+  OTHER
+}
+
+enum SupportStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model Department {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  users     User[]
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("departments")
+}
+
+model User {
+  id              String               @id @default(uuid())
+  email           String               @unique
+  passwordHash    String               @map("password_hash")
+  fullName        String               @map("full_name")
+  role            Role                 @default(MEMBER)
+  departmentId    String               @map("department_id")
+  department      Department           @relation(fields: [departmentId], references: [id])
+  position        String
+  taskgroups      Taskgroup[]          @default([])
+  isActive        Boolean              @default(true) @map("is_active")
+  createdAt       DateTime             @default(now()) @map("created_at")
+  evaluations            EvaluationSAD[]
+  transactions           WalletTransaction[]
+  walletRequests         WalletRequest[]        @relation("UserWalletRequests")
+  reviewedWalletRequests WalletRequest[]        @relation("ReviewedWalletRequests")
+  reimbursementRequests  ReimbursementRequest[] @relation("UserReimbursements")
+  reviewedReimbursements ReimbursementRequest[] @relation("ReviewedReimbursements")
+  timeline               TimelineEvent[]
+  supportTickets         SupportTicket[]      @relation("UserTickets")
+  supportMessages        SupportMessage[]
+
+  @@map("users")
+}
+
+model EvaluationSAD {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  term          String   // e.g. "2025/2026 - Q1"
+  score         Decimal  @map("score") @db.Decimal(4, 2) // Média do SAD (0.00 a 6.00)
+  reportPdfUrl  String   @map("report_pdf_url") // Caminho do ficheiro PDF carregado
+  feedbackNotes String?  @map("feedback_notes") @db.Text
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("evaluations_sad")
+}
+
+model WalletTransaction {
+  id          String     @id @default(uuid())
+  userId      String     @map("user_id")
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount      Decimal    @db.Decimal(10, 2) // Positive = Earnings, Negative = Expenses
+  type        WalletType
+  description String
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@map("wallet_transactions")
+}
+
+model WalletRequest {
+  id              String              @id @default(uuid())
+  userId          String              @map("user_id")
+  user            User                @relation("UserWalletRequests", fields: [userId], references: [id], onDelete: Cascade)
+  amount          Decimal             @db.Decimal(10, 2)
+  justification   String              @db.Text
+  status          WalletRequestStatus @default(PENDING)
+  rejectionReason String?             @map("rejection_reason") @db.Text
+  reviewedById    String?             @map("reviewed_by_id")
+  reviewedBy      User?               @relation("ReviewedWalletRequests", fields: [reviewedById], references: [id])
+  reviewedAt      DateTime?           @map("reviewed_at")
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @updatedAt @map("updated_at")
+
+  @@map("wallet_requests")
+}
+
+model ReimbursementRequest {
+  id              String              @id @default(uuid())
+  userId          String              @map("user_id")
+  user            User                @relation("UserReimbursements", fields: [userId], references: [id], onDelete: Cascade)
+  amount          Decimal             @db.Decimal(10, 2)
+  justification   String              @db.Text
+  receiptUrl      String              @map("receipt_url")
+  status          ReimbursementStatus @default(PENDING)
+  rejectionReason String?             @map("rejection_reason") @db.Text
+  refundProofUrl  String?             @map("refund_proof_url")
+  reviewedById    String?             @map("reviewed_by_id")
+  reviewedBy      User?               @relation("ReviewedReimbursements", fields: [reviewedById], references: [id])
+  reviewedAt      DateTime?           @map("reviewed_at")
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @updatedAt @map("updated_at")
+
+  @@map("reimbursement_requests")
+}
+
+model TimelineEvent {
+  id          String           @id @default(uuid())
+  userId      String           @map("user_id")
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  category    TimelineCategory
+  description String?          @db.Text
+  eventDate   DateTime         @map("event_date")
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  @@map("timeline_events")
+}
+
+model CalendarEvent {
+  id          String           @id @default(uuid())
+  title       String
+  description String?          @db.Text
+  category    CalendarCategory
+  startTime   DateTime         @map("start_time")
+  endTime     DateTime         @map("end_time")
+  location    String?
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  @@map("calendar_events")
+}
+
+model SupportTicket {
+  id        String           @id @default(uuid())
+  userId    String           @map("user_id")
+  user      User             @relation("UserTickets", fields: [userId], references: [id], onDelete: Cascade)
+  category  SupportCategory
+  subject   String
+  status    SupportStatus    @default(OPEN)
+  createdAt DateTime         @default(now()) @map("created_at")
+  updatedAt DateTime         @updatedAt @map("updated_at")
+  messages  SupportMessage[]
+
+  @@map("support_tickets")
+}
+
+model SupportMessage {
+  id        String        @id @default(uuid())
+  ticketId  String        @map("ticket_id")
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  senderId  String        @map("sender_id")
+  sender    User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content   String        @db.Text
+  createdAt DateTime      @default(now()) @map("created_at")
+
+  @@map("support_messages")
+}

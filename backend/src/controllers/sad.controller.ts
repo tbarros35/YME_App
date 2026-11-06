@@ -23,7 +23,7 @@ export class SadController {
   static async getUserSAD(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { userId } = req.params;
-      const result = await SadService.getUserEvaluations(userId);
+      const result = await SadService.getUserEvaluations(userId, req.user);
       res.status(200).json(result);
     } catch (error) {
       next(error);
@@ -45,13 +45,16 @@ export class SadController {
       const validated = createSadSchema.parse(req.body);
       const reportPdfUrl = `/uploads/sad/${req.file.filename}`;
 
-      const evaluation = await SadService.createEvaluation({
-        userId: validated.userId,
-        term: validated.term,
-        score: validated.score,
-        reportPdfUrl,
-        feedbackNotes: validated.feedbackNotes,
-      });
+      const evaluation = await SadService.createEvaluation(
+        {
+          userId: validated.userId,
+          term: validated.term,
+          score: validated.score,
+          reportPdfUrl,
+          feedbackNotes: validated.feedbackNotes,
+        },
+        req.user
+      );
 
       res.status(201).json({
         message: 'Avaliação SAD registada com sucesso',

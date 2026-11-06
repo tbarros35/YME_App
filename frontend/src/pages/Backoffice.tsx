@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
@@ -461,6 +461,26 @@ export const Backoffice: React.FC = () => {
   });
 
   // ================= Form 5: SAD Evaluation (Admin + HR) =================
+  const isHRLeadership =
+    user?.department?.name === 'Human Resources' &&
+    (user?.position === 'Head' || user?.position === 'Manager');
+
+  const isHRConsultant =
+    user?.department?.name === 'Human Resources' && !isHRLeadership && !isAdmin;
+
+  const availableSadUsers = useMemo<User[]>(() => {
+    const active = users.filter((u) => u.isActive !== false);
+    if (isAdmin || isHRLeadership) {
+      return active;
+    }
+    if (isHRConsultant) {
+      const assignedId = user?.assignedDepartmentId || user?.assignedDepartment?.id;
+      if (!assignedId) return [];
+      return active.filter((u) => (u.departmentId || u.department?.id) === assignedId);
+    }
+    return active;
+  }, [users, isAdmin, isHRLeadership, isHRConsultant, user]);
+
   const [sadUserId, setSadUserId] = useState('');
   const [sadTerm, setSadTerm] = useState('2025/2026 - Q2');
   const [sadScore, setSadScore] = useState('5.20');
@@ -1181,9 +1201,34 @@ export const Backoffice: React.FC = () => {
               </h2>
             </div>
             <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
-              Atribuído aos membros de Recursos Humanos e Executive Board. Escala oficial de 0 a 6 valores com carregamento obrigatório do relatório PDF.
+              {isAdmin ? (
+                <span>
+                  Como membro da <strong>Executive Board</strong>, tens permissão total para lançar relatórios SAD para membros de qualquer departamento.
+                </span>
+              ) : isHRLeadership ? (
+                <span>
+                  Como <strong>{user?.position} de Recursos Humanos</strong>, tens permissão para lançar relatórios SAD para membros de qualquer departamento.
+                </span>
+              ) : isHRConsultant && user?.assignedDepartment ? (
+                <span>
+                  Como consultor de Recursos Humanos alocado ao departamento <strong>{user.assignedDepartment.name}</strong>, podes lançar relatórios SAD exclusivamente para membros desse departamento.
+                </span>
+              ) : (
+                <span>
+                  Atribuído aos membros de Recursos Humanos e Executive Board. Escala oficial de 0 a 6 valores com carregamento obrigatório do relatório PDF.
+                </span>
+              )}
             </p>
           </div>
+
+          {isHRConsultant && !user?.assignedDepartment && (
+            <div className="p-4 rounded-[20px] bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-3">
+              <AlertCircle className="h-5 w-5 text-amber-600 shrink-0" />
+              <span>
+                Ainda não tens nenhum departamento alocado à tua conta de Recursos Humanos. Solicita a um membro da Executive Board a alocação de um departamento para poderes lançar avaliações SAD.
+              </span>
+            </div>
+          )}
 
           <form
             onSubmit={(e) => {
@@ -1204,16 +1249,21 @@ export const Backoffice: React.FC = () => {
               label="Membro a Avaliar *"
               value={sadUserId}
               onChange={(e) => setSadUserId(e.target.value)}
+              disabled={isHRConsultant && !user?.assignedDepartment}
               required
             >
-              <option value="">-- Selecionar Membro Ativo --</option>
-              {users
-                .filter((u) => u.isActive !== false)
-                .map((u) => (
-                  <option key={u.id} value={u.id}>
-                    {u.fullName} ({u.department?.name || 'Sem Dept'} • {u.position})
-                  </option>
-                ))}
+              <option value="">
+                {isHRConsultant && !user?.assignedDepartment
+                  ? '-- Sem departamento alocado --'
+                  : availableSadUsers.length === 0
+                  ? '-- Nenhum membro ativo disponível no teu departamento alocado --'
+                  : '-- Selecionar Membro Ativo --'}
+              </option>
+              {availableSadUsers.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.fullName} ({u.department?.name || 'Sem Dept'} • {u.position})
+                </option>
+              ))}
             </Select>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

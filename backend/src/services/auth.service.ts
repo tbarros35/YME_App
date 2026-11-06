@@ -17,6 +17,12 @@ export class AuthService {
             name: true,
           },
         },
+        assignedDepartment: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 
@@ -55,7 +61,10 @@ export class AuthService {
         email: user.email,
         fullName: user.fullName,
         role: user.role,
+        departmentId: user.departmentId,
         department: user.department,
+        assignedDepartmentId: user.assignedDepartmentId,
+        assignedDepartment: user.assignedDepartment,
         position: user.position,
         careerHistory: resolveCareerHistory(user),
         taskgroups: user.taskgroups || [],
@@ -73,6 +82,9 @@ export class AuthService {
         where: { id: decoded.userId },
         include: {
           department: {
+            select: { id: true, name: true },
+          },
+          assignedDepartment: {
             select: { id: true, name: true },
           },
         },
@@ -107,7 +119,10 @@ export class AuthService {
           email: user.email,
           fullName: user.fullName,
           role: user.role,
+          departmentId: user.departmentId,
           department: user.department,
+          assignedDepartmentId: user.assignedDepartmentId,
+          assignedDepartment: user.assignedDepartment,
           position: user.position,
           careerHistory: resolveCareerHistory(user),
           taskgroups: user.taskgroups || [],
@@ -131,6 +146,12 @@ export class AuthService {
             name: true,
           },
         },
+        assignedDepartment: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 
@@ -146,7 +167,10 @@ export class AuthService {
       email: user.email,
       fullName: user.fullName,
       role: user.role,
+      departmentId: user.departmentId,
       department: user.department,
+      assignedDepartmentId: user.assignedDepartmentId,
+      assignedDepartment: user.assignedDepartment,
       position: user.position,
       careerHistory: resolveCareerHistory(user),
       taskgroups: user.taskgroups || [],

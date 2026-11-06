@@ -1,31 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
-import { WalletTypeBadge, Badge } from '@/components/ui/Badge';
-import { YmeLogo } from '@/components/ui/YmeLogo';
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Select';
 import { Dialog } from '@/components/ui/Dialog';
+import { SupportModal } from '@/components/support/SupportModal';
 import { WalletSummary, WalletTransaction, WalletRequest, ReimbursementRequest } from '@/types';
+import { cn } from '@/lib/utils';
 import {
-  Wallet as WalletIcon,
-  ArrowUpRight,
-  ArrowDownLeft,
-  CreditCard,
-  Search,
-  CheckCircle2,
-  Clock,
-  XCircle,
-  AlertCircle,
-  Send,
-  FileText,
-  Sparkles,
   Receipt,
   Upload,
   ExternalLink,
   Paperclip,
+  CheckCircle2,
+  AlertCircle,
+  FileText,
 } from 'lucide-react';
 import api from '@/lib/api';
 
@@ -35,10 +25,9 @@ export const Wallet: React.FC = () => {
   const [transactions, setTransactions] = useState<WalletTransaction[]>([]);
   const [myRequests, setMyRequests] = useState<WalletRequest[]>([]);
   const [myReimbursements, setMyReimbursements] = useState<ReimbursementRequest[]>([]);
-  const [filterType, setFilterType] = useState<string>('ALL');
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [activeViewTab, setActiveViewTab] = useState<'MOVEMENTS' | 'REQUESTS' | 'REIMBURSEMENTS'>('MOVEMENTS');
+  const [activeViewTab, setActiveViewTab] = useState<'MOVEMENTS' | 'REIMBURSEMENTS' | 'REQUESTS'>('MOVEMENTS');
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSupportOpen, setIsSupportOpen] = useState<boolean>(false);
 
   // Balance Usage Request Modal State
   const [isRequestModalOpen, setIsRequestModalOpen] = useState<boolean>(false);
@@ -203,648 +192,354 @@ export const Wallet: React.FC = () => {
     }
   };
 
-  const filteredTransactions = transactions.filter((tx) => {
-    const matchesType = filterType === 'ALL' || tx.type === filterType;
-    const matchesSearch =
-      tx.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      tx.type.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesType && matchesSearch;
-  });
+  const formatDate = (dateStr: string): string => {
+    const d = new Date(dateStr);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
-  const totalCredits = transactions
-    .filter((t) => t.amount > 0)
-    .reduce((acc, curr) => acc + curr.amount, 0);
+  const formatStatus = (status: string): { label: string; className: string } => {
+    switch (status) {
+      case 'APPROVED':
+        return { label: 'Aprovado', className: 'text-[#ff63f6] font-bold' };
+      case 'REJECTED':
+        return { label: 'Recusado', className: 'text-[#151e33] font-medium' };
+      case 'PENDING':
+      default:
+        return { label: 'Pendente', className: 'text-[#151e33] font-medium' };
+    }
+  };
 
-  const totalDebits = transactions
-    .filter((t) => t.amount < 0)
-    .reduce((acc, curr) => acc + Math.abs(curr.amount), 0);
-
-  const pendingRequestsCount = myRequests.filter((r) => r.status === 'PENDING').length;
-  const pendingReimbursementsCount = myReimbursements.filter((r) => r.status === 'PENDING').length;
+  const availableBalance = summary ? summary.balance : 0;
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Page Title & Action Bar (Stagger 1) */}
-      <div className="stagger-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <WalletIcon className="h-6 w-6 text-[#151e33]" />
-            <h1 className="text-2xl font-extrabold tracking-tight text-[#151e33]">
-              YME Wallet
-            </h1>
+    <div className="space-y-10 pb-16 animate-fade-in max-w-7xl mx-auto">
+      {/* Top Section: 3 Cards matching Figma Design */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {/* Card 1: Saldo Disponível (Dark Navy Surface) */}
+        <div className="bg-[#151e33] rounded-[44px] p-8 shadow-[0px_4px_24px_rgba(0,0,0,0.14)] min-h-[250px] flex flex-col justify-between hover:scale-[1.01] transition-transform">
+          {/* Title with vertical pink bar */}
+          <div className="flex items-center gap-2.5">
+            <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full inline-block shrink-0" />
+            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              Saldo Disponível
+            </h2>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">
-            Cartão virtual de membro, saldo corrente, requisições de saldo e reembolsos de despesas
-          </p>
-        </div>
 
-        <div className="flex items-center gap-2.5 flex-wrap">
-          {/* Reimbursement Button (Always available for all members) */}
-          <Button
-            variant="outline"
-            onClick={handleOpenReimbursementModal}
-            className="flex items-center gap-2 border-[#151e33]/20 hover:bg-[#ff63f6]/10 text-[#151e33] font-bold shadow-xs hover:scale-[1.02] transition-transform"
-          >
-            <Receipt className="h-4 w-4 text-[#ff63f6]" />
-            <span>Pedir Reembolso YME</span>
-          </Button>
-
-          {/* Balance Usage Request Button (Requires positive balance) */}
-          <Button
-            onClick={handleOpenBalanceModal}
-            disabled={!summary || summary.balance <= 0}
-            className="flex items-center gap-2 shadow-clean-sm hover:scale-[1.02] transition-transform font-bold"
-          >
-            <Send className="h-4 w-4" />
-            <span>Requisitar Saldo</span>
-          </Button>
-
-          <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30 flex items-center gap-1.5 shadow-sm">
-            <CheckCircle2 className="h-3.5 w-3.5 text-[#ff63f6]" />
-            <span>Conta Regularizada</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Top Grid: Digital Card (Left) + Breakdown (Right) (Stagger 2) */}
-      <div className="stagger-2 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Digital Holographic Card */}
-        <div className="lg:col-span-1">
-          <div className="holographic-card text-white p-6 sm:p-7 flex flex-col justify-between min-h-[230px] sm:min-h-[250px]">
-            {/* Card Header */}
-            <div className="relative z-10 flex items-start justify-between">
-              <div>
-                <div className="bg-white rounded-xl px-3 py-1.5 inline-flex items-center shadow-sm">
-                  <YmeLogo className="h-7 sm:h-8 w-auto" />
-                </div>
-                <p className="text-[10px] text-slate-300 uppercase tracking-widest mt-1.5 font-bold">
-                  {user?.department?.name || 'Junior Enterprise'}
-                </p>
-              </div>
-              <div className="h-8 w-11 rounded-md bg-gradient-to-tr from-amber-300 via-amber-200 to-amber-400 opacity-90 shadow-sm flex items-center justify-center">
-                <div className="h-3.5 w-6 border border-amber-900/30 rounded-sm" />
-              </div>
-            </div>
-
-            {/* Card Center: Balance with AnimatedCounter */}
-            <div className="relative z-10 my-4">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-300">
-                Saldo Disponível
-              </span>
-              <div className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-0.5">
+          {/* Big Pink Metric */}
+          <div className="my-auto py-2">
+            <div className="text-5xl font-black text-[#ff63f6] tracking-tight leading-none">
+              {isLoading ? (
+                <span className="inline-block w-24 h-12 bg-white/10 rounded-xl animate-pulse" />
+              ) : (
                 <AnimatedCounter
-                  value={summary ? summary.balance : 0}
-                  decimals={2}
-                  suffix=" €"
-                  duration={1200}
+                  value={availableBalance}
+                  decimals={availableBalance % 1 === 0 ? 0 : 2}
+                  suffix="€"
+                  duration={1000}
                 />
-              </div>
+              )}
             </div>
+          </div>
 
-            {/* Card Footer: Member Info */}
-            <div className="relative z-10 flex items-end justify-between pt-2 border-t border-white/10">
-              <div>
-                <p className="text-xs font-extrabold uppercase tracking-wider text-white">
-                  {user?.fullName}
-                </p>
-                <p className="text-[10px] text-slate-300 font-medium">
-                  {user?.position} • {user?.email}
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="text-[9px] font-mono text-slate-300 tracking-wider">
-                  YME-MEMBERSHIP
-                </span>
-              </div>
-            </div>
+          {/* Pink divider and User info */}
+          <div className="pt-2">
+            <div className="w-full h-[1px] bg-[#ff63f6]/40 mb-3" />
+            <p className="text-xs sm:text-sm font-medium text-white/90 truncate">
+              {user?.fullName || 'Tiago Barros'} - {user?.position || 'COO'}
+            </p>
           </div>
         </div>
 
-        {/* Breakdown Metric Cards (2 Columns) */}
-        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Total Inflow */}
-          <div className="clean-card p-6 flex flex-col justify-between group hover:scale-[1.01] transition-transform">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#151e33]/70">
-                Total de Créditos & Bolsas
-              </span>
-              <div className="h-9 w-9 rounded-xl bg-[#ff63f6]/15 text-[#151e33] flex items-center justify-center group-hover:scale-110 transition-transform border border-[#ff63f6]/30">
-                <ArrowUpRight className="h-5 w-5 text-[#ff63f6]" />
-              </div>
-            </div>
-
-            <div className="my-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-[#151e33]">
-                +<AnimatedCounter value={totalCredits} decimals={2} suffix=" €" duration={1000} />
-              </div>
-              <p className="text-xs text-[#151e33]/60 mt-1 font-medium">
-                Reembolsos, prémios de projetos e subsídios
-              </p>
-            </div>
-
-            <span className="text-xs font-semibold text-[#151e33]/50">
-              Atribuído pela Gestão Financeira
-            </span>
+        {/* Card 2: Pedir Reembolso (White Surface) */}
+        <div className="bg-white rounded-[44px] p-8 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 min-h-[250px] flex flex-col justify-between hover:scale-[1.01] hover:shadow-[0px_6px_28px_rgba(0,0,0,0.09)] transition-all">
+          {/* Title with vertical pink bar */}
+          <div className="flex items-center gap-2.5">
+            <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full inline-block shrink-0" />
+            <h2 className="text-xl sm:text-2xl font-bold text-[#151e33] tracking-tight">
+              Pedir Reembolso
+            </h2>
           </div>
 
-          {/* Total Outflow */}
-          <div className="clean-card p-6 flex flex-col justify-between group hover:scale-[1.01] transition-transform">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#151e33]/70">
-                Total de Débitos & Despesas
-              </span>
-              <div className="h-9 w-9 rounded-xl bg-[#151e33]/5 text-[#151e33] flex items-center justify-center group-hover:scale-110 transition-transform border border-[#151e33]/15">
-                <ArrowDownLeft className="h-5 w-5 text-[#151e33]" />
-              </div>
-            </div>
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-[#151e33] font-normal leading-relaxed my-auto py-3">
+            Tiveste algum gasto relacionado com a YME? Pede aqui o reembolso!
+          </p>
 
-            <div className="my-3">
-              <div className="text-2xl sm:text-3xl font-extrabold text-[#151e33]">
-                -<AnimatedCounter value={totalDebits} decimals={2} suffix=" €" duration={1000} />
-              </div>
-              <p className="text-xs text-[#151e33]/60 mt-1 font-medium">
-                Quotas, eventos, merchandising e utilizações
-              </p>
-            </div>
+          {/* Button */}
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleOpenReimbursementModal}
+              className="px-8 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            >
+              Reembolso
+            </button>
+          </div>
+        </div>
 
-            <span className="text-xs font-semibold text-[#151e33]/50">
-              Liquidações e despesas associativas
-            </span>
+        {/* Card 3: Utilizar Saldo YME (White Surface) */}
+        <div className="bg-white rounded-[44px] p-8 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 min-h-[250px] flex flex-col justify-between hover:scale-[1.01] hover:shadow-[0px_6px_28px_rgba(0,0,0,0.09)] transition-all">
+          {/* Title with vertical pink bar */}
+          <div className="flex items-center gap-2.5">
+            <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full inline-block shrink-0" />
+            <h2 className="text-xl sm:text-2xl font-bold text-[#151e33] tracking-tight">
+              Utilizar Saldo YME
+            </h2>
+          </div>
+
+          {/* Description */}
+          <p className="text-xs sm:text-sm text-[#151e33] font-normal leading-relaxed my-auto py-3">
+            Participaste em algum evento da YME e queres utilizar o teu saldo para o reembolsar? Clica aqui!
+          </p>
+
+          {/* Button */}
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleOpenBalanceModal}
+              className="px-8 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            >
+              Utilizar Saldo
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Main Section: Movements / Balance Requests / Reimbursements Switcher (Stagger 3) */}
-      <div className="stagger-3 space-y-4">
-        {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 border-b border-[#151e33]/10 overflow-x-auto pb-1">
-          <button
-            onClick={() => setActiveViewTab('MOVEMENTS')}
-            className={`pb-3 px-4 text-xs sm:text-sm font-bold transition-all relative flex items-center gap-2 shrink-0 ${
-              activeViewTab === 'MOVEMENTS'
-                ? 'text-[#151e33] border-b-2 border-[#151e33]'
-                : 'text-[#151e33]/50 hover:text-[#151e33]'
-            }`}
-          >
-            <CreditCard className="h-4 w-4" />
-            <span>Extrato de Movimentos</span>
-            <span className="px-2 py-0.5 rounded-full bg-[#151e33]/5 text-[#151e33] text-[10px] font-bold">
-              {transactions.length}
-            </span>
-          </button>
+      {/* Bottom Section: Sub-menus and Main Table (Left) + Support (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4">
+        {/* Left Column: Sub-menu Tabs & Table */}
+        <div className="lg:col-span-9 space-y-4">
+          {/* Sub-menu Horizontal Tabs */}
+          <div className="flex items-center gap-4 sm:gap-8 flex-wrap text-xs sm:text-sm pl-2">
+            <button
+              type="button"
+              onClick={() => setActiveViewTab('MOVEMENTS')}
+              className={cn(
+                'flex items-center gap-1.5 pb-2 transition-all cursor-pointer select-none',
+                activeViewTab === 'MOVEMENTS'
+                  ? 'text-[#ff63f6] font-bold border-b-2 border-[#ff63f6]'
+                  : 'text-[#151e33] font-medium hover:text-[#ff63f6]'
+              )}
+            >
+              {activeViewTab === 'MOVEMENTS' && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ff63f6] shrink-0" />
+              )}
+              <span>Extratos de Movimentos</span>
+            </button>
 
-          <button
-            onClick={() => setActiveViewTab('REQUESTS')}
-            className={`pb-3 px-4 text-xs sm:text-sm font-bold transition-all relative flex items-center gap-2 shrink-0 ${
-              activeViewTab === 'REQUESTS'
-                ? 'text-[#151e33] border-b-2 border-[#151e33]'
-                : 'text-[#151e33]/50 hover:text-[#151e33]'
-            }`}
-          >
-            <Send className="h-4 w-4" />
-            <span>Pedidos de Saldo</span>
-            {pendingRequestsCount > 0 ? (
-              <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-[#151e33] text-[10px] font-black animate-pulse">
-                {pendingRequestsCount} pendente{pendingRequestsCount > 1 ? 's' : ''}
-              </span>
-            ) : (
-              <span className="px-2 py-0.5 rounded-full bg-[#151e33]/5 text-[#151e33] text-[10px] font-bold">
-                {myRequests.length}
-              </span>
-            )}
-          </button>
+            <span className="text-[#151e33]/25 font-light select-none">|</span>
 
-          <button
-            onClick={() => setActiveViewTab('REIMBURSEMENTS')}
-            className={`pb-3 px-4 text-xs sm:text-sm font-bold transition-all relative flex items-center gap-2 shrink-0 ${
-              activeViewTab === 'REIMBURSEMENTS'
-                ? 'text-[#151e33] border-b-2 border-[#151e33]'
-                : 'text-[#151e33]/50 hover:text-[#151e33]'
-            }`}
-          >
-            <Receipt className="h-4 w-4 text-[#ff63f6]" />
-            <span>Reembolsos YME (Faturas)</span>
-            {pendingReimbursementsCount > 0 ? (
-              <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-[#151e33] text-[10px] font-black animate-pulse">
-                {pendingReimbursementsCount} pendente{pendingReimbursementsCount > 1 ? 's' : ''}
-              </span>
+            <button
+              type="button"
+              onClick={() => setActiveViewTab('REIMBURSEMENTS')}
+              className={cn(
+                'flex items-center gap-1.5 pb-2 transition-all cursor-pointer select-none',
+                activeViewTab === 'REIMBURSEMENTS'
+                  ? 'text-[#ff63f6] font-bold border-b-2 border-[#ff63f6]'
+                  : 'text-[#151e33] font-medium hover:text-[#ff63f6]'
+              )}
+            >
+              {activeViewTab === 'REIMBURSEMENTS' && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ff63f6] shrink-0" />
+              )}
+              <span>Pedidos de Reembolso</span>
+            </button>
+
+            <span className="text-[#151e33]/25 font-light select-none">|</span>
+
+            <button
+              type="button"
+              onClick={() => setActiveViewTab('REQUESTS')}
+              className={cn(
+                'flex items-center gap-1.5 pb-2 transition-all cursor-pointer select-none',
+                activeViewTab === 'REQUESTS'
+                  ? 'text-[#ff63f6] font-bold border-b-2 border-[#ff63f6]'
+                  : 'text-[#151e33] font-medium hover:text-[#ff63f6]'
+              )}
+            >
+              {activeViewTab === 'REQUESTS' && (
+                <span className="w-1.5 h-1.5 rounded-full bg-[#ff63f6] shrink-0" />
+              )}
+              <span>Pedidos de Utilização de Saldo</span>
+            </button>
+          </div>
+
+          {/* Large White Card with Table Content */}
+          <div className="bg-white rounded-[44px] p-8 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 min-h-[320px]">
+            {/* Table Column Headers */}
+            <div className="grid grid-cols-12 text-xs sm:text-sm font-bold text-[#ff63f6] pb-3 border-b border-[#151e33]/15">
+              <div className="col-span-3 sm:col-span-2">Data</div>
+              <div className="col-span-6 sm:col-span-8">Descrição</div>
+              <div className="col-span-3 sm:col-span-2 text-right">
+                {activeViewTab === 'MOVEMENTS' ? 'Montante' : 'Estado'}
+              </div>
+            </div>
+
+            {/* Table Rows */}
+            {isLoading ? (
+              <div className="space-y-4 py-6">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-6 bg-slate-100 rounded-md animate-pulse" />
+                ))}
+              </div>
             ) : (
-              <span className="px-2 py-0.5 rounded-full bg-[#151e33]/5 text-[#151e33] text-[10px] font-bold">
-                {myReimbursements.length}
-              </span>
+              <div className="divide-y divide-[#151e33]/10">
+                {/* TAB 1: Extratos de Movimentos */}
+                {activeViewTab === 'MOVEMENTS' && (
+                  transactions.length > 0 ? (
+                    transactions.map((tx) => (
+                      <div
+                        key={tx.id}
+                        className="grid grid-cols-12 text-xs sm:text-sm py-4 items-center gap-2"
+                      >
+                        <div className="col-span-3 sm:col-span-2 text-[#151e33] font-normal">
+                          {formatDate(tx.createdAt)}
+                        </div>
+                        <div className="col-span-6 sm:col-span-8 text-[#151e33] font-normal pr-4 truncate sm:overflow-visible sm:whitespace-normal">
+                          {tx.description}
+                        </div>
+                        <div
+                          className={cn(
+                            'col-span-3 sm:col-span-2 text-right font-semibold whitespace-nowrap',
+                            tx.amount > 0 ? 'text-[#ff63f6]' : 'text-[#151e33]'
+                          )}
+                        >
+                          {tx.amount > 0
+                            ? `+ ${Number(tx.amount).toFixed(2)}€`
+                            : `- ${Math.abs(Number(tx.amount)).toFixed(2)}€`}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-12 text-center text-xs sm:text-sm text-[#151e33]/60 font-medium">
+                      Sem movimentos registados na tua carteira YME.
+                    </div>
+                  )
+                )}
+
+                {/* TAB 2: Pedidos de Reembolso */}
+                {activeViewTab === 'REIMBURSEMENTS' && (
+                  myReimbursements.length > 0 ? (
+                    myReimbursements.map((r) => (
+                      <div
+                        key={r.id}
+                        className="grid grid-cols-12 text-xs sm:text-sm py-4 items-center gap-2"
+                      >
+                        <div className="col-span-3 sm:col-span-2 text-[#151e33] font-normal">
+                          {formatDate(r.createdAt)}
+                        </div>
+                        <div className="col-span-6 sm:col-span-8 text-[#151e33] font-normal pr-4">
+                          <div className="flex items-center gap-2">
+                            <span className="truncate sm:overflow-visible sm:whitespace-normal">
+                              {r.justification}
+                            </span>
+                            {r.receiptUrl && (
+                              <a
+                                href={r.receiptUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Ver Fatura / Recibo"
+                                className="text-[#ff63f6] hover:text-[#151e33] shrink-0"
+                              >
+                                <Paperclip className="h-3.5 w-3.5" />
+                              </a>
+                            )}
+                          </div>
+                          {r.status === 'REJECTED' && r.rejectionReason && (
+                            <p className="text-[11px] text-[#ff63f6] mt-0.5 font-medium">
+                              Motivo da recusa: {r.rejectionReason}
+                            </p>
+                          )}
+                          {r.status === 'APPROVED' && r.refundProofUrl && (
+                            <a
+                              href={r.refundProofUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] text-[#ff63f6] hover:underline font-bold mt-1"
+                            >
+                              <span>Ver Comprovativo da Devolução</span>
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                          )}
+                        </div>
+                        <div
+                          className={cn(
+                            'col-span-3 sm:col-span-2 text-right whitespace-nowrap',
+                            formatStatus(r.status).className
+                          )}
+                        >
+                          {formatStatus(r.status).label}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-12 text-center text-xs sm:text-sm text-[#151e33]/60 font-medium">
+                      Ainda não efetuaste pedidos de reembolso.
+                    </div>
+                  )
+                )}
+
+                {/* TAB 3: Pedidos de Utilização de Saldo */}
+                {activeViewTab === 'REQUESTS' && (
+                  myRequests.length > 0 ? (
+                    myRequests.map((req) => (
+                      <div
+                        key={req.id}
+                        className="grid grid-cols-12 text-xs sm:text-sm py-4 items-center gap-2"
+                      >
+                        <div className="col-span-3 sm:col-span-2 text-[#151e33] font-normal">
+                          {formatDate(req.createdAt)}
+                        </div>
+                        <div className="col-span-6 sm:col-span-8 text-[#151e33] font-normal pr-4">
+                          <span className="truncate sm:overflow-visible sm:whitespace-normal">
+                            {req.justification}
+                          </span>
+                          {req.status === 'REJECTED' && req.rejectionReason && (
+                            <p className="text-[11px] text-[#ff63f6] mt-0.5 font-medium">
+                              Motivo da recusa: {req.rejectionReason}
+                            </p>
+                          )}
+                        </div>
+                        <div
+                          className={cn(
+                            'col-span-3 sm:col-span-2 text-right whitespace-nowrap',
+                            formatStatus(req.status).className
+                          )}
+                        >
+                          {formatStatus(req.status).label}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="py-12 text-center text-xs sm:text-sm text-[#151e33]/60 font-medium">
+                      Ainda não efetuaste pedidos de utilização de saldo.
+                    </div>
+                  )
+                )}
+              </div>
             )}
-          </button>
+          </div>
         </div>
 
-        {/* Tab 1: Movements Table */}
-        {activeViewTab === 'MOVEMENTS' && (
-          <Card className="border-[#151e33]/10 shadow-clean-sm">
-            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/10">
-              <div>
-                <CardTitle className="text-lg font-bold text-[#151e33]">
-                  Extrato de Movimentos
-                </CardTitle>
-                <CardDescription className="text-xs text-[#151e33]/60">
-                  Histórico detalhado de todas as transações da tua conta YME
-                </CardDescription>
-              </div>
-
-              {/* Search & Filter Controls */}
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="relative">
-                  <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#151e33]/40" />
-                  <input
-                    type="text"
-                    placeholder="Pesquisar movimento..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="h-9 pl-8 pr-3 text-xs rounded-xl border border-[#151e33]/15 bg-white text-[#151e33] focus:outline-none focus:ring-1 focus:ring-[#151e33]"
-                  />
-                </div>
-
-                <div className="flex items-center gap-1 bg-[#151e33]/5 p-1 rounded-xl border border-[#151e33]/10">
-                  {['ALL', 'SAD_REWARD', 'PRESENCE_BONUS', 'EVENT_SPEND', 'ADJUSTMENT'].map((type) => (
-                    <button
-                      key={type}
-                      onClick={() => setFilterType(type)}
-                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                        filterType === type
-                          ? 'bg-[#151e33] text-white shadow-sm font-bold scale-105'
-                          : 'text-[#151e33]/60 hover:text-[#151e33]'
-                      }`}
-                    >
-                      {type === 'ALL'
-                        ? 'Todos'
-                        : type === 'SAD_REWARD'
-                        ? 'SAD'
-                        : type === 'PRESENCE_BONUS'
-                        ? 'Bónus'
-                        : type === 'EVENT_SPEND'
-                        ? 'Eventos/Uso'
-                        : 'Ajustes'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </CardHeader>
-
-            <CardContent className="pt-2">
-              {isLoading ? (
-                <div className="space-y-3 py-8">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-12 rounded-xl bg-[#151e33]/5 animate-pulse" />
-                  ))}
-                </div>
-              ) : filteredTransactions.length === 0 ? (
-                <div className="text-center py-12">
-                  <CreditCard className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-[#151e33]">Sem movimentos encontrados</p>
-                  <p className="text-xs text-[#151e33]/50 mt-1">
-                    Não existem registos financeiros que correspondam aos filtros selecionados.
-                  </p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-[#151e33]/10 text-[#151e33]/50 font-bold uppercase tracking-wider text-[10px]">
-                        <th className="py-3 px-3">Data</th>
-                        <th className="py-3 px-3">Descrição</th>
-                        <th className="py-3 px-3">Tipo</th>
-                        <th className="py-3 px-3 text-right">Montante</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#151e33]/5">
-                      {filteredTransactions.map((tx, idx) => (
-                        <tr
-                          key={tx.id}
-                          className="hover:bg-[#151e33]/5 transition-colors animate-scale-in"
-                          style={{ animationDelay: `${idx * 0.04}s` }}
-                        >
-                          <td className="py-3 px-3 text-[#151e33]/70 font-medium whitespace-nowrap">
-                            {new Date(tx.createdAt).toLocaleDateString('pt-PT', {
-                              day: '2-digit',
-                              month: 'short',
-                              year: 'numeric',
-                            })}
-                          </td>
-                          <td className="py-3 px-3 font-semibold text-[#151e33]">
-                            {tx.description}
-                          </td>
-                          <td className="py-3 px-3">
-                            <WalletTypeBadge type={tx.type} amount={tx.amount} />
-                          </td>
-                          <td
-                            className={`py-3 px-3 text-right font-extrabold whitespace-nowrap ${
-                              tx.amount > 0 ? 'text-[#ff63f6]' : 'text-[#151e33]'
-                            }`}
-                          >
-                            {tx.amount > 0 ? `+${tx.amount.toFixed(2)} €` : `${tx.amount.toFixed(2)} €`}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Tab 2: Balance Usage Requests History */}
-        {activeViewTab === 'REQUESTS' && (
-          <Card className="border-[#151e33]/10 shadow-clean-sm">
-            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/10">
-              <div>
-                <CardTitle className="text-lg font-bold text-[#151e33]">
-                  Histórico de Pedidos de Utilização de Saldo
-                </CardTitle>
-                <CardDescription className="text-xs text-[#151e33]/60">
-                  Acompanha o estado das tuas requisições de saldo para aprovação da Direção / Legal & Finance
-                </CardDescription>
-              </div>
-
-              <Button
-                onClick={handleOpenBalanceModal}
-                disabled={!summary || summary.balance <= 0}
-                size="sm"
-                className="flex items-center gap-1.5"
-              >
-                <Send className="h-3.5 w-3.5" />
-                <span>Nova Requisição de Saldo</span>
-              </Button>
-            </CardHeader>
-
-            <CardContent className="pt-2">
-              {isLoading ? (
-                <div className="space-y-3 py-8">
-                  {[1, 2].map((i) => (
-                    <div key={i} className="h-16 rounded-xl bg-[#151e33]/5 animate-pulse" />
-                  ))}
-                </div>
-              ) : myRequests.length === 0 ? (
-                <div className="text-center py-12">
-                  <FileText className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-[#151e33]">Ainda não realizaste nenhum pedido de saldo</p>
-                  <p className="text-xs text-[#151e33]/50 mt-1">
-                    Podes requisitar a utilização do teu saldo a qualquer momento com a devida justificação.
-                  </p>
-                  {summary && summary.balance > 0 && (
-                    <Button
-                      onClick={handleOpenBalanceModal}
-                      variant="outline"
-                      size="sm"
-                      className="mt-4"
-                    >
-                      Criar Primeiro Pedido
-                    </Button>
-                  )}
-                </div>
-              ) : (
-                <div className="divide-y divide-[#151e33]/5">
-                  {myRequests.map((req) => (
-                    <div
-                      key={req.id}
-                      className="py-4 px-2 hover:bg-[#151e33]/5 rounded-xl transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
-                    >
-                      <div className="space-y-1.5 flex-1">
-                        <div className="flex items-center gap-2.5 flex-wrap">
-                          <span className="text-base font-extrabold text-[#151e33]">
-                            {req.amount.toFixed(2)} €
-                          </span>
-
-                          {req.status === 'PENDING' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ff63f6]/15 text-[#151e33] border border-[#ff63f6]/40 flex items-center gap-1">
-                              <Clock className="h-3 w-3 text-[#ff63f6]" />
-                              <span>Pendente de Aprovação</span>
-                            </span>
-                          )}
-
-                          {req.status === 'APPROVED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#151e33] text-white border border-[#151e33] flex items-center gap-1">
-                              <CheckCircle2 className="h-3 w-3 text-[#ff63f6]" />
-                              <span>Aprovado — Debitado da Conta</span>
-                            </span>
-                          )}
-
-                          {req.status === 'REJECTED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white text-[#151e33] border border-[#151e33]/30 flex items-center gap-1">
-                              <XCircle className="h-3 w-3 text-[#151e33]" />
-                              <span>Recusado — Saldo Mantido</span>
-                            </span>
-                          )}
-
-                          <span className="text-[11px] text-[#151e33]/50">
-                            Submetido em{' '}
-                            {new Date(req.createdAt).toLocaleDateString('pt-PT', {
-                              day: '2-digit',
-                              month: 'short',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                        </div>
-
-                        <p className="text-xs text-[#151e33] font-medium bg-[#151e33]/5 p-2.5 rounded-lg border border-[#151e33]/10">
-                          <span className="font-bold text-[#151e33]">Justificação: </span>
-                          {req.justification}
-                        </p>
-
-                        {req.status === 'REJECTED' && req.rejectionReason && (
-                          <div className="text-xs text-[#151e33] bg-[#ff63f6]/10 p-2 rounded-lg border border-[#ff63f6]/30 flex items-start gap-1.5">
-                            <AlertCircle className="h-3.5 w-3.5 text-[#ff63f6] mt-0.5 shrink-0" />
-                            <div>
-                              <span className="font-bold">Motivo da Recusa: </span>
-                              {req.rejectionReason}
-                            </div>
-                          </div>
-                        )}
-
-                        {req.reviewedBy && (
-                          <p className="text-[10px] text-[#151e33]/50">
-                            Revisto por: <span className="font-semibold text-[#151e33]">{req.reviewedBy.fullName}</span>
-                            {req.reviewedAt && (
-                              <span>
-                                {' '}em{' '}
-                                {new Date(req.reviewedAt).toLocaleDateString('pt-PT', {
-                                  day: '2-digit',
-                                  month: 'short',
-                                  year: 'numeric',
-                                })}
-                              </span>
-                            )}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Tab 3: Reimbursement Requests History (Compras para a YME) */}
-        {activeViewTab === 'REIMBURSEMENTS' && (
-          <Card className="border-[#151e33]/10 shadow-clean-sm">
-            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/10">
-              <div>
-                <CardTitle className="text-lg font-bold text-[#151e33] flex items-center gap-2">
-                  <Receipt className="h-5 w-5 text-[#ff63f6]" />
-                  <span>Histórico de Pedidos de Reembolso</span>
-                </CardTitle>
-                <CardDescription className="text-xs text-[#151e33]/60">
-                  Despesas e compras que efetuaste para a YME com fundos pessoais. A aprovação e devolução são geridas exclusivamente pela Administração.
-                </CardDescription>
-              </div>
-
-              <Button
-                onClick={handleOpenReimbursementModal}
-                size="sm"
-                className="flex items-center gap-1.5"
-              >
-                <Receipt className="h-3.5 w-3.5" />
-                <span>Novo Pedido de Reembolso</span>
-              </Button>
-            </CardHeader>
-
-            <CardContent className="pt-2">
-              {isLoading ? (
-                <div className="space-y-3 py-8">
-                  {[1, 2].map((i) => (
-                    <div key={i} className="h-16 rounded-xl bg-[#151e33]/5 animate-pulse" />
-                  ))}
-                </div>
-              ) : myReimbursements.length === 0 ? (
-                <div className="text-center py-12">
-                  <Receipt className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-[#151e33]">Sem pedidos de reembolso registados</p>
-                  <p className="text-xs text-[#151e33]/50 mt-1 max-w-md mx-auto">
-                    Fizeste alguma compra para a YME? Submete a fatura com justificação para receberes a devolução do dinheiro.
-                  </p>
-                  <Button
-                    onClick={handleOpenReimbursementModal}
-                    variant="outline"
-                    size="sm"
-                    className="mt-4"
-                  >
-                    Submeter Pedido de Reembolso
-                  </Button>
-                </div>
-              ) : (
-                <div className="divide-y divide-[#151e33]/5">
-                  {myReimbursements.map((req) => (
-                    <div
-                      key={req.id}
-                      className="py-4 px-2 hover:bg-[#151e33]/5 rounded-xl transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
-                    >
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-2.5 flex-wrap">
-                          <span className="text-base font-extrabold text-[#151e33]">
-                            {req.amount.toFixed(2)} €
-                          </span>
-
-                          {req.status === 'PENDING' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ff63f6]/15 text-[#151e33] border border-[#ff63f6]/40 flex items-center gap-1">
-                              <Clock className="h-3 w-3 text-[#ff63f6]" />
-                              <span>Aguardando Validação da Administração</span>
-                            </span>
-                          )}
-
-                          {req.status === 'APPROVED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#151e33] text-white border border-[#151e33] flex items-center gap-1">
-                              <CheckCircle2 className="h-3 w-3 text-[#ff63f6]" />
-                              <span>Reembolso Aprovado & Devolvido</span>
-                            </span>
-                          )}
-
-                          {req.status === 'REJECTED' && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white text-[#151e33] border border-[#151e33]/30 flex items-center gap-1">
-                              <XCircle className="h-3 w-3 text-[#151e33]" />
-                              <span>Reembolso Recusado</span>
-                            </span>
-                          )}
-
-                          <span className="text-[11px] text-[#151e33]/50">
-                            Submetido em{' '}
-                            {new Date(req.createdAt).toLocaleDateString('pt-PT', {
-                              day: '2-digit',
-                              month: 'short',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                        </div>
-
-                        <p className="text-xs text-[#151e33] font-medium bg-[#151e33]/5 p-2.5 rounded-lg border border-[#151e33]/10">
-                          <span className="font-bold text-[#151e33]">Justificação da Despesa: </span>
-                          {req.justification}
-                        </p>
-
-                        {/* Attachments Section */}
-                        <div className="flex items-center gap-3 flex-wrap pt-1">
-                          {req.receiptUrl && (
-                            <a
-                              href={req.receiptUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#151e33]/15 hover:border-[#151e33] text-xs font-semibold text-[#151e33] shadow-2xs hover:shadow-xs transition-all"
-                            >
-                              <Paperclip className="h-3.5 w-3.5 text-[#ff63f6]" />
-                              <span>Ver Fatura / Recibo</span>
-                              <ExternalLink className="h-3 w-3 text-[#151e33]/40" />
-                            </a>
-                          )}
-
-                          {req.status === 'APPROVED' && req.refundProofUrl && (
-                            <a
-                              href={req.refundProofUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff63f6]/10 border border-[#ff63f6]/30 text-xs font-bold text-[#151e33] shadow-2xs hover:bg-[#ff63f6]/20 transition-all"
-                            >
-                              <CheckCircle2 className="h-3.5 w-3.5 text-[#ff63f6]" />
-                              <span>Ver Comprovativo da Devolução</span>
-                              <ExternalLink className="h-3 w-3 text-[#ff63f6]" />
-                            </a>
-                          )}
-                        </div>
-
-                        {req.status === 'REJECTED' && req.rejectionReason && (
-                          <div className="text-xs text-[#151e33] bg-[#ff63f6]/10 p-2.5 rounded-lg border border-[#ff63f6]/30 flex items-start gap-1.5">
-                            <AlertCircle className="h-3.5 w-3.5 text-[#ff63f6] mt-0.5 shrink-0" />
-                            <div>
-                              <span className="font-bold">Motivo da Recusa: </span>
-                              {req.rejectionReason}
-                            </div>
-                          </div>
-                        )}
-
-                        {req.reviewedBy && (
-                          <p className="text-[10px] text-[#151e33]/50">
-                            Revisto pela Administração ({req.reviewedBy.fullName})
-                            {req.reviewedAt && (
-                              <span>
-                                {' '}em{' '}
-                                {new Date(req.reviewedAt).toLocaleDateString('pt-PT', {
-                                  day: '2-digit',
-                                  month: 'short',
-                                  year: 'numeric',
-                                })}
-                              </span>
-                            )}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+        {/* Right Column: Support Section (DÚVIDAS ?) */}
+        <div className="lg:col-span-3 pt-6 lg:pt-14">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#151e33] tracking-tight">
+            DÚVIDAS <span className="text-[#ff63f6]">?</span>
+          </h3>
+          <p className="text-xs sm:text-sm text-[#151e33]/80 mt-2 leading-relaxed max-w-xs">
+            Tens dúvidas relacionadas com a tua conta YME? Contacta um membro de Legal / ExBo!
+          </p>
+          <button
+            type="button"
+            onClick={() => setIsSupportOpen(true)}
+            className="mt-6 px-8 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          >
+            Abrir Chat
+          </button>
+        </div>
       </div>
 
       {/* Modal Dialog 1: Requesting Wallet Balance Funds */}
@@ -861,7 +556,7 @@ export const Wallet: React.FC = () => {
           <div className="bg-[#151e33]/5 p-3 rounded-xl border border-[#151e33]/10 flex items-center justify-between">
             <span className="text-xs font-bold text-[#151e33]/70">Saldo Disponível:</span>
             <span className="text-sm font-extrabold text-[#151e33]">
-              {summary ? summary.balance.toFixed(2) : '0.00'} €
+              {availableBalance.toFixed(2)} €
             </span>
           </div>
 
@@ -884,13 +579,13 @@ export const Wallet: React.FC = () => {
               <label className="text-xs font-bold text-[#151e33]">
                 Montante a Utilizar (€) *
               </label>
-              {summary && summary.balance > 0 && (
+              {availableBalance > 0 && (
                 <button
                   type="button"
-                  onClick={() => setRequestAmount(summary.balance.toString())}
-                  className="text-[11px] font-bold text-[#151e33] hover:text-[#ff63f6] underline"
+                  onClick={() => setRequestAmount(availableBalance.toString())}
+                  className="text-[11px] font-bold text-[#151e33] hover:text-[#ff63f6] underline cursor-pointer"
                 >
-                  Usar Saldo Total ({summary.balance.toFixed(2)} €)
+                  Usar Saldo Total ({availableBalance.toFixed(2)} €)
                 </button>
               )}
             </div>
@@ -898,7 +593,7 @@ export const Wallet: React.FC = () => {
               type="number"
               step="0.01"
               min="0.01"
-              max={summary ? summary.balance : undefined}
+              max={availableBalance > 0 ? availableBalance : undefined}
               placeholder="Ex: 25.00"
               value={requestAmount}
               onChange={(e) => setRequestAmount(e.target.value)}
@@ -919,22 +614,6 @@ export const Wallet: React.FC = () => {
               required
               disabled={isSubmittingRequest}
             />
-            <p className="text-[10px] text-[#151e33]/50">
-              Indica claramente o fim ou projeto para o qual os fundos serão alocados.
-            </p>
-          </div>
-
-          <div className="p-3 rounded-xl bg-[#151e33]/5 border border-[#151e33]/10 text-[11px] text-[#151e33]/70 space-y-1">
-            <p className="font-semibold text-[#151e33]">Como funciona o processo de aprovação?</p>
-            <p>
-              • Os Administradores e a equipa de Legal & Finance recebem notificação no backoffice.
-            </p>
-            <p>
-              • Se for <strong>aprovado</strong>, o valor sai imediatamente da tua carteira.
-            </p>
-            <p>
-              • Se for <strong>recusado</strong>, o saldo permanece intacto na tua conta.
-            </p>
           </div>
 
           <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#151e33]/10">
@@ -953,7 +632,7 @@ export const Wallet: React.FC = () => {
         </form>
       </Dialog>
 
-      {/* Modal Dialog 2: Reimbursement Request (Compras para a YME - Independente do Saldo) */}
+      {/* Modal Dialog 2: Reimbursement Request */}
       <Dialog
         isOpen={isReimbursementModalOpen}
         onClose={() => !isSubmittingReimbursement && setIsReimbursementModalOpen(false)}
@@ -1063,16 +742,6 @@ export const Wallet: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-[#151e33]/5 border border-[#151e33]/10 text-[11px] text-[#151e33]/70 space-y-1">
-            <p className="font-semibold text-[#151e33]">Validação Administrativa:</p>
-            <p>
-              • Apenas os <strong>Administradores</strong> recebem e aprovam pedidos de reembolso.
-            </p>
-            <p>
-              • Para confirmar a aprovação, a Administração anexa obrigatoriamente o <strong>comprovativo de devolução de dinheiro</strong>.
-            </p>
-          </div>
-
           <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#151e33]/10">
             <Button
               type="button"
@@ -1088,6 +757,12 @@ export const Wallet: React.FC = () => {
           </div>
         </form>
       </Dialog>
+
+      {/* Global Support Modal for "Abrir Chat" */}
+      <SupportModal
+        isOpen={isSupportOpen}
+        onClose={() => setIsSupportOpen(false)}
+      />
     </div>
   );
 };

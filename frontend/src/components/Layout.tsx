@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   LogOut,
   Building2,
-  Bell,
   HelpCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -59,19 +58,19 @@ export const Layout: React.FC = () => {
   const navItems = [
     {
       to: '/',
-      label: 'Minha Jornada',
+      label: 'Menu Principal',
       icon: Compass,
       exact: true,
-    },
-    {
-      to: '/sad',
-      label: 'Avaliação SAD',
-      icon: TrendingUp,
     },
     {
       to: '/wallet',
       label: 'Carteira YME',
       icon: Wallet,
+    },
+    {
+      to: '/sad',
+      label: 'SAD´s e Avaliações',
+      icon: TrendingUp,
     },
     {
       to: '/calendar',
@@ -92,33 +91,20 @@ export const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-[#151e33] flex flex-col selection:bg-[#ff63f6] selection:text-[#151e33] pb-20 md:pb-6">
-      {/* Top Header */}
-      <header className="sticky top-0 z-40 border-b border-[#151e33]/10 bg-white/90 backdrop-blur-md shadow-clean-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo & Brand */}
+    <div className="min-h-screen bg-[#fafbfc] text-[#151e33] flex flex-col selection:bg-[#ff63f6] selection:text-[#151e33] pb-20 md:pb-6">
+      {/* Top Header matching Figma design */}
+      <header className="sticky top-0 z-40 bg-white border-b border-[#151e33]/10 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          {/* Logo YME */}
           <div
-            className="flex items-center gap-3 cursor-pointer group select-none"
+            className="flex items-center gap-3 cursor-pointer group select-none shrink-0"
             onClick={() => navigate('/')}
           >
-            <YmeLogo className="h-10 sm:h-11 w-auto transition-transform duration-200 group-hover:scale-105" />
-            <div className="border-l border-[#151e33]/15 pl-3">
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-[#151e33]">
-                  APP
-                </span>
-                <span className="text-[10px] font-black px-1.5 py-0.2 rounded-full bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/40">
-                  v2.0
-                </span>
-              </div>
-              <p className="text-[10px] text-[#151e33]/60 hidden sm:block font-bold uppercase tracking-wider">
-                Gestão de Membros
-              </p>
-            </div>
+            <YmeLogo className="h-10 sm:h-12 w-auto transition-transform duration-200 group-hover:scale-105" />
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1.5 bg-[#151e33]/5 p-1.5 rounded-2xl border border-[#151e33]/10">
+          {/* Desktop Navigation Links with Figma Underline Style */}
+          <nav className="hidden lg:flex items-center gap-8 xl:gap-12">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -126,19 +112,25 @@ export const Layout: React.FC = () => {
                 end={item.exact}
                 className={({ isActive }) =>
                   cn(
-                    'relative flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 select-none',
+                    'relative flex items-center gap-1.5 pb-2 pt-2 text-sm font-semibold transition-all duration-200 select-none border-b-2',
                     isActive
-                      ? 'bg-[#151e33] text-white shadow-clean-sm font-bold'
-                      : 'text-[#151e33]/70 hover:text-[#151e33] hover:bg-white/80'
+                      ? 'text-[#ff63f6] font-bold border-[#ff63f6]'
+                      : 'text-[#151e33] border-slate-700/80 hover:border-[#151e33] hover:text-black'
                   )
                 }
               >
-                <item.icon className="h-4 w-4" />
-                <span>{item.label}</span>
-                {item.badge !== undefined && (
-                  <span className="ml-1 px-1.5 py-0.2 text-[10px] font-black rounded-full bg-[#ff63f6] text-[#151e33] animate-pulse">
-                    {item.badge}
-                  </span>
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#ff63f6] shrink-0" />
+                    )}
+                    <span>{item.label}</span>
+                    {item.badge !== undefined && (
+                      <span className="ml-1 px-1.5 py-0.2 text-[10px] font-black rounded-full bg-[#ff63f6] text-[#151e33] animate-pulse">
+                        {item.badge}
+                      </span>
+                    )}
+                  </>
                 )}
               </NavLink>
             ))}
@@ -201,7 +193,7 @@ export const Layout: React.FC = () => {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <Outlet />
       </main>
 
@@ -211,8 +203,8 @@ export const Layout: React.FC = () => {
         onClose={() => setIsSupportOpen(false)}
       />
 
-      {/* Mobile Bottom Navigation Bar (Impeccable Touch Targets) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[#151e33]/10 bg-white/95 backdrop-blur-md px-2 py-2 shadow-lg safe-area-bottom">
+      {/* Mobile Bottom Navigation Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[#151e33]/10 bg-white/95 backdrop-blur-md px-2 py-2 shadow-lg safe-area-bottom">
         <div className="grid grid-cols-4 sm:grid-cols-5 gap-1">
           {navItems.map((item) => (
             <NavLink
@@ -244,4 +236,3 @@ export const Layout: React.FC = () => {
     </div>
   );
 };
-

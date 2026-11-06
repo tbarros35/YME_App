@@ -16,12 +16,12 @@ const queryClient = new QueryClient({
   },
 });
 
-// Register PWA service worker if supported
-if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch((err) => {
-      console.log('SW registration skipped or failed:', err);
-    });
+// Clean up any stale service workers that could cache old versions on localhost
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (const registration of registrations) {
+      registration.unregister();
+    }
   });
 }
 

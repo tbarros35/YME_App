@@ -11,6 +11,9 @@ const createUserSchema = z.object({
   position: z.string().min(2, 'O cargo é obrigatório'),
   role: z.nativeEnum(Role).optional(),
   taskgroups: z.array(z.nativeEnum(Taskgroup)).optional(),
+  careerHistory: z.array(z.string()).optional(),
+  highestPreviousPosition: z.enum(['NONE', 'TRAINEE', 'JUNIOR_CONSULTANT']).optional(),
+  previousPositions: z.array(z.string()).optional(),
 });
 
 const updateUserSchema = z.object({
@@ -19,6 +22,7 @@ const updateUserSchema = z.object({
   position: z.string().min(2).optional(),
   role: z.nativeEnum(Role).optional(),
   taskgroups: z.array(z.nativeEnum(Taskgroup)).optional(),
+  careerHistory: z.array(z.string()).optional(),
   isActive: z.boolean().optional(),
 });
 
@@ -57,6 +61,9 @@ export class UserController {
         position: validated.position,
         role: validated.role,
         taskgroups: validated.taskgroups,
+        careerHistory: validated.careerHistory,
+        highestPreviousPosition: validated.highestPreviousPosition,
+        previousPositions: validated.previousPositions,
       });
       res.status(201).json({ message: 'Membro criado com sucesso', user });
     } catch (error) {

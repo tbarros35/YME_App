@@ -87,6 +87,7 @@ model User {
   department      Department           @relation(fields: [departmentId], references: [id])
   position        String
   taskgroups      Taskgroup[]          @default([])
+  careerHistory   String[]             @default([]) @map("career_history")
   isActive        Boolean              @default(true) @map("is_active")
   createdAt       DateTime             @default(now()) @map("created_at")
   evaluations            EvaluationSAD[]
@@ -170,6 +171,7 @@ model TimelineEvent {
   title       String
   category    TimelineCategory
   description String?          @db.Text
+  roleStep    String?          @map("role_step")
   eventDate   DateTime         @map("event_date")
   createdAt   DateTime         @default(now()) @map("created_at")
 

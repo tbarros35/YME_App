@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../config/prisma';
 import { env } from '../config/env';
+import { resolveCareerHistory } from './user.service';
 
 export class AuthService {
   static async login(email: string, passwordPlain: string) {
@@ -56,6 +57,7 @@ export class AuthService {
         role: user.role,
         department: user.department,
         position: user.position,
+        careerHistory: resolveCareerHistory(user),
         taskgroups: user.taskgroups || [],
       },
       accessToken,
@@ -107,6 +109,7 @@ export class AuthService {
           role: user.role,
           department: user.department,
           position: user.position,
+          careerHistory: resolveCareerHistory(user),
           taskgroups: user.taskgroups || [],
         },
       };
@@ -145,6 +148,7 @@ export class AuthService {
       role: user.role,
       department: user.department,
       position: user.position,
+      careerHistory: resolveCareerHistory(user),
       taskgroups: user.taskgroups || [],
       isActive: user.isActive,
       createdAt: user.createdAt,

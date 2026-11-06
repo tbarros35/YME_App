@@ -97,6 +97,55 @@ const getCategoryLabel = (category: CalendarCategory): string => {
   }
 };
 
+const computeCareerStepsForUser = (u?: User | null): string[] => {
+  if (!u) return [];
+  if (u.careerHistory && u.careerHistory.length > 0) {
+    return u.careerHistory;
+  }
+  const dept = u.department?.name || 'Geral';
+  const pos = (u.position || '').trim();
+  const lowerPos = pos.toLowerCase();
+
+  if (lowerPos === 'trainee') {
+    return [`Trainee of ${dept}`];
+  }
+  if (lowerPos === 'junior consultant') {
+    return [`Trainee of ${dept}`, `Junior Consultant of ${dept}`];
+  }
+  if (lowerPos === 'senior consultant') {
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      `Senior Consultant of ${dept}`,
+    ];
+  }
+  if (
+    u.role === 'DIRECTOR' ||
+    lowerPos === 'head' ||
+    lowerPos.includes('diretor') ||
+    lowerPos.includes('manager')
+  ) {
+    const headTitle = lowerPos.includes('head') ? `Head of ${dept}` : `${pos} of ${dept}`;
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      headTitle,
+    ];
+  }
+  if (
+    u.role === 'ADMIN' ||
+    ['ceo', 'coo', 'cmo'].some((r) => lowerPos.includes(r))
+  ) {
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      `Head of ${dept}`,
+      pos || 'Executive Board',
+    ];
+  }
+  return [`${pos || 'Membro'} of ${dept}`];
+};
+
 export const Backoffice: React.FC = () => {
   const {
     user,
@@ -179,9 +228,13 @@ export const Backoffice: React.FC = () => {
   const [newPosition, setNewPosition] = useState<Position>('Junior Consultant');
   const [newRole, setNewRole] = useState<Role>('MEMBER');
   const [newTaskgroups, setNewTaskgroups] = useState<Taskgroup[]>([]);
+  const [newHighestPreviousPos, setNewHighestPreviousPos] = useState<'NONE' | 'TRAINEE' | 'JUNIOR_CONSULTANT'>('JUNIOR_CONSULTANT');
+  const [newAdminPreviousRoles, setNewAdminPreviousRoles] = useState<string[]>(['Trainee', 'Junior Consultant', 'Head']);
 
   const createUserMutation = useMutation({
     mutationFn: async () => {
+      const selectedDeptObj = departments.find((d) => d.id === newDepartmentId);
+      const deptName = selectedDeptObj?.name || 'YME';
       const res = await api.post('/users', {
         fullName: newFullName,
         email: newEmail,
@@ -190,6 +243,13 @@ export const Backoffice: React.FC = () => {
         position: newPosition,
         role: newRole,
         taskgroups: newTaskgroups,
+        highestPreviousPosition: newRole === 'DIRECTOR' ? newHighestPreviousPos : undefined,
+        previousPositions:
+          newRole === 'ADMIN'
+            ? newAdminPreviousRoles.map((r) =>
+                r.includes('of') ? r : `${r} of ${deptName}`
+              )
+            : undefined,
       });
       return res.data;
     },
@@ -201,6 +261,8 @@ export const Backoffice: React.FC = () => {
       setNewEmail('');
       setNewPassword('password123');
       setNewTaskgroups([]);
+      setNewHighestPreviousPos('JUNIOR_CONSULTANT');
+      setNewAdminPreviousRoles(['Trainee', 'Junior Consultant', 'Head']);
     },
     onError: (err: any) => {
       showNotification(err.response?.data?.error?.message || 'Erro ao criar membro.', true);
@@ -214,6 +276,7 @@ export const Backoffice: React.FC = () => {
   const [editRole, setEditRole] = useState<Role>('MEMBER');
   const [editTaskgroups, setEditTaskgroups] = useState<Taskgroup[]>([]);
   const [editIsActive, setEditIsActive] = useState(true);
+  const [editCareerHistoryText, setEditCareerHistoryText] = useState('');
 
   const startEditUser = (u: User) => {
     setEditingUser(u);
@@ -223,6 +286,8 @@ export const Backoffice: React.FC = () => {
     setEditRole(u.role);
     setEditTaskgroups(u.taskgroups || []);
     setEditIsActive(u.isActive !== false);
+    const steps = u.careerHistory && u.careerHistory.length > 0 ? u.careerHistory : computeCareerStepsForUser(u);
+    setEditCareerHistoryText(steps.join('\n'));
   };
 
   const updateUserMutation = useMutation({
@@ -234,6 +299,7 @@ export const Backoffice: React.FC = () => {
         position: editPosition,
         role: editRole,
         taskgroups: editTaskgroups,
+        careerHistory: editCareerHistoryText.split('\n').map((s) => s.trim()).filter(Boolean),
         isActive: editIsActive,
       });
       return res.data;
@@ -493,6 +559,7 @@ export const Backoffice: React.FC = () => {
   const [timelineCategory, setTimelineCategory] = useState<TimelineCategory>('PROJECT');
   const [timelineDate, setTimelineDate] = useState(new Date().toISOString().split('T')[0]);
   const [timelineDesc, setTimelineDesc] = useState('');
+  const [timelineRoleStep, setTimelineRoleStep] = useState('');
 
   const createTimelineMutation = useMutation({
     mutationFn: async () => {
@@ -500,6 +567,7 @@ export const Backoffice: React.FC = () => {
         userId: timelineUserId,
         title: timelineTitle,
         category: timelineCategory,
+        roleStep: timelineRoleStep || undefined,
         eventDate: timelineDate,
         description: timelineDesc || undefined,
       });
@@ -511,6 +579,7 @@ export const Backoffice: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
       setTimelineTitle('');
       setTimelineDesc('');
+      setTimelineRoleStep('');
     },
     onError: (err: any) => {
       showNotification(err.response?.data?.error?.message || 'Erro ao criar marco', true);
@@ -1799,6 +1868,22 @@ export const Backoffice: React.FC = () => {
               ))}
             </Select>
 
+            {timelineUserId && (
+              <Select
+                label="Cargo em que atingiu o Marco *"
+                value={timelineRoleStep}
+                onChange={(e) => setTimelineRoleStep(e.target.value)}
+                required
+              >
+                <option value="">-- Selecionar Cargo do Membro --</option>
+                {computeCareerStepsForUser(users.find((u) => u.id === timelineUserId)).map((step) => (
+                  <option key={step} value={step}>
+                    {step}
+                  </option>
+                ))}
+              </Select>
+            )}
+
             <Input
               label="Título do Marco *"
               placeholder="ex: Nomeação como Tech Lead no Projeto Alfa"
@@ -2430,6 +2515,56 @@ export const Backoffice: React.FC = () => {
             </Select>
           </div>
 
+          {newRole === 'DIRECTOR' && (
+            <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-200">
+              <label className="text-xs font-bold text-[#151e33] block mb-1">
+                Cargo mais alto antes de ser Diretor *
+              </label>
+              <p className="text-[11px] text-slate-500 mb-2">
+                Um diretor pode ter sido no máximo Junior Consultant antes de ser diretor. Isto define as etapas do seu percurso.
+              </p>
+              <Select
+                value={newHighestPreviousPos}
+                onChange={(e) => setNewHighestPreviousPos(e.target.value as any)}
+                required
+              >
+                <option value="NONE">Nenhum (Entrada direta como Diretor/Head)</option>
+                <option value="TRAINEE">Trainee</option>
+                <option value="JUNIOR_CONSULTANT">Junior Consultant (Trainee ➔ Junior Consultant)</option>
+              </Select>
+            </div>
+          )}
+
+          {newRole === 'ADMIN' && (
+            <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-200 space-y-2">
+              <label className="text-xs font-bold text-[#151e33] block">
+                Cargos anteriores na YME (Executive Board) *
+              </label>
+              <p className="text-[11px] text-slate-500">
+                Seleciona todos os cargos que teve anteriormente para que a sua linha temporal fique correta:
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {['Trainee', 'Junior Consultant', 'Senior Consultant', 'Head'].map((cargo) => (
+                  <label key={cargo} className="flex items-center gap-1.5 text-xs text-[#151e33] font-medium cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={newAdminPreviousRoles.includes(cargo)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setNewAdminPreviousRoles([...newAdminPreviousRoles, cargo]);
+                        } else {
+                          setNewAdminPreviousRoles(newAdminPreviousRoles.filter((c) => c !== cargo));
+                        }
+                      }}
+                      className="rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
+                    />
+                    <span>{cargo}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div>
             <label className="text-xs font-semibold text-slate-700 block mb-1.5">
               Taskgroups Associadas
@@ -2588,6 +2723,21 @@ export const Backoffice: React.FC = () => {
                 <span>🤝 Taskgroup Partnerships</span>
               </label>
             </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-slate-700 block mb-1">
+              Etapas do Percurso do Membro (uma por linha)
+            </label>
+            <p className="text-[11px] text-slate-500 mb-1.5">
+              Define os títulos a rosa na linha temporal do Menu Principal (ex: Trainee of Brand Strategy, Junior Consultant of Brand Strategy, etc.).
+            </p>
+            <Textarea
+              value={editCareerHistoryText}
+              onChange={(e) => setEditCareerHistoryText(e.target.value)}
+              rows={3}
+              placeholder="Trainee of Digital Development&#10;Junior Consultant of Digital Development&#10;Senior Consultant of Digital Development"
+            />
           </div>
 
           <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">

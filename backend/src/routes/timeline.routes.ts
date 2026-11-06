@@ -5,7 +5,8 @@ import { Role } from '@prisma/client';
 
 const router = Router();
 
-// Member access
+// Member access (both / and /my return member's timeline)
+router.get('/', authenticate, TimelineController.getMy);
 router.get('/my', authenticate, TimelineController.getMy);
 
 // Admin access only (Executive Board manages timeline milestones)

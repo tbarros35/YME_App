@@ -14,6 +14,7 @@ export class TimelineService {
       title: e.title,
       category: e.category,
       description: e.description,
+      roleStep: e.roleStep,
       eventDate: e.eventDate,
       createdAt: e.createdAt,
     }));
@@ -24,6 +25,7 @@ export class TimelineService {
     title: string;
     category: TimelineCategory;
     description?: string;
+    roleStep?: string;
     eventDate: string | Date;
   }) {
     const user = await prisma.user.findUnique({
@@ -43,6 +45,7 @@ export class TimelineService {
         title: data.title,
         category: data.category,
         description: data.description || null,
+        roleStep: data.roleStep || null,
         eventDate: new Date(data.eventDate),
       },
     });
@@ -53,6 +56,7 @@ export class TimelineService {
       title: event.title,
       category: event.category,
       description: event.description,
+      roleStep: event.roleStep,
       eventDate: event.eventDate,
       createdAt: event.createdAt,
     };

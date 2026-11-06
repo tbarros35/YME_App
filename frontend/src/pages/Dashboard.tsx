@@ -23,7 +23,7 @@ export const Dashboard: React.FC = () => {
         setIsLoading(true);
         const [dashboardRes, timelineRes, walletRes, eventsRes, sadRes] = await Promise.all([
           api.get('/dashboard/summary').catch(() => ({ data: null })),
-          api.get('/timeline').catch(() => ({ data: null })),
+          api.get('/timeline/my').catch(() => ({ data: null })),
           api.get('/wallet/summary').catch(() => ({ data: null })),
           api.get('/calendar').catch(() => ({ data: null })),
           api.get('/sad/my').catch(() => ({ data: null })),
@@ -55,7 +55,6 @@ export const Dashboard: React.FC = () => {
         // 3. Next 3 Scheduled Activities in Calendar (nome da atividade - data - local)
         const allEvents: CalendarEvent[] = eventsRes.data?.events || eventsRes.data?.data || [];
         const now = new Date();
-        // Prefer upcoming events (ending today or in the future)
         const upcoming = [...allEvents]
           .filter(
             (e) =>
@@ -105,6 +104,81 @@ export const Dashboard: React.FC = () => {
     const dateStr = `${day} de ${months[d.getMonth()]}`;
     const location = evt.location?.trim() ? evt.location.trim() : 'Sede da YME';
     return `${evt.title} - ${dateStr} - ${location}`;
+  };
+
+  // Determine dynamic career steps for the member
+  const computeCareerSteps = (): string[] => {
+    if (user?.careerHistory && user.careerHistory.length > 0) {
+      return user.careerHistory;
+    }
+
+    const dept = user?.department?.name || 'Digital Development';
+    const pos = (user?.position || '').trim();
+    const lowerPos = pos.toLowerCase();
+
+    // Trainee -> 1 dot
+    if (lowerPos === 'trainee') {
+      return [`Trainee of ${dept}`];
+    }
+
+    // Junior Consultant -> 2 dots
+    if (lowerPos === 'junior consultant') {
+      return [`Trainee of ${dept}`, `Junior Consultant of ${dept}`];
+    }
+
+    // Senior Consultant -> 3 dots
+    if (lowerPos === 'senior consultant') {
+      return [
+        `Trainee of ${dept}`,
+        `Junior Consultant of ${dept}`,
+        `Senior Consultant of ${dept}`,
+      ];
+    }
+
+    // Director / Head / Manager
+    if (
+      user?.role === 'DIRECTOR' ||
+      lowerPos === 'head' ||
+      lowerPos.includes('diretor') ||
+      lowerPos.includes('manager')
+    ) {
+      const headTitle = lowerPos.includes('head') ? `Head of ${dept}` : `${pos} of ${dept}`;
+      return [
+        `Trainee of ${dept}`,
+        `Junior Consultant of ${dept}`,
+        headTitle,
+      ];
+    }
+
+    // Admin (Executive Board: CEO, COO, CMO)
+    if (
+      user?.role === 'ADMIN' ||
+      ['ceo', 'coo', 'cmo'].some((r) => lowerPos.includes(r))
+    ) {
+      return [
+        `Trainee of ${dept}`,
+        `Junior Consultant of ${dept}`,
+        `Head of ${dept}`,
+        pos || 'Executive Board',
+      ];
+    }
+
+    return [`${pos || 'Membro'} of ${dept}`];
+  };
+
+  const careerSteps = computeCareerSteps();
+
+  // Helper to get milestones belonging to a specific role step
+  const getMilestonesForStep = (step: string, index: number): TimelineEvent[] => {
+    return milestones
+      .filter((m) => {
+        if (m.roleStep) {
+          return m.roleStep.toLowerCase().trim() === step.toLowerCase().trim();
+        }
+        // If roleStep was not set (legacy fallback), associate with first step
+        return index === 0;
+      })
+      .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
   };
 
   return (
@@ -227,67 +301,40 @@ export const Dashboard: React.FC = () => {
                 O meu percurso na <span className="text-[#ff63f6] font-bold">YME</span>
               </p>
 
-              {/* Vertical Member Timeline matching Figma Node 20:27 */}
-              <div className="relative pl-6 space-y-6 my-7">
-                {/* Vertical connecting line */}
+              {/* Vertical Member Timeline matching Figma Design */}
+              <div className="relative pl-6 space-y-7 my-7">
+                {/* Vertical connecting line spanning through all dots */}
                 <div className="absolute left-[6.5px] top-2 bottom-3 w-[2px] bg-[#ff63f6]" />
 
-                {milestones.length > 0 ? (
-                  milestones.map((m) => (
-                    <div key={m.id} className="relative">
+                {careerSteps.map((step, idx) => {
+                  const stepMilestones = getMilestonesForStep(step, idx);
+
+                  return (
+                    <div key={idx} className="relative">
                       {/* Node Bullet Dot */}
                       <span className="absolute -left-[20.5px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#ff63f6] ring-4 ring-white" />
+                      
+                      {/* Pink Role / Cargo Title */}
                       <p className="text-xs sm:text-sm font-bold text-[#ff63f6] leading-snug">
-                        {m.title}
+                        {step}
                       </p>
-                      {m.description && (
-                        <p className="text-[11px] text-[#151e33] mt-0.5 leading-relaxed font-normal">
-                          {m.description}
-                        </p>
+
+                      {/* Milestones in dark navy #151e33 under this role */}
+                      {stepMilestones.length > 0 && (
+                        <div className="mt-1 space-y-1">
+                          {stepMilestones.map((m) => (
+                            <p
+                              key={m.id}
+                              className="text-[11px] sm:text-xs text-[#151e33] font-normal leading-relaxed"
+                            >
+                              {m.title}
+                            </p>
+                          ))}
+                        </div>
                       )}
                     </div>
-                  ))
-                ) : (
-                  <>
-                    <div className="relative">
-                      <span className="absolute -left-[20.5px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#ff63f6] ring-4 ring-white" />
-                      <p className="text-xs sm:text-sm font-bold text-[#ff63f6]">
-                        Trainee of Brand Strategy
-                      </p>
-                      <p className="text-[11px] text-[#151e33] mt-0.5 font-normal">
-                        Membro do Departamento de Comunicação - Spring Conference 2025
-                      </p>
-                    </div>
-
-                    <div className="relative">
-                      <span className="absolute -left-[20.5px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#ff63f6] ring-4 ring-white" />
-                      <p className="text-xs sm:text-sm font-bold text-[#ff63f6]">
-                        Junior Consultant of Brand Strategy
-                      </p>
-                      <p className="text-[11px] text-[#151e33] mt-0.5 font-normal">
-                        Membro do Departamento de Comunicação - Spring Conference 2025
-                      </p>
-                      <p className="text-[11px] text-[#151e33] font-normal">
-                        Serviço Tecnibuild
-                      </p>
-                    </div>
-
-                    <div className="relative">
-                      <span className="absolute -left-[20.5px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#ff63f6] ring-4 ring-white" />
-                      <p className="text-xs sm:text-sm font-bold text-[#ff63f6]">
-                        Head of Brand Strategy
-                      </p>
-                      <p className="text-[11px] text-[#151e33] mt-0.5 font-normal">
-                        Team Leader de Comunicação - WHY ME ´25
-                      </p>
-                    </div>
-
-                    <div className="relative">
-                      <span className="absolute -left-[20.5px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#ff63f6] ring-4 ring-white" />
-                      <p className="text-xs sm:text-sm font-bold text-[#ff63f6]">COO</p>
-                    </div>
-                  </>
-                )}
+                  );
+                })}
               </div>
             </div>
 

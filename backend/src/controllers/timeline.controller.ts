@@ -10,6 +10,7 @@ const createTimelineSchema = z.object({
     errorMap: () => ({ message: 'Invalid timeline category' }),
   }),
   description: z.string().optional(),
+  roleStep: z.string().min(2, 'O cargo associado ao marco é obrigatório').optional(),
   eventDate: z.string().min(4, 'Valid event date string or ISO format required'),
 });
 

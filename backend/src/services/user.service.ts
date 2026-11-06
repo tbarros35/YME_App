@@ -2,6 +2,72 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '../config/prisma';
 import { Role, Taskgroup } from '@prisma/client';
 
+export function resolveCareerHistory(user: {
+  position?: string;
+  role?: Role | string;
+  department?: { name: string } | null;
+  careerHistory?: string[];
+}): string[] {
+  if (user.careerHistory && user.careerHistory.length > 0) {
+    return user.careerHistory;
+  }
+
+  const dept = user.department?.name || 'YME';
+  const pos = (user.position || '').trim();
+  const lowerPos = pos.toLowerCase();
+
+  // If Trainee
+  if (lowerPos === 'trainee') {
+    return [`Trainee of ${dept}`];
+  }
+
+  // If Junior Consultant
+  if (lowerPos === 'junior consultant') {
+    return [`Trainee of ${dept}`, `Junior Consultant of ${dept}`];
+  }
+
+  // If Senior Consultant
+  if (lowerPos === 'senior consultant') {
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      `Senior Consultant of ${dept}`,
+    ];
+  }
+
+  // If Director / Head / Manager
+  if (
+    user.role === Role.DIRECTOR ||
+    user.role === 'DIRECTOR' ||
+    lowerPos === 'head' ||
+    lowerPos.includes('diretor') ||
+    lowerPos.includes('manager')
+  ) {
+    const headTitle = lowerPos.includes('head') ? `Head of ${dept}` : `${pos} of ${dept}`;
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      headTitle,
+    ];
+  }
+
+  // If Admin (Executive Board: CEO, COO, CMO, etc.)
+  if (
+    user.role === Role.ADMIN ||
+    user.role === 'ADMIN' ||
+    ['ceo', 'coo', 'cmo'].some((r) => lowerPos.includes(r))
+  ) {
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      `Head of ${dept}`,
+      pos || 'Executive Board',
+    ];
+  }
+
+  return [`${pos || 'Membro'} of ${dept}`];
+}
+
 export class UserService {
   static async getAllUsers() {
     const users = await prisma.user.findMany({
@@ -11,6 +77,7 @@ export class UserService {
         fullName: true,
         role: true,
         position: true,
+        careerHistory: true,
         taskgroups: true,
         isActive: true,
         departmentId: true,
@@ -25,7 +92,10 @@ export class UserService {
       orderBy: [{ isActive: 'desc' }, { fullName: 'asc' }],
     });
 
-    return users;
+    return users.map((u) => ({
+      ...u,
+      careerHistory: resolveCareerHistory(u),
+    }));
   }
 
   static async getUserById(userId: string) {
@@ -37,6 +107,7 @@ export class UserService {
         fullName: true,
         role: true,
         position: true,
+        careerHistory: true,
         taskgroups: true,
         isActive: true,
         departmentId: true,
@@ -57,7 +128,10 @@ export class UserService {
       throw error;
     }
 
-    return user;
+    return {
+      ...user,
+      careerHistory: resolveCareerHistory(user),
+    };
   }
 
   static async createUser(data: {
@@ -68,6 +142,9 @@ export class UserService {
     position: string;
     role?: Role;
     taskgroups?: Taskgroup[];
+    careerHistory?: string[];
+    highestPreviousPosition?: 'NONE' | 'TRAINEE' | 'JUNIOR_CONSULTANT';
+    previousPositions?: string[];
   }) {
     const normalizedEmail = data.email.trim().toLowerCase();
 
@@ -93,6 +170,56 @@ export class UserService {
       throw error;
     }
 
+    // Determine career history
+    let computedCareerHistory: string[] = [];
+    if (data.careerHistory && data.careerHistory.length > 0) {
+      computedCareerHistory = data.careerHistory;
+    } else if (data.role === Role.DIRECTOR || data.position === 'Head') {
+      const headTitle = data.position === 'Head' ? `Head of ${dept.name}` : `${data.position} of ${dept.name}`;
+      if (data.highestPreviousPosition === 'NONE') {
+        computedCareerHistory = [headTitle];
+      } else if (data.highestPreviousPosition === 'TRAINEE') {
+        computedCareerHistory = [`Trainee of ${dept.name}`, headTitle];
+      } else {
+        // Default or JUNIOR_CONSULTANT
+        computedCareerHistory = [
+          `Trainee of ${dept.name}`,
+          `Junior Consultant of ${dept.name}`,
+          headTitle,
+        ];
+      }
+    } else if (data.role === Role.ADMIN) {
+      if (data.previousPositions && data.previousPositions.length > 0) {
+        computedCareerHistory = [...data.previousPositions, data.position];
+      } else {
+        computedCareerHistory = [
+          `Trainee of ${dept.name}`,
+          `Junior Consultant of ${dept.name}`,
+          `Head of ${dept.name}`,
+          data.position,
+        ];
+      }
+    } else {
+      // MEMBER / standard progression
+      const posLower = data.position.toLowerCase();
+      if (posLower.includes('senior consultant')) {
+        computedCareerHistory = [
+          `Trainee of ${dept.name}`,
+          `Junior Consultant of ${dept.name}`,
+          `Senior Consultant of ${dept.name}`,
+        ];
+      } else if (posLower.includes('junior consultant')) {
+        computedCareerHistory = [
+          `Trainee of ${dept.name}`,
+          `Junior Consultant of ${dept.name}`,
+        ];
+      } else if (posLower.includes('trainee')) {
+        computedCareerHistory = [`Trainee of ${dept.name}`];
+      } else {
+        computedCareerHistory = [`${data.position} of ${dept.name}`];
+      }
+    }
+
     const passwordHash = await bcrypt.hash(data.passwordPlain, 10);
 
     const newUser = await prisma.user.create({
@@ -104,6 +231,7 @@ export class UserService {
         position: data.position,
         role: data.role || Role.MEMBER,
         taskgroups: data.taskgroups || [],
+        careerHistory: computedCareerHistory,
         isActive: true,
       },
       include: {
@@ -113,12 +241,13 @@ export class UserService {
       },
     });
 
-    // Create a welcoming timeline event
+    // Create a welcoming timeline event under the initial role
     await prisma.timelineEvent.create({
       data: {
         userId: newUser.id,
         title: 'Entrada na YME',
         category: 'RECRUITMENT',
+        roleStep: computedCareerHistory[0] || `${newUser.position} of ${newUser.department.name}`,
         description: `Admissão oficial no departamento de ${newUser.department.name} como ${newUser.position}.`,
         eventDate: new Date(),
       },
@@ -130,6 +259,7 @@ export class UserService {
       fullName: newUser.fullName,
       role: newUser.role,
       position: newUser.position,
+      careerHistory: computedCareerHistory,
       taskgroups: newUser.taskgroups,
       department: newUser.department,
       isActive: newUser.isActive,
@@ -145,6 +275,7 @@ export class UserService {
       position?: string;
       role?: Role;
       taskgroups?: Taskgroup[];
+      careerHistory?: string[];
       isActive?: boolean;
     }
   ) {
@@ -174,6 +305,7 @@ export class UserService {
         ...(data.position ? { position: data.position } : {}),
         ...(data.role ? { role: data.role } : {}),
         ...(data.taskgroups !== undefined ? { taskgroups: data.taskgroups } : {}),
+        ...(data.careerHistory !== undefined ? { careerHistory: data.careerHistory } : {}),
         ...(data.isActive !== undefined ? { isActive: data.isActive } : {}),
       },
       include: {
@@ -189,6 +321,7 @@ export class UserService {
       fullName: updated.fullName,
       role: updated.role,
       position: updated.position,
+      careerHistory: resolveCareerHistory(updated),
       taskgroups: updated.taskgroups,
       department: updated.department,
       isActive: updated.isActive,

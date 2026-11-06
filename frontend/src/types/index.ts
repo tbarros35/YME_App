@@ -53,6 +53,7 @@ export interface User {
   departmentId?: string;
   department?: Department;
   position: string;
+  careerHistory?: string[];
   taskgroups?: Taskgroup[];
   isActive?: boolean;
   createdAt?: string;
@@ -155,6 +156,7 @@ export interface TimelineEvent {
   title: string;
   category: TimelineCategory;
   description?: string | null;
+  roleStep?: string | null;
   eventDate: string;
   createdAt?: string;
 }

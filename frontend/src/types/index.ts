@@ -1,6 +1,9 @@
 export type Role = 'MEMBER' | 'DIRECTOR' | 'ADMIN';
 
 export type Position =
+  | 'CEO'
+  | 'COO'
+  | 'CMO'
   | 'Head'
   | 'Manager'
   | 'Senior Consultant'
@@ -10,6 +13,7 @@ export type Position =
 export type Taskgroup = 'CSR' | 'PARTNERSHIPS';
 
 export type DepartmentName =
+  | 'Executive Board'
   | 'Brand Strategy'
   | 'Digital Development'
   | 'Human Resources'
@@ -54,6 +58,8 @@ export interface User {
   role: Role;
   departmentId?: string;
   department?: Department;
+  assignedDepartmentId?: string | null;
+  assignedDepartment?: Department | null;
   position: string;
   careerHistory?: string[];
   taskgroups?: Taskgroup[];

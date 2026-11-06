@@ -135,17 +135,28 @@ export const Dashboard: React.FC = () => {
       ];
     }
 
-    // Director / Head / Manager
+    // Manager (2nd highest position in regular dept) -> 4 dots
+    if (lowerPos === 'manager') {
+      return [
+        `Trainee of ${dept}`,
+        `Junior Consultant of ${dept}`,
+        `Senior Consultant of ${dept}`,
+        `Manager of ${dept}`,
+      ];
+    }
+
+    // Head / Director -> 5 dots
     if (
       user?.role === 'DIRECTOR' ||
       lowerPos === 'head' ||
-      lowerPos.includes('diretor') ||
-      lowerPos.includes('manager')
+      lowerPos.includes('diretor')
     ) {
       const headTitle = lowerPos.includes('head') ? `Head of ${dept}` : `${pos} of ${dept}`;
       return [
         `Trainee of ${dept}`,
         `Junior Consultant of ${dept}`,
+        `Senior Consultant of ${dept}`,
+        `Manager of ${dept}`,
         headTitle,
       ];
     }
@@ -158,8 +169,9 @@ export const Dashboard: React.FC = () => {
       return [
         `Trainee of ${dept}`,
         `Junior Consultant of ${dept}`,
+        `Senior Consultant of ${dept}`,
         `Head of ${dept}`,
-        pos || 'Executive Board',
+        pos.toUpperCase() || 'Executive Board',
       ];
     }
 

@@ -7,18 +7,71 @@ export interface AuthenticatedUserContext {
   fullName: string;
   role: string;
   departmentName?: string;
+  departmentId?: string;
+  assignedDepartmentId?: string | null;
+  assignedDepartmentName?: string;
   position?: string;
 }
 
 export class SupportService {
   /**
-   * Helper to verify if user has permission to access a specific ticket
+   * Helper to verify if user has permission to access a specific ticket:
+   * - Creator: Always can access
+   * - Admin (Executive Board: CEO, COO, CMO): Universal access
+   * - Legal & Finance: ONLY Head and Manager have access to WALLET tickets
+   * - Human Resources:
+   *     - Head & Manager: All SAD tickets
+   *     - Trainee, Junior, Senior Consultant: Only SAD tickets for members in their assigned department
+   * - Other: Only Admin and creator
    */
-  static canUserAccessTicket(user: AuthenticatedUserContext, ticket: { userId: string; category: SupportCategory }): boolean {
-    if (user.role === 'ADMIN') return true;
+  static canUserAccessTicket(
+    user: AuthenticatedUserContext,
+    ticket: {
+      userId: string;
+      category: SupportCategory;
+      user?: {
+        departmentId?: string;
+        department?: { id: string; name: string };
+      };
+    }
+  ): boolean {
+    // 1. Creator always has access to their own ticket
     if (ticket.userId === user.id) return true;
-    if (ticket.category === 'SAD_EVALUATION' && user.departmentName === 'Human Resources') return true;
-    if (ticket.category === 'WALLET' && user.departmentName === 'Legal & Finance') return true;
+
+    // 2. Admins (Executive Board) have universal access to all tickets
+    if (user.role === 'ADMIN') return true;
+
+    const isLegal = user.departmentName === 'Legal & Finance';
+    const isHR = user.departmentName === 'Human Resources';
+    const pos = (user.position || '').trim();
+    const isLeadership = pos === 'Head' || pos === 'Manager';
+
+    // 3. Wallet tickets: Only Head and Manager of Legal & Finance (and Admins) have access
+    if (ticket.category === 'WALLET') {
+      if (isLegal && isLeadership) return true;
+      return false; // Trainees, Junior, Senior of Legal & Finance have NO access
+    }
+
+    // 4. SAD tickets:
+    if (ticket.category === 'SAD_EVALUATION') {
+      if (isHR) {
+        // Head and Manager of HR have access to all SAD tickets
+        if (isLeadership) return true;
+
+        // Non-leadership HR members (Trainee, Junior, Senior) must be allocated to the ticket creator's department
+        const ticketCreatorDeptId = ticket.user?.departmentId || ticket.user?.department?.id;
+        if (
+          user.assignedDepartmentId &&
+          ticketCreatorDeptId &&
+          user.assignedDepartmentId === ticketCreatorDeptId
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // 5. General / Other tickets: only Admin and ticket creator
     return false;
   }
 
@@ -75,6 +128,7 @@ export class SupportService {
             email: true,
             role: true,
             position: true,
+            departmentId: true,
             department: { select: { id: true, name: true } },
           },
         },
@@ -112,6 +166,7 @@ export class SupportService {
             email: true,
             role: true,
             position: true,
+            departmentId: true,
             department: { select: { id: true, name: true } },
           },
         },
@@ -137,27 +192,38 @@ export class SupportService {
   }
 
   /**
-   * Get tickets assigned to staff based on department and role
+   * Get tickets assigned to staff based on department, role, and allocation:
    * - Admin: ALL tickets
-   * - HR: SAD_EVALUATION tickets
-   * - Legal & Finance: WALLET tickets
+   * - Legal & Finance: ONLY Head & Manager (WALLET tickets)
+   * - HR: Head & Manager (ALL SAD tickets); Trainee/Junior/Senior (ONLY SAD tickets for their assigned department)
    */
   static async getAssignedTickets(user: AuthenticatedUserContext) {
     const isAdmin = user.role === 'ADMIN';
     const isHR = user.departmentName === 'Human Resources';
     const isLegal = user.departmentName === 'Legal & Finance';
+    const pos = (user.position || '').trim();
+    const isLeadership = pos === 'Head' || pos === 'Manager';
 
-    if (!isAdmin && !isHR && !isLegal) {
+    if (!isAdmin && !isHR && !(isLegal && isLeadership)) {
       return [];
     }
 
     const whereClause: any = {};
     if (!isAdmin) {
-      const allowedCategories: SupportCategory[] = [];
-      if (isHR) allowedCategories.push('SAD_EVALUATION');
-      if (isLegal) allowedCategories.push('WALLET');
-
-      whereClause.category = { in: allowedCategories };
+      if (isLegal && isLeadership) {
+        whereClause.category = 'WALLET';
+      } else if (isHR) {
+        whereClause.category = 'SAD_EVALUATION';
+        if (!isLeadership) {
+          // Non-leadership HR member (Trainee, Junior, Senior) only sees SAD tickets for members in their assigned department
+          if (!user.assignedDepartmentId) {
+            return [];
+          }
+          whereClause.user = {
+            departmentId: user.assignedDepartmentId,
+          };
+        }
+      }
     }
 
     const tickets = await prisma.supportTicket.findMany({
@@ -170,6 +236,7 @@ export class SupportService {
             email: true,
             role: true,
             position: true,
+            departmentId: true,
             department: { select: { id: true, name: true } },
           },
         },
@@ -208,6 +275,7 @@ export class SupportService {
             email: true,
             role: true,
             position: true,
+            departmentId: true,
             department: { select: { id: true, name: true } },
           },
         },
@@ -258,6 +326,15 @@ export class SupportService {
 
     const ticket = await prisma.supportTicket.findUnique({
       where: { id: ticketId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            departmentId: true,
+            department: { select: { id: true, name: true } },
+          },
+        },
+      },
     });
 
     if (!ticket) {
@@ -313,7 +390,7 @@ export class SupportService {
   }
 
   /**
-   * Update ticket status (e.g. RESOLVED, IN_PROGRESS, CLOSED)
+   * Update status of a ticket
    */
   static async updateStatus(ticketId: string, user: AuthenticatedUserContext, status: SupportStatus) {
     if (!['OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'].includes(status)) {
@@ -325,6 +402,15 @@ export class SupportService {
 
     const ticket = await prisma.supportTicket.findUnique({
       where: { id: ticketId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            departmentId: true,
+            department: { select: { id: true, name: true } },
+          },
+        },
+      },
     });
 
     if (!ticket) {
@@ -352,6 +438,7 @@ export class SupportService {
             email: true,
             role: true,
             position: true,
+            departmentId: true,
             department: { select: { id: true, name: true } },
           },
         },

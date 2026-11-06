@@ -60,6 +60,7 @@ import {
 } from 'lucide-react';
 
 const DEPARTMENTS: DepartmentName[] = [
+  'Executive Board',
   'Brand Strategy',
   'Digital Development',
   'Human Resources',
@@ -68,7 +69,20 @@ const DEPARTMENTS: DepartmentName[] = [
   'Sales & Commercial',
 ];
 
+const EXBO_POSITIONS: Position[] = ['CEO', 'COO', 'CMO'];
+
+const DEPT_POSITIONS: Position[] = [
+  'Head',
+  'Manager',
+  'Senior Consultant',
+  'Junior Consultant',
+  'Trainee',
+];
+
 const POSITIONS: Position[] = [
+  'CEO',
+  'COO',
+  'CMO',
   'Head',
   'Manager',
   'Senior Consultant',
@@ -119,16 +133,25 @@ const computeCareerStepsForUser = (u?: User | null): string[] => {
       `Senior Consultant of ${dept}`,
     ];
   }
+  if (lowerPos === 'manager') {
+    return [
+      `Trainee of ${dept}`,
+      `Junior Consultant of ${dept}`,
+      `Senior Consultant of ${dept}`,
+      `Manager of ${dept}`,
+    ];
+  }
   if (
     u.role === 'DIRECTOR' ||
     lowerPos === 'head' ||
-    lowerPos.includes('diretor') ||
-    lowerPos.includes('manager')
+    lowerPos.includes('diretor')
   ) {
     const headTitle = lowerPos.includes('head') ? `Head of ${dept}` : `${pos} of ${dept}`;
     return [
       `Trainee of ${dept}`,
       `Junior Consultant of ${dept}`,
+      `Senior Consultant of ${dept}`,
+      `Manager of ${dept}`,
       headTitle,
     ];
   }
@@ -139,8 +162,9 @@ const computeCareerStepsForUser = (u?: User | null): string[] => {
     return [
       `Trainee of ${dept}`,
       `Junior Consultant of ${dept}`,
+      `Senior Consultant of ${dept}`,
       `Head of ${dept}`,
-      pos || 'Executive Board',
+      pos.toUpperCase() || 'Executive Board',
     ];
   }
   return [`${pos || 'Membro'} of ${dept}`];
@@ -160,10 +184,14 @@ export const Backoffice: React.FC = () => {
   } = useAuth();
   const queryClient = useQueryClient();
 
+  const isLegalHeadOrManager =
+    user?.department?.name === 'Legal & Finance' &&
+    (user?.position === 'Head' || user?.position === 'Manager');
+
   const canAccessSupport =
     isAdmin ||
     user?.department?.name === 'Human Resources' ||
-    user?.department?.name === 'Legal & Finance';
+    isLegalHeadOrManager;
 
   const [activeTab, setActiveTab] = useState<
     'MEMBERS' | 'SAD' | 'WALLET' | 'TIMELINE' | 'CALENDAR' | 'SUPPORT'
@@ -225,21 +253,54 @@ export const Backoffice: React.FC = () => {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('password123');
   const [newDepartmentId, setNewDepartmentId] = useState('');
+  const [newAssignedDepartmentId, setNewAssignedDepartmentId] = useState('');
   const [newPosition, setNewPosition] = useState<Position>('Junior Consultant');
   const [newRole, setNewRole] = useState<Role>('MEMBER');
   const [newTaskgroups, setNewTaskgroups] = useState<Taskgroup[]>([]);
   const [newHighestPreviousPos, setNewHighestPreviousPos] = useState<'NONE' | 'TRAINEE' | 'JUNIOR_CONSULTANT'>('JUNIOR_CONSULTANT');
   const [newAdminPreviousRoles, setNewAdminPreviousRoles] = useState<string[]>(['Trainee', 'Junior Consultant', 'Head']);
 
+  const handleNewDepartmentChange = (deptId: string) => {
+    setNewDepartmentId(deptId);
+    const selectedDept = departments.find((d) => d.id === deptId);
+    const isExBo = selectedDept?.name === 'Executive Board';
+    if (isExBo) {
+      setNewPosition('COO');
+      setNewRole('ADMIN');
+      setNewAssignedDepartmentId('');
+    } else {
+      setNewPosition('Junior Consultant');
+      setNewRole('MEMBER');
+      setNewAssignedDepartmentId('');
+    }
+  };
+
+  const handleNewPositionChange = (pos: Position) => {
+    setNewPosition(pos);
+    const selectedDept = departments.find((d) => d.id === newDepartmentId);
+    const isExBo = selectedDept?.name === 'Executive Board';
+    if (isExBo) {
+      setNewRole('ADMIN');
+    } else if (pos === 'Head') {
+      setNewRole('DIRECTOR');
+    } else {
+      setNewRole('MEMBER');
+    }
+  };
+
   const createUserMutation = useMutation({
     mutationFn: async () => {
       const selectedDeptObj = departments.find((d) => d.id === newDepartmentId);
       const deptName = selectedDeptObj?.name || 'YME';
+      const isHR = selectedDeptObj?.name === 'Human Resources';
+      const isNonLeaderHR = isHR && ['Trainee', 'Junior Consultant', 'Senior Consultant'].includes(newPosition);
+
       const res = await api.post('/users', {
         fullName: newFullName,
         email: newEmail,
         password: newPassword,
         departmentId: newDepartmentId,
+        assignedDepartmentId: isNonLeaderHR ? newAssignedDepartmentId || null : null,
         position: newPosition,
         role: newRole,
         taskgroups: newTaskgroups,
@@ -260,6 +321,8 @@ export const Backoffice: React.FC = () => {
       setNewFullName('');
       setNewEmail('');
       setNewPassword('password123');
+      setNewDepartmentId('');
+      setNewAssignedDepartmentId('');
       setNewTaskgroups([]);
       setNewHighestPreviousPos('JUNIOR_CONSULTANT');
       setNewAdminPreviousRoles(['Trainee', 'Junior Consultant', 'Head']);
@@ -272,6 +335,7 @@ export const Backoffice: React.FC = () => {
   // ================= Form 2: Edit Member (Admin only) =================
   const [editFullName, setEditFullName] = useState('');
   const [editDepartmentId, setEditDepartmentId] = useState('');
+  const [editAssignedDepartmentId, setEditAssignedDepartmentId] = useState('');
   const [editPosition, setEditPosition] = useState<Position>('Junior Consultant');
   const [editRole, setEditRole] = useState<Role>('MEMBER');
   const [editTaskgroups, setEditTaskgroups] = useState<Taskgroup[]>([]);
@@ -282,6 +346,7 @@ export const Backoffice: React.FC = () => {
     setEditingUser(u);
     setEditFullName(u.fullName);
     setEditDepartmentId(u.departmentId || u.department?.id || '');
+    setEditAssignedDepartmentId(u.assignedDepartmentId || u.assignedDepartment?.id || '');
     setEditPosition(u.position as Position);
     setEditRole(u.role);
     setEditTaskgroups(u.taskgroups || []);
@@ -290,12 +355,55 @@ export const Backoffice: React.FC = () => {
     setEditCareerHistoryText(steps.join('\n'));
   };
 
+  const handleEditDepartmentChange = (deptId: string) => {
+    setEditDepartmentId(deptId);
+    const selectedDept = departments.find((d) => d.id === deptId);
+    const isExBo = selectedDept?.name === 'Executive Board';
+    if (isExBo) {
+      if (!EXBO_POSITIONS.includes(editPosition)) {
+        setEditPosition('COO');
+      }
+      setEditRole('ADMIN');
+      setEditAssignedDepartmentId('');
+    } else {
+      if (EXBO_POSITIONS.includes(editPosition)) {
+        setEditPosition('Junior Consultant');
+      }
+      if (editPosition === 'Head') {
+        setEditRole('DIRECTOR');
+      } else {
+        setEditRole('MEMBER');
+      }
+      if (selectedDept?.name !== 'Human Resources') {
+        setEditAssignedDepartmentId('');
+      }
+    }
+  };
+
+  const handleEditPositionChange = (pos: Position) => {
+    setEditPosition(pos);
+    const selectedDept = departments.find((d) => d.id === editDepartmentId);
+    const isExBo = selectedDept?.name === 'Executive Board';
+    if (isExBo) {
+      setEditRole('ADMIN');
+    } else if (pos === 'Head') {
+      setEditRole('DIRECTOR');
+    } else {
+      setEditRole('MEMBER');
+    }
+  };
+
   const updateUserMutation = useMutation({
     mutationFn: async () => {
       if (!editingUser) return;
+      const selectedDeptObj = departments.find((d) => d.id === editDepartmentId);
+      const isHR = selectedDeptObj?.name === 'Human Resources';
+      const isNonLeaderHR = isHR && ['Trainee', 'Junior Consultant', 'Senior Consultant'].includes(editPosition);
+
       const res = await api.put(`/users/${editingUser.id}`, {
         fullName: editFullName,
         departmentId: editDepartmentId,
+        assignedDepartmentId: isNonLeaderHR ? editAssignedDepartmentId || null : null,
         position: editPosition,
         role: editRole,
         taskgroups: editTaskgroups,
@@ -987,9 +1095,16 @@ export const Backoffice: React.FC = () => {
                     </td>
                     <td className="px-4 py-3.5 font-mono text-[#151e33]/60 text-[11px]">{u.email}</td>
                     <td className="px-4 py-3.5">
-                      <span className="px-2.5 py-1 rounded-full bg-[#151e33]/5 text-[#151e33] font-medium text-[11px]">
-                        {u.department?.name || 'N/A'}
-                      </span>
+                      <div className="flex flex-col gap-1 items-start">
+                        <span className="px-2.5 py-1 rounded-full bg-[#151e33]/5 text-[#151e33] font-medium text-[11px]">
+                          {u.department?.name || 'N/A'}
+                        </span>
+                        {u.department?.name === 'Human Resources' && u.assignedDepartment && (
+                          <span className="px-2 py-0.5 rounded-full bg-[#ff63f6]/10 text-[#ff63f6] font-semibold text-[10px]">
+                            Alocado a: {u.assignedDepartment.name}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3.5 font-semibold">
                       <Badge variant="outline">{u.position}</Badge>
@@ -2052,12 +2167,22 @@ export const Backoffice: React.FC = () => {
                     Como membro da <strong>Executive Board</strong>, tens acesso universal a todos os pedidos de suporte (Avaliação SAD, Carteira e Assuntos Gerais).
                   </span>
                 ) : user?.department?.name === 'Human Resources' ? (
-                  <span>
-                    Como membro de <strong>Recursos Humanos</strong>, tens acesso aos pedidos e dúvidas de <strong>Avaliação SAD</strong>.
-                  </span>
+                  user?.position === 'Head' || user?.position === 'Manager' ? (
+                    <span>
+                      Como <strong>{user?.position} de Recursos Humanos</strong>, tens acesso a todos os tickets e dúvidas de <strong>Avaliação SAD</strong>.
+                    </span>
+                  ) : user?.assignedDepartment ? (
+                    <span>
+                      Como consultor de <strong>Recursos Humanos</strong> alocado ao departamento <strong>{user.assignedDepartment.name}</strong>, tens acesso aos tickets de <strong>Avaliação SAD</strong> submetidos pelos membros desse departamento.
+                    </span>
+                  ) : (
+                    <span>
+                      Como membro de <strong>Recursos Humanos</strong>, tens acesso aos pedidos e dúvidas de <strong>Avaliação SAD</strong>.
+                    </span>
+                  )
                 ) : user?.department?.name === 'Legal & Finance' ? (
                   <span>
-                    Como membro de <strong>Legal & Finance</strong>, tens acesso aos pedidos e dúvidas sobre a <strong>Carteira YME</strong>.
+                    Como <strong>{user?.position} de Legal & Finance</strong>, tens acesso aos pedidos e dúvidas sobre a <strong>Carteira YME</strong>.
                   </span>
                 ) : (
                   <span>Painel de atendimento e resolução de dúvidas.</span>
@@ -2477,7 +2602,7 @@ export const Backoffice: React.FC = () => {
             <Select
               label="Departamento Oficial *"
               value={newDepartmentId}
-              onChange={(e) => setNewDepartmentId(e.target.value)}
+              onChange={(e) => handleNewDepartmentChange(e.target.value)}
               required
             >
               <option value="">-- Selecionar --</option>
@@ -2491,10 +2616,13 @@ export const Backoffice: React.FC = () => {
             <Select
               label="Cargo / Position *"
               value={newPosition}
-              onChange={(e) => setNewPosition(e.target.value as Position)}
+              onChange={(e) => handleNewPositionChange(e.target.value as Position)}
               required
             >
-              {POSITIONS.map((pos) => (
+              {(departments.find((d) => d.id === newDepartmentId)?.name === 'Executive Board'
+                ? EXBO_POSITIONS
+                : DEPT_POSITIONS
+              ).map((pos) => (
                 <option key={pos} value={pos}>
                   {pos}
                 </option>
@@ -2505,13 +2633,41 @@ export const Backoffice: React.FC = () => {
               label="Permissão / Role *"
               value={newRole}
               onChange={(e) => setNewRole(e.target.value as Role)}
+              disabled={true}
               required
             >
               <option value="MEMBER">Membro</option>
-              <option value="DIRECTOR">Diretor</option>
+              <option value="DIRECTOR">Diretor (Head)</option>
               <option value="ADMIN">Admin (Executive Board)</option>
             </Select>
           </div>
+
+          {/* Conditional field for Human Resources: Departamento a que está alocado */}
+          {departments.find((d) => d.id === newDepartmentId)?.name === 'Human Resources' &&
+            ['Trainee', 'Junior Consultant', 'Senior Consultant'].includes(newPosition) && (
+              <div className="p-4 bg-[#ff63f6]/10 rounded-[20px] border border-[#ff63f6]/30 space-y-2">
+                <label className="text-xs font-bold text-[#151e33] block">
+                  Departamento a que está alocado *
+                </label>
+                <p className="text-[11px] text-[#151e33]/70">
+                  Como membro de RH, este consultor terá acesso e poderá responder aos tickets de SAD submetidos pelos membros do departamento selecionado.
+                </p>
+                <Select
+                  value={newAssignedDepartmentId}
+                  onChange={(e) => setNewAssignedDepartmentId(e.target.value)}
+                  required
+                >
+                  <option value="">-- Selecionar Departamento Alocado --</option>
+                  {departments
+                    .filter((d) => d.name !== 'Executive Board' && d.name !== 'Human Resources')
+                    .map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.name}
+                      </option>
+                    ))}
+                </Select>
+              </div>
+            )}
 
           {newRole === 'DIRECTOR' && (
             <div className="p-4 bg-[#ff63f6]/10 rounded-[20px] border border-[#ff63f6]/30">
@@ -2648,7 +2804,7 @@ export const Backoffice: React.FC = () => {
             <Select
               label="Departamento Oficial *"
               value={editDepartmentId}
-              onChange={(e) => setEditDepartmentId(e.target.value)}
+              onChange={(e) => handleEditDepartmentChange(e.target.value)}
               required
             >
               <option value="">-- Selecionar --</option>
@@ -2662,10 +2818,13 @@ export const Backoffice: React.FC = () => {
             <Select
               label="Cargo / Position *"
               value={editPosition}
-              onChange={(e) => setEditPosition(e.target.value as Position)}
+              onChange={(e) => handleEditPositionChange(e.target.value as Position)}
               required
             >
-              {POSITIONS.map((pos) => (
+              {(departments.find((d) => d.id === editDepartmentId)?.name === 'Executive Board'
+                ? EXBO_POSITIONS
+                : DEPT_POSITIONS
+              ).map((pos) => (
                 <option key={pos} value={pos}>
                   {pos}
                 </option>
@@ -2676,13 +2835,41 @@ export const Backoffice: React.FC = () => {
               label="Permissão / Role *"
               value={editRole}
               onChange={(e) => setEditRole(e.target.value as Role)}
+              disabled={true}
               required
             >
               <option value="MEMBER">Membro</option>
-              <option value="DIRECTOR">Diretor</option>
+              <option value="DIRECTOR">Diretor (Head)</option>
               <option value="ADMIN">Admin (Executive Board)</option>
             </Select>
           </div>
+
+          {/* Conditional field for Human Resources: Departamento a que está alocado */}
+          {departments.find((d) => d.id === editDepartmentId)?.name === 'Human Resources' &&
+            ['Trainee', 'Junior Consultant', 'Senior Consultant'].includes(editPosition) && (
+              <div className="p-4 bg-[#ff63f6]/10 rounded-[20px] border border-[#ff63f6]/30 space-y-2">
+                <label className="text-xs font-bold text-[#151e33] block">
+                  Departamento a que está alocado *
+                </label>
+                <p className="text-[11px] text-[#151e33]/70">
+                  Como membro de RH, este consultor terá acesso e poderá responder aos tickets de SAD submetidos pelos membros do departamento selecionado.
+                </p>
+                <Select
+                  value={editAssignedDepartmentId}
+                  onChange={(e) => setEditAssignedDepartmentId(e.target.value)}
+                  required
+                >
+                  <option value="">-- Selecionar Departamento Alocado --</option>
+                  {departments
+                    .filter((d) => d.name !== 'Executive Board' && d.name !== 'Human Resources')
+                    .map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.name}
+                      </option>
+                    ))}
+                </Select>
+              </div>
+            )}
 
           <div>
             <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block mb-1.5">

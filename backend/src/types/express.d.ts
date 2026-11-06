@@ -10,6 +10,8 @@ declare global {
         role: Role;
         departmentId: string;
         departmentName?: string;
+        assignedDepartmentId?: string | null;
+        assignedDepartmentName?: string;
         position: string;
         taskgroups: Taskgroup[];
       };

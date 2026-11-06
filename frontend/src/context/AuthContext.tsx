@@ -17,6 +17,7 @@ interface AuthContextType {
   canManageTimeline: boolean;
   canCreateEvents: boolean;
   allowedEventCategories: CalendarCategory[];
+  canAccessSupport: boolean;
   canAccessBackoffice: boolean;
   refreshUserData: () => Promise<void>;
 }
@@ -144,9 +145,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const canCreateEvents = allowedEventCategories.length > 0;
 
+  // Requirement: Support Tickets (Admin, all HR, Head/Manager of Legal & Finance)
+  const canAccessSupport =
+    isAdmin ||
+    isHumanResources ||
+    isLegalHeadOrManager;
+
   // Backoffice Access
   const canAccessBackoffice =
-    isAdmin || canManageSAD || canManageWallet || canReviewWalletRequests || canManageTimeline || canCreateEvents;
+    isAdmin ||
+    canManageSAD ||
+    canManageWallet ||
+    canReviewWalletRequests ||
+    canManageTimeline ||
+    canCreateEvents ||
+    canAccessSupport;
 
   return (
     <AuthContext.Provider
@@ -165,6 +178,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         canManageTimeline,
         canCreateEvents,
         allowedEventCategories,
+        canAccessSupport,
         canAccessBackoffice,
         refreshUserData,
       }}

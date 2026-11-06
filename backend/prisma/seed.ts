@@ -40,6 +40,7 @@ startxref
 %%EOF`;
 
 const OFFICIAL_DEPARTMENTS = [
+  'Executive Board',
   'Brand Strategy',
   'Digital Development',
   'Human Resources',
@@ -63,7 +64,7 @@ async function main() {
     }
   }
 
-  // 1. Criar ou garantir os 6 Departamentos Oficiais da YME (Idempotente)
+  // 1. Criar ou garantir os Departamentos Oficiais da YME (incluindo Executive Board)
   console.log('🏢 A verificar departamentos oficiais...');
   const departmentMap: Record<string, string> = {};
 
@@ -83,16 +84,16 @@ async function main() {
     departmentMap[deptName] = dept.id;
   }
 
-  // 2. Criar ou garantir Conta de Administrador Principal (Executive Board)
+  // 2. Criar ou garantir Conta de Administrador Principal (Executive Board - CEO)
   const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@yme.pt';
   const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'password123';
   const adminName = process.env.SEED_ADMIN_NAME || 'Rodrigo Antunes';
 
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
+
   const existingAdmin = await prisma.user.findUnique({
     where: { email: adminEmail },
   });
-
-  const passwordHash = await bcrypt.hash(adminPassword, 10);
 
   if (!existingAdmin) {
     await prisma.user.create({
@@ -101,15 +102,30 @@ async function main() {
         passwordHash,
         fullName: adminName,
         role: Role.ADMIN,
-        departmentId: departmentMap['Digital Development'],
-        position: 'Head',
+        departmentId: departmentMap['Executive Board'],
+        position: 'CEO',
         taskgroups: [Taskgroup.CSR, Taskgroup.PARTNERSHIPS],
+        careerHistory: [
+          'Trainee of Brand Strategy',
+          'Junior Consultant of Brand Strategy',
+          'Head of Brand Strategy',
+          'CEO',
+        ],
         isActive: true,
       },
     });
-    console.log(`👑 Conta Administrador Principal criada: ${adminEmail}`);
+    console.log(`👑 Conta Administrador Principal (CEO - Executive Board) criada: ${adminEmail}`);
   } else {
-    console.log(`✓ Conta Administrador Principal existente: ${adminEmail}`);
+    // Atualizar departamento e cargo se necessário
+    await prisma.user.update({
+      where: { email: adminEmail },
+      data: {
+        departmentId: departmentMap['Executive Board'],
+        position: 'CEO',
+        role: Role.ADMIN,
+      },
+    });
+    console.log(`✓ Conta Administrador Principal atualizada para Executive Board (CEO): ${adminEmail}`);
   }
 
   // Se estivermos em PRODUÇÃO, terminamos aqui para manter a base de dados limpa
@@ -122,12 +138,6 @@ async function main() {
   // ==============================================================================
   // DADOS DE DEMONSTRAÇÃO E TESTE (APENAS AMBIENTE DE DESENVOLVIMENTO)
   // ==============================================================================
-  const totalUsers = await prisma.user.count();
-  if (totalUsers > 2) {
-    console.log(`ℹ️ Base de dados de desenvolvimento já possui ${totalUsers} utilizadores. A ignorar criação de dados demo adicionais.`);
-    return;
-  }
-
   console.log('📦 A carregar dados de demonstração (membros de teste, avaliações SAD, carteira e calendário)...');
 
   // Criar ficheiros PDF de exemplo para relatórios SAD
@@ -146,57 +156,169 @@ async function main() {
     }
   }
 
-  // Outros Administradores da Executive Board
-  const vpAdmin = await prisma.user.upsert({
+  // Restantes membros da Executive Board (COO e CMO - Ambos Admins)
+  await prisma.user.upsert({
     where: { email: 'vp@yme.pt' },
-    update: {},
+    update: {
+      departmentId: departmentMap['Executive Board'],
+      position: 'COO',
+      role: Role.ADMIN,
+    },
     create: {
       email: 'vp@yme.pt',
       passwordHash,
       fullName: 'Inês Duarte',
       role: Role.ADMIN,
-      departmentId: departmentMap['Brand Strategy'],
-      position: 'Head',
+      departmentId: departmentMap['Executive Board'],
+      position: 'COO',
+      careerHistory: [
+        'Trainee of Brand Strategy',
+        'Junior Consultant of Brand Strategy',
+        'Head of Brand Strategy',
+        'COO',
+      ],
       taskgroups: [],
       isActive: true,
     },
   });
 
-  const execAdmin = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { email: 'exec@yme.pt' },
-    update: {},
+    update: {
+      departmentId: departmentMap['Executive Board'],
+      position: 'CMO',
+      role: Role.ADMIN,
+    },
     create: {
       email: 'exec@yme.pt',
       passwordHash,
       fullName: 'Afonso Henriques',
       role: Role.ADMIN,
-      departmentId: departmentMap['Quality Management'],
-      position: 'Head',
+      departmentId: departmentMap['Executive Board'],
+      position: 'CMO',
+      careerHistory: [
+        'Trainee of Quality Management',
+        'Junior Consultant of Quality Management',
+        'Head of Quality Management',
+        'CMO',
+      ],
       taskgroups: [],
       isActive: true,
     },
   });
 
-  // Recursos Humanos
+  // Recursos Humanos: Manager e Consultor alocado a Digital Development
   await prisma.user.upsert({
     where: { email: 'hr.manager@yme.pt' },
-    update: {},
+    update: {
+      departmentId: departmentMap['Human Resources'],
+      position: 'Manager',
+      role: Role.MEMBER,
+    },
     create: {
       email: 'hr.manager@yme.pt',
       passwordHash,
       fullName: 'Marta Ribeiro',
-      role: Role.DIRECTOR,
+      role: Role.MEMBER,
       departmentId: departmentMap['Human Resources'],
       position: 'Manager',
+      careerHistory: [
+        'Trainee of Human Resources',
+        'Junior Consultant of Human Resources',
+        'Senior Consultant of Human Resources',
+        'Manager of Human Resources',
+      ],
       taskgroups: [],
       isActive: true,
     },
   });
 
-  // Membro Principal de Testes (Tiago Silva)
+  await prisma.user.upsert({
+    where: { email: 'hr.consultant@yme.pt' },
+    update: {
+      departmentId: departmentMap['Human Resources'],
+      assignedDepartmentId: departmentMap['Digital Development'],
+      position: 'Senior Consultant',
+      role: Role.MEMBER,
+    },
+    create: {
+      email: 'hr.consultant@yme.pt',
+      passwordHash,
+      fullName: 'Tiago Ferreira',
+      role: Role.MEMBER,
+      departmentId: departmentMap['Human Resources'],
+      assignedDepartmentId: departmentMap['Digital Development'],
+      position: 'Senior Consultant',
+      careerHistory: [
+        'Trainee of Human Resources',
+        'Junior Consultant of Human Resources',
+        'Senior Consultant of Human Resources',
+      ],
+      taskgroups: [Taskgroup.PARTNERSHIPS],
+      isActive: true,
+    },
+  });
+
+  // Legal & Finance: Head (Diretor) e Manager (Membro)
+  await prisma.user.upsert({
+    where: { email: 'legal.head@yme.pt' },
+    update: {
+      departmentId: departmentMap['Legal & Finance'],
+      position: 'Head',
+      role: Role.DIRECTOR,
+    },
+    create: {
+      email: 'legal.head@yme.pt',
+      passwordHash,
+      fullName: 'Diogo Fonseca',
+      role: Role.DIRECTOR,
+      departmentId: departmentMap['Legal & Finance'],
+      position: 'Head',
+      careerHistory: [
+        'Trainee of Legal & Finance',
+        'Junior Consultant of Legal & Finance',
+        'Senior Consultant of Legal & Finance',
+        'Manager of Legal & Finance',
+        'Head of Legal & Finance',
+      ],
+      taskgroups: [],
+      isActive: true,
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { email: 'legal.manager@yme.pt' },
+    update: {
+      departmentId: departmentMap['Legal & Finance'],
+      position: 'Manager',
+      role: Role.MEMBER,
+    },
+    create: {
+      email: 'legal.manager@yme.pt',
+      passwordHash,
+      fullName: 'Camila Neves',
+      role: Role.MEMBER,
+      departmentId: departmentMap['Legal & Finance'],
+      position: 'Manager',
+      careerHistory: [
+        'Trainee of Legal & Finance',
+        'Junior Consultant of Legal & Finance',
+        'Senior Consultant of Legal & Finance',
+        'Manager of Legal & Finance',
+      ],
+      taskgroups: [],
+      isActive: true,
+    },
+  });
+
+  // Membro Principal de Testes (Tiago Silva - Senior Consultant em Digital Development)
   const memberUser = await prisma.user.upsert({
     where: { email: 'member@yme.pt' },
-    update: {},
+    update: {
+      departmentId: departmentMap['Digital Development'],
+      position: 'Senior Consultant',
+      role: Role.MEMBER,
+    },
     create: {
       email: 'member@yme.pt',
       passwordHash,
@@ -204,6 +326,11 @@ async function main() {
       role: Role.MEMBER,
       departmentId: departmentMap['Digital Development'],
       position: 'Senior Consultant',
+      careerHistory: [
+        'Trainee of Digital Development',
+        'Junior Consultant of Digital Development',
+        'Senior Consultant of Digital Development',
+      ],
       taskgroups: [Taskgroup.CSR],
       isActive: true,
     },

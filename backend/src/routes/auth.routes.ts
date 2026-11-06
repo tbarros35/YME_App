@@ -8,7 +8,7 @@ const router = Router();
 // Stricter rate limiter for authentication endpoints to prevent brute-force attacks
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 10 login requests per window
+  max: process.env.NODE_ENV === 'production' ? 25 : 1000,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

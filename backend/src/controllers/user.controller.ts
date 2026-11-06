@@ -8,6 +8,7 @@ const createUserSchema = z.object({
   password: z.string().min(6, 'A palavra-passe deve ter pelo menos 6 caracteres'),
   fullName: z.string().min(3, 'O nome deve ter pelo menos 3 caracteres'),
   departmentId: z.string().uuid('ID de departamento inválido'),
+  assignedDepartmentId: z.string().uuid().nullable().optional(),
   position: z.string().min(2, 'O cargo é obrigatório'),
   role: z.nativeEnum(Role).optional(),
   taskgroups: z.array(z.nativeEnum(Taskgroup)).optional(),
@@ -19,6 +20,7 @@ const createUserSchema = z.object({
 const updateUserSchema = z.object({
   fullName: z.string().min(3).optional(),
   departmentId: z.string().uuid().optional(),
+  assignedDepartmentId: z.string().uuid().nullable().optional(),
   position: z.string().min(2).optional(),
   role: z.nativeEnum(Role).optional(),
   taskgroups: z.array(z.nativeEnum(Taskgroup)).optional(),
@@ -58,6 +60,7 @@ export class UserController {
         passwordPlain: validated.password,
         fullName: validated.fullName,
         departmentId: validated.departmentId,
+        assignedDepartmentId: validated.assignedDepartmentId,
         position: validated.position,
         role: validated.role,
         taskgroups: validated.taskgroups,

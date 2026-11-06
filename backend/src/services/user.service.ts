@@ -15,18 +15,33 @@ export function resolveCareerHistory(user: {
   const dept = user.department?.name || 'YME';
   const pos = (user.position || '').trim();
   const lowerPos = pos.toLowerCase();
+  const isExBo =
+    dept === 'Executive Board' ||
+    ['ceo', 'coo', 'cmo'].some((r) => lowerPos === r || lowerPos.includes(r)) ||
+    user.role === Role.ADMIN ||
+    user.role === 'ADMIN';
 
-  // If Trainee
+  // 1. Executive Board members (CEO, COO, CMO)
+  if (isExBo) {
+    return [
+      `Trainee of Brand Strategy`,
+      `Junior Consultant of Brand Strategy`,
+      `Head of Brand Strategy`,
+      pos.toUpperCase() || 'Executive Board',
+    ];
+  }
+
+  // 2. Trainee -> 1 dot
   if (lowerPos === 'trainee') {
     return [`Trainee of ${dept}`];
   }
 
-  // If Junior Consultant
+  // 3. Junior Consultant -> 2 dots
   if (lowerPos === 'junior consultant') {
     return [`Trainee of ${dept}`, `Junior Consultant of ${dept}`];
   }
 
-  // If Senior Consultant
+  // 4. Senior Consultant -> 3 dots
   if (lowerPos === 'senior consultant') {
     return [
       `Trainee of ${dept}`,
@@ -35,33 +50,24 @@ export function resolveCareerHistory(user: {
     ];
   }
 
-  // If Director / Head / Manager
-  if (
-    user.role === Role.DIRECTOR ||
-    user.role === 'DIRECTOR' ||
-    lowerPos === 'head' ||
-    lowerPos.includes('diretor') ||
-    lowerPos.includes('manager')
-  ) {
-    const headTitle = lowerPos.includes('head') ? `Head of ${dept}` : `${pos} of ${dept}`;
+  // 5. Manager (2nd highest position in department) -> 4 dots
+  if (lowerPos === 'manager') {
     return [
       `Trainee of ${dept}`,
       `Junior Consultant of ${dept}`,
-      headTitle,
+      `Senior Consultant of ${dept}`,
+      `Manager of ${dept}`,
     ];
   }
 
-  // If Admin (Executive Board: CEO, COO, CMO, etc.)
-  if (
-    user.role === Role.ADMIN ||
-    user.role === 'ADMIN' ||
-    ['ceo', 'coo', 'cmo'].some((r) => lowerPos.includes(r))
-  ) {
+  // 6. Head (Highest position in department) -> 5 dots
+  if (lowerPos === 'head' || user.role === Role.DIRECTOR || user.role === 'DIRECTOR') {
     return [
       `Trainee of ${dept}`,
       `Junior Consultant of ${dept}`,
+      `Senior Consultant of ${dept}`,
+      `Manager of ${dept}`,
       `Head of ${dept}`,
-      pos || 'Executive Board',
     ];
   }
 
@@ -82,6 +88,13 @@ export class UserService {
         isActive: true,
         departmentId: true,
         department: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        assignedDepartmentId: true,
+        assignedDepartment: {
           select: {
             id: true,
             name: true,
@@ -117,6 +130,13 @@ export class UserService {
             name: true,
           },
         },
+        assignedDepartmentId: true,
+        assignedDepartment: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         createdAt: true,
       },
     });
@@ -139,6 +159,7 @@ export class UserService {
     passwordPlain: string;
     fullName: string;
     departmentId: string;
+    assignedDepartmentId?: string | null;
     position: string;
     role?: Role;
     taskgroups?: Taskgroup[];
@@ -170,39 +191,63 @@ export class UserService {
       throw error;
     }
 
+    const isExBoDept = dept.name === 'Executive Board';
+    let assignedRole: Role = data.role || Role.MEMBER;
+
+    // Executive Board members are ALWAYS Admins
+    if (isExBoDept) {
+      assignedRole = Role.ADMIN;
+    } else {
+      // Department Heads are DIRECTORS (never ADMIN)
+      if (data.position === 'Head') {
+        assignedRole = Role.DIRECTOR;
+      } else {
+        assignedRole = Role.MEMBER;
+      }
+    }
+
     // Determine career history
     let computedCareerHistory: string[] = [];
     if (data.careerHistory && data.careerHistory.length > 0) {
       computedCareerHistory = data.careerHistory;
-    } else if (data.role === Role.DIRECTOR || data.position === 'Head') {
-      const headTitle = data.position === 'Head' ? `Head of ${dept.name}` : `${data.position} of ${dept.name}`;
+    } else if (isExBoDept) {
+      if (data.previousPositions && data.previousPositions.length > 0) {
+        computedCareerHistory = [...data.previousPositions, data.position];
+      } else {
+        computedCareerHistory = [
+          `Trainee of Brand Strategy`,
+          `Junior Consultant of Brand Strategy`,
+          `Head of Brand Strategy`,
+          data.position,
+        ];
+      }
+    } else if (data.position === 'Head' || assignedRole === Role.DIRECTOR) {
+      const headTitle = `Head of ${dept.name}`;
       if (data.highestPreviousPosition === 'NONE') {
         computedCareerHistory = [headTitle];
       } else if (data.highestPreviousPosition === 'TRAINEE') {
         computedCareerHistory = [`Trainee of ${dept.name}`, headTitle];
       } else {
-        // Default or JUNIOR_CONSULTANT
+        // Default progression up to Head
         computedCareerHistory = [
           `Trainee of ${dept.name}`,
           `Junior Consultant of ${dept.name}`,
+          `Senior Consultant of ${dept.name}`,
+          `Manager of ${dept.name}`,
           headTitle,
         ];
       }
-    } else if (data.role === Role.ADMIN) {
-      if (data.previousPositions && data.previousPositions.length > 0) {
-        computedCareerHistory = [...data.previousPositions, data.position];
-      } else {
+    } else {
+      // Standard department progression
+      const posLower = data.position.toLowerCase();
+      if (posLower === 'manager') {
         computedCareerHistory = [
           `Trainee of ${dept.name}`,
           `Junior Consultant of ${dept.name}`,
-          `Head of ${dept.name}`,
-          data.position,
+          `Senior Consultant of ${dept.name}`,
+          `Manager of ${dept.name}`,
         ];
-      }
-    } else {
-      // MEMBER / standard progression
-      const posLower = data.position.toLowerCase();
-      if (posLower.includes('senior consultant')) {
+      } else if (posLower.includes('senior consultant')) {
         computedCareerHistory = [
           `Trainee of ${dept.name}`,
           `Junior Consultant of ${dept.name}`,
@@ -228,14 +273,18 @@ export class UserService {
         passwordHash,
         fullName: data.fullName.trim(),
         departmentId: data.departmentId,
+        assignedDepartmentId: data.assignedDepartmentId || null,
         position: data.position,
-        role: data.role || Role.MEMBER,
+        role: assignedRole,
         taskgroups: data.taskgroups || [],
         careerHistory: computedCareerHistory,
         isActive: true,
       },
       include: {
         department: {
+          select: { id: true, name: true },
+        },
+        assignedDepartment: {
           select: { id: true, name: true },
         },
       },
@@ -262,6 +311,8 @@ export class UserService {
       careerHistory: computedCareerHistory,
       taskgroups: newUser.taskgroups,
       department: newUser.department,
+      assignedDepartment: newUser.assignedDepartment,
+      assignedDepartmentId: newUser.assignedDepartmentId,
       isActive: newUser.isActive,
       createdAt: newUser.createdAt,
     };
@@ -272,6 +323,7 @@ export class UserService {
     data: {
       fullName?: string;
       departmentId?: string;
+      assignedDepartmentId?: string | null;
       position?: string;
       role?: Role;
       taskgroups?: Taskgroup[];
@@ -302,6 +354,9 @@ export class UserService {
       data: {
         ...(data.fullName ? { fullName: data.fullName.trim() } : {}),
         ...(data.departmentId ? { departmentId: data.departmentId } : {}),
+        ...(data.assignedDepartmentId !== undefined
+          ? { assignedDepartmentId: data.assignedDepartmentId }
+          : {}),
         ...(data.position ? { position: data.position } : {}),
         ...(data.role ? { role: data.role } : {}),
         ...(data.taskgroups !== undefined ? { taskgroups: data.taskgroups } : {}),
@@ -310,6 +365,9 @@ export class UserService {
       },
       include: {
         department: {
+          select: { id: true, name: true },
+        },
+        assignedDepartment: {
           select: { id: true, name: true },
         },
       },
@@ -324,6 +382,8 @@ export class UserService {
       careerHistory: resolveCareerHistory(updated),
       taskgroups: updated.taskgroups,
       department: updated.department,
+      assignedDepartment: updated.assignedDepartment,
+      assignedDepartmentId: updated.assignedDepartmentId,
       isActive: updated.isActive,
       createdAt: updated.createdAt,
     };
@@ -357,11 +417,7 @@ export class UserService {
       throw error;
     }
 
-    // Permanently delete member (cascading evaluations, transactions, timeline)
-    await prisma.user.delete({
-      where: { id: userId },
-    });
-
+    await prisma.user.delete({ where: { id: userId } });
     return { message: `Membro ${user.fullName} excluído com sucesso.` };
   }
 
@@ -372,18 +428,23 @@ export class UserService {
   }
 
   static async getDashboardSummary(userId: string) {
-    // 1. Balance
+    // 1. Current Balance
     const transactions = await prisma.walletTransaction.findMany({
       where: { userId },
       select: { amount: true },
     });
     const currentBalance = transactions.reduce((acc, curr) => acc + Number(curr.amount), 0);
 
-    // 2. All SAD scores & Historical Average
+    // 2. SAD Evaluations average and latest
     const sadEvaluations = await prisma.evaluationSAD.findMany({
       where: { userId },
-      select: { id: true, term: true, score: true, reportPdfUrl: true, createdAt: true },
       orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        term: true,
+        score: true,
+        reportPdfUrl: true,
+      },
     });
 
     const totalSadCount = sadEvaluations.length;

@@ -46,6 +46,13 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             name: true,
           },
         },
+        assignedDepartmentId: true,
+        assignedDepartment: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         position: true,
         taskgroups: true,
         isActive: true,
@@ -69,6 +76,8 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
       role: user.role,
       departmentId: user.departmentId,
       departmentName: user.department?.name,
+      assignedDepartmentId: user.assignedDepartmentId,
+      assignedDepartmentName: user.assignedDepartment?.name,
       position: user.position,
       taskgroups: user.taskgroups || [],
     };

@@ -19,6 +19,7 @@ import {
   TimelineCategory,
   CalendarCategory,
   Taskgroup,
+  TaskgroupItem,
   SupportTicket,
   SupportMessage,
   SupportCategory,
@@ -41,6 +42,7 @@ import {
   AlertCircle,
   PlusCircle,
   UserPlus,
+  Layers,
   KeyRound,
   Trash2,
   Edit3,
@@ -231,8 +233,52 @@ export const Backoffice: React.FC = () => {
     },
   });
 
+  // Fetch Taskgroups
+  const { data: taskgroupsData } = useQuery<{ taskgroups: TaskgroupItem[] }>({
+    queryKey: ['backoffice-taskgroups'],
+    queryFn: async () => {
+      const res = await api.get('/taskgroups');
+      return res.data;
+    },
+  });
+
   const users = usersData?.users || [];
   const departments = deptsData?.departments || [];
+  const taskgroupsList = taskgroupsData?.taskgroups || [];
+
+  // ================= Taskgroups Management (Admin only) =================
+  const [isManageTaskgroupsOpen, setIsManageTaskgroupsOpen] = useState(false);
+  const [newTaskgroupName, setNewTaskgroupName] = useState('');
+
+  const createTaskgroupMutation = useMutation({
+    mutationFn: async () => {
+      const res = await api.post('/taskgroups', { name: newTaskgroupName.trim() });
+      return res.data;
+    },
+    onSuccess: () => {
+      showNotification('Nova taskgroup criada com sucesso!');
+      queryClient.invalidateQueries({ queryKey: ['backoffice-taskgroups'] });
+      setNewTaskgroupName('');
+    },
+    onError: (err: any) => {
+      showNotification(err.response?.data?.error?.message || 'Erro ao criar taskgroup.', true);
+    },
+  });
+
+  const deleteTaskgroupMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await api.delete(`/taskgroups/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      showNotification('Taskgroup removida com sucesso!');
+      queryClient.invalidateQueries({ queryKey: ['backoffice-taskgroups'] });
+      queryClient.invalidateQueries({ queryKey: ['backoffice-users'] });
+    },
+    onError: (err: any) => {
+      showNotification(err.response?.data?.error?.message || 'Erro ao remover taskgroup.', true);
+    },
+  });
 
   const showNotification = (msg: string, isError = false) => {
     if (isError) {
@@ -877,15 +923,24 @@ export const Backoffice: React.FC = () => {
           </p>
         </div>
 
-        {/* Action Button for Admins: Create Member */}
+        {/* Action Buttons for Admins: Create Member & Manage Taskgroups */}
         {canManageUsers && (
-          <button
-            onClick={() => setIsCreateUserOpen(true)}
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all cursor-pointer self-start md:self-auto"
-          >
-            <UserPlus className="h-4 w-4" />
-            <span>Criar Novo Membro</span>
-          </button>
+          <div className="flex items-center gap-2.5 flex-wrap self-start md:self-auto">
+            <button
+              onClick={() => setIsManageTaskgroupsOpen(true)}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white border border-[#151e33]/20 hover:border-[#ff63f6] text-[#151e33] hover:text-[#ff63f6] text-xs font-bold shadow-sm transition-all cursor-pointer"
+            >
+              <Layers className="h-4 w-4" />
+              <span>Gerir Taskgroups</span>
+            </button>
+            <button
+              onClick={() => setIsCreateUserOpen(true)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
+            >
+              <UserPlus className="h-4 w-4" />
+              <span>Criar Novo Membro</span>
+            </button>
+          </div>
         )}
       </div>
 
@@ -2773,39 +2828,47 @@ export const Backoffice: React.FC = () => {
             <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block mb-1.5">
               Taskgroups Associadas
             </label>
-            <div className="flex flex-wrap gap-4 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
-                <input
-                  type="checkbox"
-                  checked={newTaskgroups.includes('CSR')}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setNewTaskgroups([...newTaskgroups, 'CSR']);
-                    } else {
-                      setNewTaskgroups(newTaskgroups.filter((t) => t !== 'CSR'));
-                    }
-                  }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
-                />
-                <span>🌱 Taskgroup CSR (RSC)</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
-                <input
-                  type="checkbox"
-                  checked={newTaskgroups.includes('PARTNERSHIPS')}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setNewTaskgroups([...newTaskgroups, 'PARTNERSHIPS']);
-                    } else {
-                      setNewTaskgroups(newTaskgroups.filter((t) => t !== 'PARTNERSHIPS'));
-                    }
-                  }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
-                />
-                <span>🤝 Taskgroup Partnerships</span>
-              </label>
-            </div>
+            {taskgroupsList.length === 0 ? (
+              <p className="text-xs text-[#151e33]/50 italic p-3 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
+                Nenhuma taskgroup ativa registada no sistema.
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2.5 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
+                {taskgroupsList.map((tg) => {
+                  const isChecked = newTaskgroups.some(
+                    (t) => t.toLowerCase() === tg.name.toLowerCase()
+                  );
+                  return (
+                    <label
+                      key={tg.id}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold cursor-pointer transition-all ${
+                        isChecked
+                          ? 'bg-white border-[#ff63f6] text-[#151e33] shadow-sm'
+                          : 'bg-white/60 border-[#151e33]/10 text-[#151e33]/70 hover:border-[#151e33]/25'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setNewTaskgroups([...newTaskgroups, tg.name]);
+                          } else {
+                            setNewTaskgroups(
+                              newTaskgroups.filter(
+                                (t) => t.toLowerCase() !== tg.name.toLowerCase()
+                              )
+                            );
+                          }
+                        }}
+                        className="h-3.5 w-3.5 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
+                      />
+                      <TaskgroupBadge taskgroup={tg.name} />
+                    </label>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="pt-4 flex items-center justify-end gap-2.5">
@@ -2925,39 +2988,47 @@ export const Backoffice: React.FC = () => {
             <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block mb-1.5">
               Taskgroups Associadas
             </label>
-            <div className="flex flex-wrap gap-4 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
-                <input
-                  type="checkbox"
-                  checked={editTaskgroups.includes('CSR')}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setEditTaskgroups([...editTaskgroups, 'CSR']);
-                    } else {
-                      setEditTaskgroups(editTaskgroups.filter((t) => t !== 'CSR'));
-                    }
-                  }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
-                />
-                <span>🌱 Taskgroup CSR (RSC)</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
-                <input
-                  type="checkbox"
-                  checked={editTaskgroups.includes('PARTNERSHIPS')}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setEditTaskgroups([...editTaskgroups, 'PARTNERSHIPS']);
-                    } else {
-                      setEditTaskgroups(editTaskgroups.filter((t) => t !== 'PARTNERSHIPS'));
-                    }
-                  }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
-                />
-                <span>🤝 Taskgroup Partnerships</span>
-              </label>
-            </div>
+            {taskgroupsList.length === 0 ? (
+              <p className="text-xs text-[#151e33]/50 italic p-3 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
+                Nenhuma taskgroup ativa registada no sistema.
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2.5 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
+                {taskgroupsList.map((tg) => {
+                  const isChecked = editTaskgroups.some(
+                    (t) => t.toLowerCase() === tg.name.toLowerCase()
+                  );
+                  return (
+                    <label
+                      key={tg.id}
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold cursor-pointer transition-all ${
+                        isChecked
+                          ? 'bg-white border-[#ff63f6] text-[#151e33] shadow-sm'
+                          : 'bg-white/60 border-[#151e33]/10 text-[#151e33]/70 hover:border-[#151e33]/25'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setEditTaskgroups([...editTaskgroups, tg.name]);
+                          } else {
+                            setEditTaskgroups(
+                              editTaskgroups.filter(
+                                (t) => t.toLowerCase() !== tg.name.toLowerCase()
+                              )
+                            );
+                          }
+                        }}
+                        className="h-3.5 w-3.5 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
+                      />
+                      <TaskgroupBadge taskgroup={tg.name} />
+                    </label>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div>
@@ -3085,6 +3156,106 @@ export const Backoffice: React.FC = () => {
               className="px-6 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
               {deleteUserMutation.isPending ? 'A excluir...' : 'Confirmar Exclusão'}
+            </button>
+          </div>
+        </div>
+      </Dialog>
+
+      {/* ================= MODAL: GESTÃO DE TASKGROUPS (ADMIN) ================= */}
+      <Dialog
+        isOpen={isManageTaskgroupsOpen}
+        onClose={() => setIsManageTaskgroupsOpen(false)}
+        title="Gestão de Taskgroups da YME"
+        description="Cria novas taskgroups ou remove existentes. A remoção desassocia automaticamente a taskgroup de todos os membros que a possuam."
+        maxWidth="md"
+      >
+        <div className="space-y-5 pt-2">
+          {/* Form to create new taskgroup */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!newTaskgroupName.trim()) return;
+              createTaskgroupMutation.mutate();
+            }}
+            className="flex items-center gap-2"
+          >
+            <div className="flex-1">
+              <Input
+                placeholder="Nome da nova taskgroup (ex: Hive, Concerto Solidário...)"
+                value={newTaskgroupName}
+                onChange={(e) => setNewTaskgroupName(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={createTaskgroupMutation.isPending || !newTaskgroupName.trim()}
+              className="mt-1 h-10 px-5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shrink-0"
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>{createTaskgroupMutation.isPending ? 'A criar...' : 'Criar'}</span>
+            </button>
+          </form>
+
+          {/* List of current taskgroups */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block">
+              Taskgroups Ativas ({taskgroupsList.length})
+            </label>
+            {taskgroupsList.length === 0 ? (
+              <p className="text-xs text-[#151e33]/50 italic p-4 rounded-[20px] bg-slate-50 border border-[#151e33]/10 text-center">
+                Sem taskgroups ativas no momento.
+              </p>
+            ) : (
+              <div className="divide-y divide-[#151e33]/5 border border-[#151e33]/10 rounded-[20px] bg-slate-50 overflow-hidden">
+                {taskgroupsList.map((tg) => {
+                  const membersWithTg = users.filter((u) =>
+                    (u.taskgroups || []).some(
+                      (t) => t.toLowerCase() === tg.name.toLowerCase()
+                    )
+                  ).length;
+                  return (
+                    <div
+                      key={tg.id}
+                      className="flex items-center justify-between px-4 py-3 bg-white hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <TaskgroupBadge taskgroup={tg.name} />
+                        <span className="text-xs text-[#151e33]/60 font-medium">
+                          {membersWithTg} {membersWithTg === 1 ? 'membro associado' : 'membros associados'}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              `Tens a certeza que desejas remover a taskgroup "${tg.name}"? Ela será desvinculada de ${membersWithTg} membro(s).`
+                            )
+                          ) {
+                            deleteTaskgroupMutation.mutate(tg.id);
+                          }
+                        }}
+                        disabled={deleteTaskgroupMutation.isPending}
+                        className="p-1.5 rounded-full hover:bg-rose-50 text-rose-600 transition-colors cursor-pointer"
+                        title="Remover Taskgroup"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className="pt-2 flex justify-end">
+            <button
+              type="button"
+              onClick={() => setIsManageTaskgroupsOpen(false)}
+              className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
+            >
+              Fechar
             </button>
           </div>
         </div>

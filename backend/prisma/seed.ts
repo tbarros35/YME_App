@@ -6,7 +6,6 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 import {
   PrismaClient,
   Role,
-  Taskgroup,
   WalletType,
   TimelineCategory,
   CalendarCategory,
@@ -84,6 +83,23 @@ async function main() {
     departmentMap[deptName] = dept.id;
   }
 
+  // 1.1 Criar ou garantir Taskgroups Oficiais
+  console.log('🌱 A verificar taskgroups oficiais...');
+  const INITIAL_TASKGROUPS = ['CSR', 'Partnerships', 'Hive', 'Concerto Solidário'];
+  for (const tgName of INITIAL_TASKGROUPS) {
+    const existing = await prisma.taskgroup.findUnique({
+      where: { name: tgName },
+    });
+    if (!existing) {
+      await prisma.taskgroup.create({
+        data: { name: tgName },
+      });
+      console.log(`  ➕ Criada taskgroup: ${tgName}`);
+    } else {
+      console.log(`  ✓ Taskgroup existente: ${tgName}`);
+    }
+  }
+
   // 2. Criar ou garantir Conta de Administrador Principal (Executive Board - CEO)
   const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@yme.pt';
   const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'password123';
@@ -104,7 +120,7 @@ async function main() {
         role: Role.ADMIN,
         departmentId: departmentMap['Executive Board'],
         position: 'CEO',
-        taskgroups: [Taskgroup.CSR, Taskgroup.PARTNERSHIPS],
+        taskgroups: ['CSR', 'Partnerships'],
         careerHistory: [
           'Trainee of Brand Strategy',
           'Junior Consultant of Brand Strategy',
@@ -254,7 +270,7 @@ async function main() {
         'Junior Consultant of Human Resources',
         'Senior Consultant of Human Resources',
       ],
-      taskgroups: [Taskgroup.PARTNERSHIPS],
+      taskgroups: ['Partnerships'],
       isActive: true,
     },
   });
@@ -331,7 +347,7 @@ async function main() {
         'Junior Consultant of Digital Development',
         'Senior Consultant of Digital Development',
       ],
-      taskgroups: [Taskgroup.CSR],
+      taskgroups: ['CSR'],
       isActive: true,
     },
   });

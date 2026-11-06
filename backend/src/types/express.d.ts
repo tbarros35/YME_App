@@ -1,4 +1,4 @@
-import { Role, Taskgroup } from '@prisma/client';
+import { Role } from '@prisma/client';
 
 declare global {
   namespace Express {
@@ -13,7 +13,7 @@ declare global {
         assignedDepartmentId?: string | null;
         assignedDepartmentName?: string;
         position: string;
-        taskgroups: Taskgroup[];
+        taskgroups: string[];
       };
     }
   }

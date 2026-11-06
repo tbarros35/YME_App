@@ -6,6 +6,7 @@ import timelineRoutes from './timeline.routes';
 import calendarRoutes from './calendar.routes';
 import userRoutes from './user.routes';
 import supportRoutes from './support.routes';
+import taskgroupRoutes from './taskgroup.routes';
 import { UserController } from '../controllers/user.controller';
 import { authenticate } from '../middlewares/auth';
 
@@ -19,5 +20,6 @@ router.use('/timeline', timelineRoutes);
 router.use('/calendar', calendarRoutes);
 router.use('/users', userRoutes);
 router.use('/support', supportRoutes);
+router.use('/taskgroups', taskgroupRoutes);
 
 export default router;

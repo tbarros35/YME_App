@@ -61,22 +61,40 @@ export const RoleBadge: React.FC<{ role: Role }> = ({ role }) => {
 };
 
 export const TaskgroupBadge: React.FC<{ taskgroup: Taskgroup }> = ({ taskgroup }) => {
-  switch (taskgroup) {
-    case 'CSR':
-      return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#151e33] text-white border border-[#151e33]">
-          🌱 CSR
-        </span>
-      );
-    case 'PARTNERSHIPS':
-      return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30">
-          🤝 Partnerships
-        </span>
-      );
-    default:
-      return null;
+  const normalized = (taskgroup || '').trim().toUpperCase();
+  if (normalized === 'CSR') {
+    return (
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#151e33] text-white border border-[#151e33]">
+        🌱 CSR
+      </span>
+    );
   }
+  if (normalized === 'PARTNERSHIPS') {
+    return (
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30">
+        🤝 Partnerships
+      </span>
+    );
+  }
+  if (normalized === 'HIVE') {
+    return (
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-900 border border-amber-200">
+        🐝 Hive
+      </span>
+    );
+  }
+  if (normalized.includes('CONCERTO')) {
+    return (
+      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-900 border border-purple-200">
+        🎵 Concerto Solidário
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200">
+      ⚡ {taskgroup}
+    </span>
+  );
 };
 
 export const WalletTypeBadge: React.FC<{ type: WalletType; amount: number }> = ({ type, amount }) => {

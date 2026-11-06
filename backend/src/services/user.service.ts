@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { prisma } from '../config/prisma';
-import { Role, Taskgroup } from '@prisma/client';
+import { Role } from '@prisma/client';
 
 export function resolveCareerHistory(user: {
   position?: string;
@@ -162,7 +162,7 @@ export class UserService {
     assignedDepartmentId?: string | null;
     position: string;
     role?: Role;
-    taskgroups?: Taskgroup[];
+    taskgroups?: string[];
     careerHistory?: string[];
     highestPreviousPosition?: 'NONE' | 'TRAINEE' | 'JUNIOR_CONSULTANT';
     previousPositions?: string[];
@@ -326,7 +326,7 @@ export class UserService {
       assignedDepartmentId?: string | null;
       position?: string;
       role?: Role;
-      taskgroups?: Taskgroup[];
+      taskgroups?: string[];
       careerHistory?: string[];
       isActive?: boolean;
     }

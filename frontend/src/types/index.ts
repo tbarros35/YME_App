@@ -10,7 +10,13 @@ export type Position =
   | 'Junior Consultant'
   | 'Trainee';
 
-export type Taskgroup = 'CSR' | 'PARTNERSHIPS';
+export type Taskgroup = string;
+
+export interface TaskgroupItem {
+  id: string;
+  name: string;
+  createdAt?: string;
+}
 
 export type DepartmentName =
   | 'Executive Board'

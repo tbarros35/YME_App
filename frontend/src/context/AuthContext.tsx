@@ -134,10 +134,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (isHumanResources) {
       categories.push('HR_ACTIVITY');
     }
-    if (user.taskgroups?.includes('CSR')) {
+    if (user.taskgroups?.some((tg) => tg.toUpperCase() === 'CSR')) {
       categories.push('CSR_ACTIVITY');
     }
-    if (user.taskgroups?.includes('PARTNERSHIPS')) {
+    if (user.taskgroups?.some((tg) => tg.toUpperCase() === 'PARTNERSHIPS')) {
       categories.push('OPEN_DAY');
     }
     return categories;

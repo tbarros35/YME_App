@@ -220,8 +220,8 @@ export const requireCalendarCreatePermission = (req: Request, res: Response, nex
   const user = req.user;
   const isAdmin = user.role === 'ADMIN';
   const isHR = user.departmentName === 'Human Resources';
-  const isCSR = user.taskgroups?.includes('CSR');
-  const isPartnerships = user.taskgroups?.includes('PARTNERSHIPS');
+  const isCSR = user.taskgroups?.some((t) => t.toUpperCase() === 'CSR');
+  const isPartnerships = user.taskgroups?.some((t) => t.toUpperCase() === 'PARTNERSHIPS');
 
   // Compute allowed categories for this user
   const allowedCategories: CalendarCategory[] = [];

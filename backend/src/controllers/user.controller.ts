@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
-import { Role, Taskgroup } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { UserService } from '../services/user.service';
 
 const createUserSchema = z.object({
@@ -11,7 +11,7 @@ const createUserSchema = z.object({
   assignedDepartmentId: z.string().uuid().nullable().optional(),
   position: z.string().min(2, 'O cargo é obrigatório'),
   role: z.nativeEnum(Role).optional(),
-  taskgroups: z.array(z.nativeEnum(Taskgroup)).optional(),
+  taskgroups: z.array(z.string()).optional(),
   careerHistory: z.array(z.string()).optional(),
   highestPreviousPosition: z.enum(['NONE', 'TRAINEE', 'JUNIOR_CONSULTANT']).optional(),
   previousPositions: z.array(z.string()).optional(),
@@ -23,7 +23,7 @@ const updateUserSchema = z.object({
   assignedDepartmentId: z.string().uuid().nullable().optional(),
   position: z.string().min(2).optional(),
   role: z.nativeEnum(Role).optional(),
-  taskgroups: z.array(z.nativeEnum(Taskgroup)).optional(),
+  taskgroups: z.array(z.string()).optional(),
   careerHistory: z.array(z.string()).optional(),
   isActive: z.boolean().optional(),
 });

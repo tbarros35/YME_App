@@ -3,13 +3,22 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-import { PrismaClient, Role, Taskgroup, WalletType, TimelineCategory, CalendarCategory } from '@prisma/client';
+import {
+  PrismaClient,
+  Role,
+  Taskgroup,
+  WalletType,
+  TimelineCategory,
+  CalendarCategory,
+} from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL || 'postgresql://yme_user:yme_password_secure@localhost:5432/yme_portal_db?schema=public',
+      url:
+        process.env.DATABASE_URL ||
+        'postgresql://yme_user:yme_password_secure@localhost:5432/yme_portal_db?schema=public',
     },
   },
 });
@@ -30,23 +39,98 @@ startxref
 190
 %%EOF`;
 
-async function main() {
-  console.log('🌱 Starting YME Portal database seeding with official Executive Board, Taskgroups & SAD Scores (0-6 scale)...');
+const OFFICIAL_DEPARTMENTS = [
+  'Brand Strategy',
+  'Digital Development',
+  'Human Resources',
+  'Legal & Finance',
+  'Quality Management',
+  'Sales & Commercial',
+] as const;
 
-  // Skip seeding if database already has users
-  const userCount = await prisma.user.count();
-  if (userCount > 0) {
-    console.log(`ℹ️ Database already has ${userCount} users. Skipping seed to preserve data.`);
+async function main() {
+  const isProduction = process.env.NODE_ENV === 'production';
+  console.log(`🌱 A iniciar o povoamento da base de dados YME Portal (Modo: ${isProduction ? 'PRODUÇÃO' : 'DESENVOLVIMENTO'})...`);
+
+  // Ensure uploads directories exist
+  const uploadsSadDir = path.resolve(__dirname, '../uploads/sad');
+  const uploadsReimbursementsDir = path.resolve(__dirname, '../uploads/reimbursements');
+  const uploadsProofsDir = path.resolve(__dirname, '../uploads/reimbursement_proofs');
+
+  for (const dir of [uploadsSadDir, uploadsReimbursementsDir, uploadsProofsDir]) {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+  }
+
+  // 1. Criar ou garantir os 6 Departamentos Oficiais da YME (Idempotente)
+  console.log('🏢 A verificar departamentos oficiais...');
+  const departmentMap: Record<string, string> = {};
+
+  for (const deptName of OFFICIAL_DEPARTMENTS) {
+    let dept = await prisma.department.findUnique({
+      where: { name: deptName },
+    });
+
+    if (!dept) {
+      dept = await prisma.department.create({
+        data: { name: deptName },
+      });
+      console.log(`  ➕ Criado departamento: ${deptName}`);
+    } else {
+      console.log(`  ✓ Departamento existente: ${deptName}`);
+    }
+    departmentMap[deptName] = dept.id;
+  }
+
+  // 2. Criar ou garantir Conta de Administrador Principal (Executive Board)
+  const adminEmail = process.env.SEED_ADMIN_EMAIL || 'admin@yme.pt';
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || 'password123';
+  const adminName = process.env.SEED_ADMIN_NAME || 'Rodrigo Antunes';
+
+  const existingAdmin = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
+
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
+
+  if (!existingAdmin) {
+    await prisma.user.create({
+      data: {
+        email: adminEmail,
+        passwordHash,
+        fullName: adminName,
+        role: Role.ADMIN,
+        departmentId: departmentMap['Digital Development'],
+        position: 'Head',
+        taskgroups: [Taskgroup.CSR, Taskgroup.PARTNERSHIPS],
+        isActive: true,
+      },
+    });
+    console.log(`👑 Conta Administrador Principal criada: ${adminEmail}`);
+  } else {
+    console.log(`✓ Conta Administrador Principal existente: ${adminEmail}`);
+  }
+
+  // Se estivermos em PRODUÇÃO, terminamos aqui para manter a base de dados limpa
+  if (isProduction) {
+    console.log('🛡️ Modo de Produção: Estrutura base e conta de Direção criadas. Dados de teste ignorados.');
+    console.log('✅ Base de dados de produção pronta para uso!');
     return;
   }
 
-  // Ensure uploads/sad directory exists
-  const uploadsDir = path.resolve(__dirname, '../uploads/sad');
-  if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
+  // ==============================================================================
+  // DADOS DE DEMONSTRAÇÃO E TESTE (APENAS AMBIENTE DE DESENVOLVIMENTO)
+  // ==============================================================================
+  const totalUsers = await prisma.user.count();
+  if (totalUsers > 2) {
+    console.log(`ℹ️ Base de dados de desenvolvimento já possui ${totalUsers} utilizadores. A ignorar criação de dados demo adicionais.`);
+    return;
   }
 
-  // Create sample PDF files for demonstration
+  console.log('📦 A carregar dados de demonstração (membros de teste, avaliações SAD, carteira e calendário)...');
+
+  // Criar ficheiros PDF de exemplo para relatórios SAD
   const samplePdfs = [
     'sad_2024_2025_q1_tiago_silva.pdf',
     'sad_2024_2025_q2_tiago_silva.pdf',
@@ -56,425 +140,229 @@ async function main() {
   ];
 
   for (const pdfName of samplePdfs) {
-    fs.writeFileSync(path.join(uploadsDir, pdfName), minimalPdfContent);
+    const filePath = path.join(uploadsSadDir, pdfName);
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(filePath, minimalPdfContent);
+    }
   }
 
-  // Clean up existing data
-  await prisma.walletTransaction.deleteMany();
-  await prisma.evaluationSAD.deleteMany();
-  await prisma.timelineEvent.deleteMany();
-  await prisma.calendarEvent.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.department.deleteMany();
-
-  console.log('🧹 Cleaned existing database records.');
-
-  // 1. Create the Official 6 Departments
-  const brandDept = await prisma.department.create({
-    data: { name: 'Brand Strategy' },
-  });
-  const digitalDept = await prisma.department.create({
-    data: { name: 'Digital Development' },
-  });
-  const hrDept = await prisma.department.create({
-    data: { name: 'Human Resources' },
-  });
-  const legalDept = await prisma.department.create({
-    data: { name: 'Legal & Finance' },
-  });
-  const qualityDept = await prisma.department.create({
-    data: { name: 'Quality Management' },
-  });
-  const salesDept = await prisma.department.create({
-    data: { name: 'Sales & Commercial' },
-  });
-
-  console.log('🏢 Official Departments created (Brand, Digital, HR, Legal & Finance, Quality, Sales).');
-
-  // 2. Hash default password
-  const passwordHash = await bcrypt.hash('password123', 10);
-
-  // 3. Create the 3 Executive Board Members (All are ADMIN)
-  const presidentAdmin = await prisma.user.create({
-    data: {
-      email: 'admin@yme.pt',
-      passwordHash,
-      fullName: 'Rodrigo Antunes',
-      role: Role.ADMIN,
-      departmentId: digitalDept.id,
-      position: 'Head',
-      taskgroups: [Taskgroup.CSR, Taskgroup.PARTNERSHIPS],
-      isActive: true,
-    },
-  });
-
-  const vpAdmin = await prisma.user.create({
-    data: {
+  // Outros Administradores da Executive Board
+  const vpAdmin = await prisma.user.upsert({
+    where: { email: 'vp@yme.pt' },
+    update: {},
+    create: {
       email: 'vp@yme.pt',
       passwordHash,
       fullName: 'Inês Duarte',
       role: Role.ADMIN,
-      departmentId: brandDept.id,
+      departmentId: departmentMap['Brand Strategy'],
       position: 'Head',
       taskgroups: [],
       isActive: true,
     },
   });
 
-  const execAdmin = await prisma.user.create({
-    data: {
+  const execAdmin = await prisma.user.upsert({
+    where: { email: 'exec@yme.pt' },
+    update: {},
+    create: {
       email: 'exec@yme.pt',
       passwordHash,
       fullName: 'Afonso Henriques',
       role: Role.ADMIN,
-      departmentId: qualityDept.id,
+      departmentId: departmentMap['Quality Management'],
       position: 'Head',
       taskgroups: [],
       isActive: true,
     },
   });
 
-  console.log('👑 Executive Board Admins created (3 Admins).');
-
-  // 4. Create Human Resources Members (Authorized for SAD + HR_ACTIVITY)
-  const hrManager = await prisma.user.create({
-    data: {
+  // Recursos Humanos
+  await prisma.user.upsert({
+    where: { email: 'hr.manager@yme.pt' },
+    update: {},
+    create: {
       email: 'hr.manager@yme.pt',
       passwordHash,
       fullName: 'Marta Ribeiro',
       role: Role.DIRECTOR,
-      departmentId: hrDept.id,
+      departmentId: departmentMap['Human Resources'],
       position: 'Manager',
       taskgroups: [],
       isActive: true,
     },
   });
 
-  const hrConsultant = await prisma.user.create({
-    data: {
-      email: 'hr.consultant@yme.pt',
-      passwordHash,
-      fullName: 'Tiago Ferreira',
-      role: Role.MEMBER,
-      departmentId: hrDept.id,
-      position: 'Senior Consultant',
-      taskgroups: [Taskgroup.PARTNERSHIPS],
-      isActive: true,
-    },
-  });
-
-  // 5. Create Legal & Finance Members (Head & Manager authorized for Wallet)
-  const legalHead = await prisma.user.create({
-    data: {
-      email: 'legal.head@yme.pt',
-      passwordHash,
-      fullName: 'Diogo Fonseca',
-      role: Role.DIRECTOR,
-      departmentId: legalDept.id,
-      position: 'Head',
-      taskgroups: [],
-      isActive: true,
-    },
-  });
-
-  const legalManager = await prisma.user.create({
-    data: {
-      email: 'legal.manager@yme.pt',
-      passwordHash,
-      fullName: 'Camila Neves',
-      role: Role.MEMBER,
-      departmentId: legalDept.id,
-      position: 'Manager',
-      taskgroups: [],
-      isActive: true,
-    },
-  });
-
-  // 6. Create Digital Development, Sales & Trainee Members
-  const memberUser = await prisma.user.create({
-    data: {
+  // Membro Principal de Testes (Tiago Silva)
+  const memberUser = await prisma.user.upsert({
+    where: { email: 'member@yme.pt' },
+    update: {},
+    create: {
       email: 'member@yme.pt',
       passwordHash,
       fullName: 'Tiago Silva',
       role: Role.MEMBER,
-      departmentId: digitalDept.id,
+      departmentId: departmentMap['Digital Development'],
       position: 'Senior Consultant',
       taskgroups: [Taskgroup.CSR],
       isActive: true,
     },
   });
 
-  const salesHead = await prisma.user.create({
-    data: {
-      email: 'sales.head@yme.pt',
-      passwordHash,
-      fullName: 'Gonçalo Ramos',
-      role: Role.DIRECTOR,
-      departmentId: salesDept.id,
-      position: 'Head',
-      taskgroups: [Taskgroup.PARTNERSHIPS],
-      isActive: true,
-    },
-  });
+  // Avaliações SAD para Tiago Silva
+  const sadCount = await prisma.evaluationSAD.count({ where: { userId: memberUser.id } });
+  if (sadCount === 0) {
+    const sadData = [
+      {
+        userId: memberUser.id,
+        term: '2024/2025 - Q1',
+        score: 4.85,
+        reportPdfUrl: '/uploads/sad/sad_2024_2025_q1_tiago_silva.pdf',
+        feedbackNotes:
+          'Excelente integração no departamento de Digital Development. Demonstrou autonomia na refatoração da stack interna e proatividade.',
+      },
+      {
+        userId: memberUser.id,
+        term: '2024/2025 - Q2',
+        score: 5.1,
+        reportPdfUrl: '/uploads/sad/sad_2024_2025_q2_tiago_silva.pdf',
+        feedbackNotes:
+          'Grande evolução na comunicação inter-departamental. Entregou o módulo de gestão com zero bloqueios críticos.',
+      },
+      {
+        userId: memberUser.id,
+        term: '2024/2025 - Q3',
+        score: 5.35,
+        reportPdfUrl: '/uploads/sad/sad_2024_2025_q3_tiago_silva.pdf',
+        feedbackNotes:
+          'Liderou com brio o task group de infraestrutura e DevOps. Capacidade de mentoria para novos trainees altamente elogiada.',
+      },
+      {
+        userId: memberUser.id,
+        term: '2024/2025 - Q4',
+        score: 5.6,
+        reportPdfUrl: '/uploads/sad/sad_2024_2025_q4_tiago_silva.pdf',
+        feedbackNotes:
+          'Desempenho exemplar no fecho do mandato. Consistência técnica e forte alinhamento com a visão estratégica da Executive Board.',
+      },
+      {
+        userId: memberUser.id,
+        term: '2025/2026 - Q1',
+        score: 5.8,
+        reportPdfUrl: '/uploads/sad/sad_2025_2026_q1_tiago_silva.pdf',
+        feedbackNotes:
+          'Início de mandato estelar como Senior Consultant em Digital Development. Papel fundamental no lançamento da nova YME APP.',
+      },
+    ];
 
-  const traineeUser = await prisma.user.create({
-    data: {
-      email: 'trainee@yme.pt',
-      passwordHash,
-      fullName: 'Beatriz Santos',
-      role: Role.MEMBER,
-      departmentId: brandDept.id,
-      position: 'Trainee',
-      taskgroups: [Taskgroup.CSR],
-      isActive: true,
-    },
-  });
-
-  console.log('👥 Team Members created across all 6 departments and taskgroups.');
-
-  // 7. Create SAD Evaluations for Tiago Silva (0 to 6 Scale)
-  const sadData = [
-    {
-      userId: memberUser.id,
-      term: '2024/2025 - Q1',
-      score: 4.85,
-      reportPdfUrl: '/uploads/sad/sad_2024_2025_q1_tiago_silva.pdf',
-      feedbackNotes:
-        'Excelente integração no departamento de Digital Development. Demonstrou autonomia na refatoração da stack interna e proatividade em propor melhorias na arquitetura.',
-    },
-    {
-      userId: memberUser.id,
-      term: '2024/2025 - Q2',
-      score: 5.10,
-      reportPdfUrl: '/uploads/sad/sad_2024_2025_q2_tiago_silva.pdf',
-      feedbackNotes:
-        'Grande evolução na comunicação inter-departamental. Entregou o módulo de gestão com zero bloqueios críticos.',
-    },
-    {
-      userId: memberUser.id,
-      term: '2024/2025 - Q3',
-      score: 5.35,
-      reportPdfUrl: '/uploads/sad/sad_2024_2025_q3_tiago_silva.pdf',
-      feedbackNotes:
-        'Liderou com brio o task group de infraestrutura e DevOps. Capacidade de mentoria para novos trainees altamente elogiada pelos Recursos Humanos.',
-    },
-    {
-      userId: memberUser.id,
-      term: '2024/2025 - Q4',
-      score: 5.60,
-      reportPdfUrl: '/uploads/sad/sad_2024_2025_q4_tiago_silva.pdf',
-      feedbackNotes:
-        'Desempenho exemplar no fecho do mandato. Consistência técnica e forte alinhamento com a visão estratégica da Executive Board.',
-    },
-    {
-      userId: memberUser.id,
-      term: '2025/2026 - Q1',
-      score: 5.80,
-      reportPdfUrl: '/uploads/sad/sad_2025_2026_q1_tiago_silva.pdf',
-      feedbackNotes:
-        'Início de mandato estelar como Senior Consultant em Digital Development. Papel fundamental no lançamento da nova YME APP.',
-    },
-  ];
-
-  for (const item of sadData) {
-    await prisma.evaluationSAD.create({ data: item });
+    for (const item of sadData) {
+      await prisma.evaluationSAD.create({ data: item });
+    }
   }
 
-  // 8. Create Wallet Transactions for Tiago Silva
-  const walletTransactions = [
-    {
-      userId: memberUser.id,
-      amount: 25.0,
-      type: WalletType.SAD_REWARD,
-      description: 'Prémio SAD 2024/2025 Q1 - Top Performer Digital Dev',
-      createdAt: new Date('2024-11-15T10:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: 10.0,
-      type: WalletType.PRESENCE_BONUS,
-      description: 'Bónus de assiduidade e pontualidade em Reuniões Gerais',
-      createdAt: new Date('2024-12-01T14:30:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: -15.0,
-      type: WalletType.EVENT_SPEND,
-      description: 'Inscrição no Encontro Nacional de Juniores Empresas (ENJE)',
-      createdAt: new Date('2025-01-20T09:15:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: 30.0,
-      type: WalletType.SAD_REWARD,
-      description: 'Prémio SAD 2024/2025 Q2 - Excelência de Desempenho',
-      createdAt: new Date('2025-02-28T18:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: 5.0,
-      type: WalletType.ADJUSTMENT,
-      description: 'Crédito de suporte a formação interna de NestJS/React',
-      createdAt: new Date('2025-03-10T11:20:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: -20.0,
-      type: WalletType.EVENT_SPEND,
-      description: 'Jantar de Gala e Comemoração do Aniversário YME',
-      createdAt: new Date('2025-04-12T20:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: 35.0,
-      type: WalletType.SAD_REWARD,
-      description: 'Prémio SAD 2024/2025 Q3 - Top 5 Global da Associação',
-      createdAt: new Date('2025-05-30T17:45:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: 15.0,
-      type: WalletType.PRESENCE_BONUS,
-      description: 'Facilitação de 3 workshops práticos de Git & Docker',
-      createdAt: new Date('2025-06-18T16:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: -12.5,
-      type: WalletType.EVENT_SPEND,
-      description: 'Merchandising Oficial YME - Hoodie Exclusivo de Consultor',
-      createdAt: new Date('2025-07-05T12:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      amount: 40.0,
-      type: WalletType.SAD_REWARD,
-      description: 'Prémio SAD 2024/2025 Q4 - Reconhecimento de Mérito Global',
-      createdAt: new Date('2025-08-01T15:30:00Z'),
-    },
-  ];
+  // Transações da Carteira YME para Tiago Silva
+  const txCount = await prisma.walletTransaction.count({ where: { userId: memberUser.id } });
+  if (txCount === 0) {
+    const walletTransactions = [
+      {
+        userId: memberUser.id,
+        amount: 25.0,
+        type: WalletType.SAD_REWARD,
+        description: 'Prémio de SAD 2026 - 2º Quadrimestre',
+        createdAt: new Date('2026-09-02T10:00:00Z'),
+      },
+      {
+        userId: memberUser.id,
+        amount: -25.0,
+        type: WalletType.EVENT_SPEND,
+        description: 'Utilização de Saldo Aprovada: Participação no XI JENC',
+        createdAt: new Date('2026-10-25T14:30:00Z'),
+      },
+      {
+        userId: memberUser.id,
+        amount: 35.0,
+        type: WalletType.SAD_REWARD,
+        description: 'Prémio de SAD 2026 - 3º Quadrimestre',
+        createdAt: new Date('2026-11-01T18:00:00Z'),
+      },
+    ];
 
-  for (const tx of walletTransactions) {
-    await prisma.walletTransaction.create({ data: tx });
+    for (const tx of walletTransactions) {
+      await prisma.walletTransaction.create({ data: tx });
+    }
   }
 
-  // 9. Create Timeline Events for Tiago Silva
-  const timelineEvents = [
-    {
-      userId: memberUser.id,
-      title: 'Recrutamento & Entrada na YME',
-      category: TimelineCategory.RECRUITMENT,
-      description:
-        'Admissão com distinção no processo de recrutamento de outono no departamento de Digital Development.',
-      eventDate: new Date('2024-09-15T09:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      title: 'Bootcamp de Clean Architecture & Full-Stack',
-      category: TimelineCategory.FORMATION,
-      description:
-        'Conclusão de formação intensiva de 24 horas sobre Clean Architecture, React, Node.js, Prisma e Docker.',
-      eventDate: new Date('2024-10-20T18:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      title: 'Alocação ao Projeto Portal de Clientes v2',
-      category: TimelineCategory.PROJECT,
-      description:
-        'Nomeação como Full-Stack Developer responsável pelo desenvolvimento de APIs REST seguras e integração com React.',
-      eventDate: new Date('2024-12-10T10:00:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      title: 'Promoção a Senior Consultant',
-      category: TimelineCategory.AWARD,
-      description:
-        'Reconhecimento pela Executive Board e transição para o cargo de Senior Consultant no departamento de Digital Development.',
-      eventDate: new Date('2025-03-01T14:30:00Z'),
-    },
-    {
-      userId: memberUser.id,
-      title: 'Tech Lead na YME APP 2026',
-      category: TimelineCategory.PROJECT,
-      description:
-        'Liderança técnica e arquitetural da plataforma interna mobile-first para gestão de SAD, Carteira e Calendário.',
-      eventDate: new Date('2025-09-01T09:00:00Z'),
-    },
-  ];
+  // Eventos de Calendário (com categorias oficiais atualizadas)
+  const calCount = await prisma.calendarEvent.count();
+  if (calCount === 0) {
+    const calendarEvents = [
+      {
+        title: 'Assembleia Geral Ordinária - Plano Estratégico',
+        category: CalendarCategory.GENERAL_ASSEMBLY,
+        description:
+          'Apresentação dos resultados do mandato anterior, discussão do plano de atividades anual e votação das novas moções globais.',
+        startTime: new Date('2026-09-10T18:30:00Z'),
+        endTime: new Date('2026-09-10T21:00:00Z'),
+        location: 'Auditório Principal / Sala 1.02',
+      },
+      {
+        title: 'Workshop: Masterclass de Negociação & Pitching Comercial',
+        category: CalendarCategory.FORMATION,
+        description:
+          'Formação avançada e prática para consultores comerciais e gestores de projeto sobre técnicas de fecho e propostas de valor.',
+        startTime: new Date('2026-09-15T15:00:00Z'),
+        endTime: new Date('2026-09-15T18:00:00Z'),
+        location: 'Sala de Conferências YME',
+      },
+      {
+        title: 'Ação Solidária: Recolha e Apoio Comunitário (Taskgroup CSR)',
+        category: CalendarCategory.CSR_ACTIVITY,
+        description:
+          'Iniciativa de voluntariado e responsabilidade social promovida pelo task group CSR em colaboração com entidades locais.',
+        startTime: new Date('2026-09-20T10:00:00Z'),
+        endTime: new Date('2026-09-20T13:30:00Z'),
+        location: 'Sede Comunitária do Porto',
+      },
+      {
+        title: 'YME Open Day & Mostra de Parceiros 2026',
+        category: CalendarCategory.OPEN_DAY,
+        description:
+          'Dia de portas abertas com a presença de alumni, parceiros corporativos e estudantes universitários interessados na YME.',
+        startTime: new Date('2026-09-25T14:00:00Z'),
+        endTime: new Date('2026-09-25T19:00:00Z'),
+        location: 'Hall de Entrada & Sala de Eventos',
+      },
+      {
+        title: 'Reunião Geral de Alinhamento Trimestral',
+        category: CalendarCategory.GENERAL_MEETING,
+        description:
+          'Reunião com todos os departamentos para partilha de novidades, lançamentos e metas para o trimestre.',
+        startTime: new Date('2026-09-28T17:00:00Z'),
+        endTime: new Date('2026-09-28T19:00:00Z'),
+        location: 'Sala Multiusos YME',
+      },
+      {
+        title: 'Submissão de Relatórios de Autoavaliação SAD Q1',
+        category: CalendarCategory.OTHER,
+        description:
+          'Data limite improrrogável para submissão dos formulários de autoavaliação por todos os membros ativos.',
+        startTime: new Date('2026-09-30T23:59:00Z'),
+        endTime: new Date('2026-09-30T23:59:00Z'),
+        location: 'YME APP - Módulo SAD',
+      },
+    ];
 
-  for (const event of timelineEvents) {
-    await prisma.timelineEvent.create({ data: event });
+    for (const calEvent of calendarEvents) {
+      await prisma.calendarEvent.create({ data: calEvent });
+    }
   }
 
-  // 10. Create Calendar Events
-  const calendarEvents = [
-    {
-      title: 'Assembleia Geral Ordinária - Plano Estratégico',
-      category: CalendarCategory.GENERAL_ASSEMBLY,
-      description:
-        'Apresentação dos resultados consolidados pela Executive Board, balanço financeiro e votação do plano de atividades.',
-      startTime: new Date('2026-09-10T18:30:00Z'),
-      endTime: new Date('2026-09-10T21:30:00Z'),
-      location: 'Auditório Principal / Sala 2.04 & Zoom',
-    },
-    {
-      title: 'Workshop: Masterclass de Negociação & Pitching Comercial',
-      category: CalendarCategory.FORMATION,
-      description:
-        'Sessão prática dinamizada por Sales & Commercial sobre técnicas de negociação de propostas e fecho de contratos.',
-      startTime: new Date('2026-09-15T14:00:00Z'),
-      endTime: new Date('2026-09-15T17:30:00Z'),
-      location: 'Espaço Inovação YME / Sala B',
-    },
-    {
-      title: 'Ação Solidária: Recolha e Apoio Comunitário (Taskgroup CSR)',
-      category: CalendarCategory.CSR_ACTIVITY,
-      description:
-        'Iniciativa de Responsabilidade Social Corporativa dinamizada pelo Taskgroup de CSR da YME junto de instituições locais.',
-      startTime: new Date('2026-09-20T09:30:00Z'),
-      endTime: new Date('2026-09-20T16:00:00Z'),
-      location: 'Centro Comunitário / Porto',
-    },
-    {
-      title: 'YME Open Day & Mostra de Parceiros 2026',
-      category: CalendarCategory.OPEN_DAY,
-      description:
-        'Evento aberto a empresas parceiras, alumni e novos candidatos para apresentação de projetos e oportunidades de consultoria.',
-      startTime: new Date('2026-09-25T10:00:00Z'),
-      endTime: new Date('2026-09-25T18:00:00Z'),
-      location: 'Átrio Central da Faculdade / Stand YME',
-    },
-    {
-      title: 'Dinâmica de Integração & Onboarding RH (Recursos Humanos)',
-      category: CalendarCategory.HR_ACTIVITY,
-      description:
-        'Sessão de acompanhamento mensal promovida pela equipa de Recursos Humanos para partilha de feedback e acompanhamento de planos de desenvolvimento.',
-      startTime: new Date('2026-09-28T17:00:00Z'),
-      endTime: new Date('2026-09-28T19:00:00Z'),
-      location: 'Sala Multiusos YME',
-    },
-    {
-      title: 'Submissão de Relatórios de Autoavaliação SAD Q1',
-      category: CalendarCategory.DEADLINE,
-      description:
-        'Data limite improrrogável para submissão dos formulários de autoavaliação por todos os membros ativos.',
-      startTime: new Date('2026-09-30T23:59:00Z'),
-      endTime: new Date('2026-09-30T23:59:00Z'),
-      location: 'YME APP - Módulo SAD',
-    },
-  ];
-
-  for (const calEvent of calendarEvents) {
-    await prisma.calendarEvent.create({ data: calEvent });
-  }
-
-  console.log('📅 Calendar Events created across all categories.');
-  console.log('✅ YME Portal database seed completed successfully!');
+  console.log('✅ Povoamento da base de dados YME Portal concluído com sucesso!');
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Error during seeding:', e);
+    console.error('❌ Erro durante o povoamento da base de dados:', e);
     process.exit(1);
   })
   .finally(async () => {

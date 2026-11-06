@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: yme_postgres_prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-yme_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-yme_portal_prod_db}
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-yme_admin} -d ${POSTGRES_DB:-yme_portal_prod_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - yme_prod_network
+    # Porta 5432 NÃO exposta para a Internet por razões de segurança (apenas acessível internamente pelo backend)
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: yme_backend_prod
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Direção YME}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@yme.pt}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD}
+    volumes:
+      - backend_uploads_prod:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - yme_prod_network
+    # Porta 3001 NÃO exposta para a Internet (o frontend Nginx faz o proxy interno de /api e /uploads)
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: yme_frontend_prod
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - yme_prod_network
+
+volumes:
+  postgres_data_prod:
+  backend_uploads_prod:
+
+networks:
+  yme_prod_network:
+    driver: bridge

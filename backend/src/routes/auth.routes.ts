@@ -5,17 +5,19 @@ import { authenticate } from '../middlewares/auth';
 
 const router = Router();
 
+// Stricter rate limiter for authentication endpoints to prevent brute-force attacks
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 30, // Limit each IP to 30 login requests per windowMs
+  max: 10, // Limit each IP to 10 login requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
   message: {
     error: {
       code: 'TOO_MANY_REQUESTS',
-      message: 'Too many login attempts from this IP, please try again after 15 minutes',
+      message:
+        'Demasiadas tentativas de início de sessão. Por favor aguarda 15 minutos antes de tentar novamente.',
     },
   },
-  standardHeaders: true,
-  legacyHeaders: false,
 });
 
 router.post('/login', loginLimiter, AuthController.login);

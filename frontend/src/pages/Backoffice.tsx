@@ -729,130 +729,124 @@ export const Backoffice: React.FC = () => {
   });
 
   return (
-    <div className="space-y-8 animate-fade-in pb-12">
+    <div className="space-y-8 animate-fade-in pb-16">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#ff63f6] bg-[rgba(255,99,246,0.1)] px-2.5 py-0.5 rounded-full border border-[#ff63f6]/30">
-              Painel de Gestão & Administração
-            </span>
+          <div className="flex items-center gap-3">
+            <span className="w-[3px] h-[22px] bg-[#ff63f6] rounded-full inline-block" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#151e33] tracking-tight">
+              Backoffice
+            </h1>
             {isAdmin && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#151e33] text-white">
+              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#151e33] text-white">
                 Executive Board
               </span>
             )}
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#151e33] tracking-tight flex items-center gap-2">
-            <ShieldCheck className="h-7 w-7 text-[#151e33]" />
-            <span>Backoffice YME APP</span>
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Gestão de membros, taskgroups, SAD, operações de carteira, marcos na jornada e agenda associativa.
+          <p className="text-xs sm:text-sm text-[#151e33]/60 mt-1.5 ml-4">
+            Gestão de membros, taskgroups, SAD, operações de carteira, marcos na jornada e agenda associativa
           </p>
         </div>
 
         {/* Action Button for Admins: Create Member */}
         {canManageUsers && (
-          <Button
-            variant="primary"
+          <button
             onClick={() => setIsCreateUserOpen(true)}
-            size="sm"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all cursor-pointer self-start md:self-auto"
           >
-            <UserPlus className="h-4 w-4 mr-2" />
+            <UserPlus className="h-4 w-4" />
             <span>Criar Novo Membro</span>
-          </Button>
+          </button>
         )}
       </div>
 
       {/* Wallet Requests High-Priority Alert Banner for Admin & Legal */}
       {(canManageWallet || canReviewWalletRequests) && pendingWalletCount > 0 && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-amber-500/10 border-2 border-amber-300 text-amber-900 shadow-clean-sm animate-scale-in">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-md">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-[32px] sm:rounded-[40px] bg-white border border-[#ff63f6]/40 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] animate-scale-in">
+          <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-full bg-[#ff63f6]/10 text-[#ff63f6] flex items-center justify-center shrink-0">
               <Bell className="h-5 w-5 animate-bounce" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-sm text-[#151e33]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-sm sm:text-base text-[#151e33]">
                   {pendingWalletCount} {pendingWalletCount === 1 ? 'Pedido Pendente' : 'Pedidos Pendentes'} de Utilização de Saldo!
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-black uppercase">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#ff63f6] text-white text-[10px] font-black uppercase">
                   Ação Necessária
                 </span>
               </div>
-              <p className="text-xs text-slate-600 mt-0.5">
+              <p className="text-xs text-[#151e33]/60 mt-1">
                 Membros da associação solicitaram a utilização do respetivo saldo e aguardam aprovação ou recusa pelo Departamento Legal & Finance ou Direção.
               </p>
             </div>
           </div>
-          <Button
-            size="sm"
+          <button
             onClick={() => setActiveTab('WALLET')}
-            className="bg-[#151e33] text-white hover:bg-slate-800 shrink-0 font-bold"
+            className="px-5 py-2.5 rounded-full bg-[#151e33] hover:bg-[#1e2a47] text-white text-xs font-bold shrink-0 transition-all shadow-sm self-start sm:self-auto cursor-pointer"
           >
             Rever Pedidos Agora
-          </Button>
+          </button>
         </div>
       )}
 
       {/* Reimbursement Requests High-Priority Alert Banner (ADMIN ONLY) */}
       {isAdmin && pendingReimbursementsCount > 0 && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-rose-500/10 border-2 border-rose-300 text-rose-950 shadow-clean-sm animate-scale-in">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-md">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-[32px] sm:rounded-[40px] bg-white border border-[#ff63f6]/40 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] animate-scale-in">
+          <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-full bg-[#ff63f6]/10 text-[#ff63f6] flex items-center justify-center shrink-0">
               <Receipt className="h-5 w-5 animate-bounce" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-sm text-[#151e33]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-sm sm:text-base text-[#151e33]">
                   {pendingReimbursementsCount} {pendingReimbursementsCount === 1 ? 'Pedido Pendente' : 'Pedidos Pendentes'} de Reembolso de Despesas YME!
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-black uppercase">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#ff63f6] text-white text-[10px] font-black uppercase">
                   Exclusivo Admin
                 </span>
               </div>
-              <p className="text-xs text-slate-600 mt-0.5">
+              <p className="text-xs text-[#151e33]/60 mt-1">
                 Membros submeteram faturas de despesas feitas para a YME e aguardam validação e devolução do dinheiro com anexo obrigatório do comprovativo.
               </p>
             </div>
           </div>
-          <Button
-            size="sm"
+          <button
             onClick={() => {
               setActiveTab('WALLET');
               setWalletSubView('REIMBURSEMENTS');
             }}
-            className="bg-[#151e33] text-white hover:bg-slate-800 shrink-0 font-bold"
+            className="px-5 py-2.5 rounded-full bg-[#151e33] hover:bg-[#1e2a47] text-white text-xs font-bold shrink-0 transition-all shadow-sm self-start sm:self-auto cursor-pointer"
           >
             Rever Reembolsos
-          </Button>
+          </button>
         </div>
       )}
 
       {/* Notifications Banner */}
       {successMessage && (
-        <div className="flex items-center gap-3 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm animate-fade-in shadow-clean-sm">
-          <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
-          <span className="font-semibold">{successMessage}</span>
+        <div className="flex items-center gap-3 p-4 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold animate-fade-in shadow-sm px-6">
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+          <span>{successMessage}</span>
         </div>
       )}
       {errorMessage && (
-        <div className="flex items-center gap-3 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm animate-fade-in shadow-clean-sm">
-          <AlertCircle className="h-5 w-5 shrink-0 text-rose-600" />
-          <span className="font-semibold">{errorMessage}</span>
+        <div className="flex items-center gap-3 p-4 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold animate-fade-in shadow-sm px-6">
+          <AlertCircle className="h-4 w-4 shrink-0 text-rose-600" />
+          <span>{errorMessage}</span>
         </div>
       )}
 
       {/* Tab Navigation */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200">
+      <div className="flex items-center gap-2.5 overflow-x-auto pb-1 no-scrollbar">
         {canManageUsers && (
           <button
             onClick={() => setActiveTab('MEMBERS')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === 'MEMBERS'
-                ? 'bg-[#151e33] text-white shadow-clean-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                ? 'bg-[#151e33] text-white shadow-sm'
+                : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
             }`}
           >
             <Users className="h-4 w-4" />
@@ -863,10 +857,10 @@ export const Backoffice: React.FC = () => {
         {canManageSAD && (
           <button
             onClick={() => setActiveTab('SAD')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === 'SAD'
-                ? 'bg-[#151e33] text-white shadow-clean-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                ? 'bg-[#151e33] text-white shadow-sm'
+                : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
             }`}
           >
             <Award className="h-4 w-4" />
@@ -877,16 +871,16 @@ export const Backoffice: React.FC = () => {
         {(canManageWallet || canReviewWalletRequests) && (
           <button
             onClick={() => setActiveTab('WALLET')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === 'WALLET'
-                ? 'bg-[#151e33] text-white shadow-clean-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                ? 'bg-[#151e33] text-white shadow-sm'
+                : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
             }`}
           >
             <Wallet className="h-4 w-4" />
             <span>Operações & Pedidos Carteira</span>
             {pendingWalletCount + (isAdmin ? pendingReimbursementsCount : 0) > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px] font-black animate-pulse">
+              <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-white text-[10px] font-black">
                 {pendingWalletCount + (isAdmin ? pendingReimbursementsCount : 0)}
               </span>
             )}
@@ -896,10 +890,10 @@ export const Backoffice: React.FC = () => {
         {canManageTimeline && (
           <button
             onClick={() => setActiveTab('TIMELINE')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === 'TIMELINE'
-                ? 'bg-[#151e33] text-white shadow-clean-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                ? 'bg-[#151e33] text-white shadow-sm'
+                : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
             }`}
           >
             <Flag className="h-4 w-4" />
@@ -910,10 +904,10 @@ export const Backoffice: React.FC = () => {
         {canCreateEvents && (
           <button
             onClick={() => setActiveTab('CALENDAR')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === 'CALENDAR'
-                ? 'bg-[#151e33] text-white shadow-clean-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                ? 'bg-[#151e33] text-white shadow-sm'
+                : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
             }`}
           >
             <Calendar className="h-4 w-4" />
@@ -924,16 +918,16 @@ export const Backoffice: React.FC = () => {
         {canAccessSupport && (
           <button
             onClick={() => setActiveTab('SUPPORT')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shrink-0 ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
               activeTab === 'SUPPORT'
-                ? 'bg-[#151e33] text-white shadow-clean-sm'
-                : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                ? 'bg-[#151e33] text-white shadow-sm'
+                : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
             }`}
           >
-            <MessagesSquare className="h-4 w-4 text-[#ff63f6]" />
+            <MessagesSquare className="h-4 w-4" />
             <span>Suporte & Dúvidas</span>
             {supportTickets.filter((t) => t.status === 'OPEN' || t.status === 'IN_PROGRESS').length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-[#ff63f6] text-[#151e33]">
+              <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-white text-[10px] font-black">
                 {supportTickets.filter((t) => t.status === 'OPEN' || t.status === 'IN_PROGRESS').length}
               </span>
             )}
@@ -943,74 +937,80 @@ export const Backoffice: React.FC = () => {
 
       {/* TAB 1: GESTÃO DE MEMBROS (EXECUTIVE BOARD ONLY) */}
       {activeTab === 'MEMBERS' && canManageUsers && (
-        <Card className="border-slate-200 overflow-hidden">
-          <CardHeader className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/5">
             <div>
-              <CardTitle className="text-lg font-bold text-[#151e33] flex items-center gap-2">
-                <Users className="h-5 w-5 text-[#ff63f6]" />
-                <span>Diretório & Gestão de Membros</span>
-              </CardTitle>
-              <CardDescription className="text-slate-500">
+              <div className="flex items-center gap-2.5">
+                <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+                <h2 className="text-xl font-bold text-[#151e33]">
+                  Diretório & Gestão de Membros
+                </h2>
+              </div>
+              <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
                 Permite à Executive Board alterar cargos, gerir taskgroups, palavras-passe, criar e excluir membros.
-              </CardDescription>
+              </p>
             </div>
 
-            <div className="w-full sm:w-72">
-              <Input
-                placeholder="Pesquisar membro, taskgroup, email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                icon={<Search className="h-4 w-4" />}
-              />
+            <div className="w-full sm:w-80">
+              <div className="relative">
+                <Search className="h-4 w-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#151e33]/40" />
+                <input
+                  type="text"
+                  placeholder="Pesquisar membro, taskgroup, email..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#151e33]/15 rounded-full text-xs text-[#151e33] placeholder:text-[#151e33]/40 focus:outline-none focus:border-[#ff63f6] focus:ring-1 focus:ring-[#ff63f6] transition-all"
+                />
+              </div>
             </div>
-          </CardHeader>
+          </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-700">
-              <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider font-bold border-b border-slate-200">
-                <tr>
-                  <th className="px-5 py-3.5">Membro</th>
-                  <th className="px-5 py-3.5">Email</th>
-                  <th className="px-5 py-3.5">Departamento</th>
-                  <th className="px-5 py-3.5">Cargo</th>
-                  <th className="px-5 py-3.5">Taskgroups</th>
-                  <th className="px-5 py-3.5">Permissão</th>
-                  <th className="px-5 py-3.5 text-center">Estado</th>
-                  <th className="px-5 py-3.5 text-right">Ações (Admin)</th>
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-[#151e33]/10 text-[#ff63f6] text-[11px] font-bold uppercase tracking-wider">
+                  <th className="px-4 py-3">Membro</th>
+                  <th className="px-4 py-3">Email</th>
+                  <th className="px-4 py-3">Departamento</th>
+                  <th className="px-4 py-3">Cargo</th>
+                  <th className="px-4 py-3">Taskgroups</th>
+                  <th className="px-4 py-3">Permissão</th>
+                  <th className="px-4 py-3 text-center">Estado</th>
+                  <th className="px-4 py-3 text-right">Ações (Admin)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-[#151e33]/5 text-[#151e33]">
                 {filteredUsers.map((u) => (
-                  <tr key={u.id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="px-5 py-4 font-bold text-[#151e33] whitespace-nowrap">
+                  <tr key={u.id} className="hover:bg-[#151e33]/[0.02] transition-colors">
+                    <td className="px-4 py-3.5 font-bold whitespace-nowrap">
                       {u.fullName}
                     </td>
-                    <td className="px-5 py-4 font-mono text-slate-500">{u.email}</td>
-                    <td className="px-5 py-4 text-slate-700">
-                      <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 font-medium">
+                    <td className="px-4 py-3.5 font-mono text-[#151e33]/60 text-[11px]">{u.email}</td>
+                    <td className="px-4 py-3.5">
+                      <span className="px-2.5 py-1 rounded-full bg-[#151e33]/5 text-[#151e33] font-medium text-[11px]">
                         {u.department?.name || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-5 py-4 font-semibold text-[#151e33]">
+                    <td className="px-4 py-3.5 font-semibold">
                       <Badge variant="outline">{u.position}</Badge>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-4 py-3.5">
                       <div className="flex flex-wrap gap-1">
                         {u.taskgroups && u.taskgroups.length > 0 ? (
                           u.taskgroups.map((tg) => (
                             <TaskgroupBadge key={tg} taskgroup={tg} />
                           ))
                         ) : (
-                          <span className="text-slate-400 italic text-[11px]">—</span>
+                          <span className="text-[#151e33]/30 italic text-[11px]">—</span>
                         )}
                       </div>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-4 py-3.5">
                       <RoleBadge role={u.role} />
                     </td>
-                    <td className="px-5 py-4 text-center">
+                    <td className="px-4 py-3.5 text-center">
                       <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                           u.isActive !== false
                             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                             : 'bg-rose-50 text-rose-700 border border-rose-200'
@@ -1019,11 +1019,11 @@ export const Backoffice: React.FC = () => {
                         {u.isActive !== false ? 'Ativo' : 'Inativo'}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-right space-x-1.5 whitespace-nowrap">
+                    <td className="px-4 py-3.5 text-right space-x-1.5 whitespace-nowrap">
                       <button
                         onClick={() => startEditUser(u)}
                         title="Alterar Cargo / Departamento / Taskgroups"
-                        className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#151e33] transition-colors"
+                        className="p-2 rounded-full bg-[#151e33]/5 hover:bg-[#ff63f6]/10 text-[#151e33] hover:text-[#ff63f6] transition-all cursor-pointer"
                       >
                         <Edit3 className="h-3.5 w-3.5" />
                       </button>
@@ -1034,7 +1034,7 @@ export const Backoffice: React.FC = () => {
                           setNewResetPassword('');
                         }}
                         title="Redefinir Palavra-passe"
-                        className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-colors"
+                        className="p-2 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-800 transition-all cursor-pointer"
                       >
                         <KeyRound className="h-3.5 w-3.5" />
                       </button>
@@ -1042,7 +1042,7 @@ export const Backoffice: React.FC = () => {
                       <button
                         onClick={() => setDeleteConfirmUser(u)}
                         title="Excluir Membro"
-                        className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors"
+                        className="p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 transition-all cursor-pointer"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -1052,21 +1052,23 @@ export const Backoffice: React.FC = () => {
               </tbody>
             </table>
           </div>
-        </Card>
+        </div>
       )}
 
       {/* TAB 2: AVALIAÇÃO SAD (ADMIN + HUMAN RESOURCES) */}
       {activeTab === 'SAD' && canManageSAD && (
-        <Card className="border-slate-200 p-6 md:p-8 max-w-3xl">
-          <CardHeader className="p-0 pb-6">
-            <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-              <Award className="h-5 w-5 text-[#ff63f6]" />
-              <span>Lançamento de Avaliação SAD</span>
-            </CardTitle>
-            <CardDescription className="text-slate-500">
+        <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 max-w-3xl space-y-6">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+              <h2 className="text-xl font-bold text-[#151e33]">
+                Lançamento de Avaliação SAD
+              </h2>
+            </div>
+            <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
               Atribuído aos membros de Recursos Humanos e Executive Board. Escala oficial de 0 a 6 valores com carregamento obrigatório do relatório PDF.
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
 
           <form
             onSubmit={(e) => {
@@ -1123,10 +1125,10 @@ export const Backoffice: React.FC = () => {
 
             {/* Upload do Relatório PDF Obrigatório */}
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+              <label className="text-xs font-semibold text-[#151e33] block mb-1.5 uppercase tracking-wider">
                 Relatório PDF Oficial da Avaliação SAD *
               </label>
-              <div className="p-4 rounded-xl border-2 border-dashed border-slate-200 hover:border-[#151e33] bg-slate-50/70 transition-colors text-center">
+              <div className="p-6 rounded-[24px] border-2 border-dashed border-[#151e33]/15 hover:border-[#ff63f6] bg-[#151e33]/[0.02] transition-colors text-center">
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -1143,25 +1145,25 @@ export const Backoffice: React.FC = () => {
                   htmlFor="sadPdfUpload"
                   className="cursor-pointer flex flex-col items-center justify-center gap-2"
                 >
-                  <div className="h-10 w-10 rounded-full bg-white shadow-clean-sm border border-slate-200 flex items-center justify-center text-[#151e33]">
+                  <div className="h-12 w-12 rounded-full bg-white shadow-sm border border-[#151e33]/10 flex items-center justify-center text-[#ff63f6]">
                     <Upload className="h-5 w-5" />
                   </div>
                   {sadPdfFile ? (
                     <div className="space-y-1">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         <FileText className="h-3.5 w-3.5" />
                         {sadPdfFile.name} ({(sadPdfFile.size / 1024 / 1024).toFixed(2)} MB)
                       </span>
-                      <p className="text-[11px] text-slate-500 font-medium">
+                      <p className="text-[11px] text-[#151e33]/60 font-medium">
                         Clica para substituir o ficheiro PDF
                       </p>
                     </div>
                   ) : (
                     <div>
-                      <span className="text-xs font-bold text-[#151e33] hover:underline">
+                      <span className="text-xs font-bold text-[#151e33] hover:text-[#ff63f6] transition-colors">
                         Clica para carregar o ficheiro PDF
                       </span>
-                      <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                      <p className="text-[11px] text-[#151e33]/50 font-medium mt-0.5">
                         Documentos em formato PDF (máx. 25 MB)
                       </p>
                     </div>
@@ -1178,37 +1180,36 @@ export const Backoffice: React.FC = () => {
               rows={4}
             />
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              className="w-full h-11"
-              isLoading={createSadMutation.isPending}
+              disabled={createSadMutation.isPending}
+              className="w-full h-12 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
-              <Award className="h-4 w-4 mr-2 text-[#ff63f6]" />
-              <span>Registar Avaliação & Publicar Relatório</span>
-            </Button>
+              <Award className="h-4 w-4" />
+              <span>{createSadMutation.isPending ? 'A registar...' : 'Registar Avaliação & Publicar Relatório'}</span>
+            </button>
           </form>
-        </Card>
+        </div>
       )}
 
       {/* TAB 3: OPERAÇÕES & PEDIDOS DE CARTEIRA (ADMIN + LEGAL & FINANCE) */}
       {activeTab === 'WALLET' && (canManageWallet || canReviewWalletRequests) && (
         <div className="space-y-6 max-w-5xl">
           {/* Sub-view Navigation */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <div className="flex items-center gap-2.5 overflow-x-auto pb-1 no-scrollbar">
             <button
               type="button"
               onClick={() => setWalletSubView('BALANCE_REQUESTS')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 walletSubView === 'BALANCE_REQUESTS'
-                  ? 'bg-[#151e33] text-white shadow-clean-sm'
-                  : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                  ? 'bg-[#151e33] text-white shadow-sm'
+                  : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
               }`}
             >
               <HandCoins className="h-4 w-4" />
               <span>Pedidos de Saldo</span>
               {pendingWalletCount > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px] font-black">
+                <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-white text-[10px] font-black">
                   {pendingWalletCount}
                 </span>
               )}
@@ -1218,16 +1219,16 @@ export const Backoffice: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setWalletSubView('REIMBURSEMENTS')}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                   walletSubView === 'REIMBURSEMENTS'
-                    ? 'bg-[#151e33] text-white shadow-clean-sm'
-                    : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                    ? 'bg-[#151e33] text-white shadow-sm'
+                    : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
                 }`}
               >
-                <Receipt className="h-4 w-4 text-[#ff63f6]" />
+                <Receipt className="h-4 w-4" />
                 <span>Reembolsos YME (Faturas)</span>
                 {pendingReimbursementsCount > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[10px] font-black animate-pulse">
+                  <span className="px-2 py-0.5 rounded-full bg-[#ff63f6] text-white text-[10px] font-black animate-pulse">
                     {pendingReimbursementsCount}
                   </span>
                 )}
@@ -1238,10 +1239,10 @@ export const Backoffice: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setWalletSubView('MANUAL')}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                   walletSubView === 'MANUAL'
-                    ? 'bg-[#151e33] text-white shadow-clean-sm'
-                    : 'bg-white border border-slate-200 text-slate-600 hover:text-[#151e33] hover:border-slate-300'
+                    ? 'bg-[#151e33] text-white shadow-sm'
+                    : 'bg-white border border-[#151e33]/15 text-[#151e33]/70 hover:border-[#ff63f6] hover:text-[#151e33]'
                 }`}
               >
                 <Wallet className="h-4 w-4" />
@@ -1252,277 +1253,40 @@ export const Backoffice: React.FC = () => {
 
           {/* Sub-Section 1: Pedidos de Utilização de Saldo Submetidos por Membros */}
           {walletSubView === 'BALANCE_REQUESTS' && (
-            <Card className="border-slate-200 p-6 md:p-8">
-            <CardHeader className="p-0 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                  <HandCoins className="h-5 w-5 text-[#ff63f6]" />
-                  <span>Pedidos de Utilização de Saldo</span>
-                  {pendingWalletCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-xs font-black animate-pulse">
-                      {pendingWalletCount} pendente{pendingWalletCount > 1 ? 's' : ''}
-                    </span>
-                  )}
-                </CardTitle>
-                <CardDescription className="text-slate-500">
-                  Revisão de requisições financeiras feitas pelos membros. Aprovação debita o valor da conta do membro; recusa mantém o saldo intacto.
-                </CardDescription>
-              </div>
-
-              {/* Filter tabs */}
-              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shrink-0">
-                {(['PENDING', 'ALL', 'APPROVED', 'REJECTED'] as const).map((filter) => {
-                  const count =
-                    filter === 'ALL'
-                      ? walletRequests.length
-                      : walletRequests.filter((r) => r.status === filter).length;
-                  return (
-                    <button
-                      key={filter}
-                      onClick={() => setWalletRequestsFilter(filter)}
-                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                        walletRequestsFilter === filter
-                          ? 'bg-white text-[#151e33] shadow-sm font-bold'
-                          : 'text-slate-500 hover:text-slate-800'
-                      }`}
-                    >
-                      {filter === 'ALL'
-                        ? `Todos (${count})`
-                        : filter === 'PENDING'
-                        ? `Pendentes (${count})`
-                        : filter === 'APPROVED'
-                        ? `Aprovados (${count})`
-                        : `Recusados (${count})`}
-                    </button>
-                  );
-                })}
-              </div>
-            </CardHeader>
-
-            <CardContent className="p-0">
-              {isLoadingWalletRequests ? (
-                <div className="space-y-3 py-8">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-20 rounded-xl bg-slate-100 animate-pulse" />
-                  ))}
-                </div>
-              ) : walletRequests.filter((r) => walletRequestsFilter === 'ALL' || r.status === walletRequestsFilter).length === 0 ? (
-                <div className="text-center py-12 border-2 border-dashed border-slate-100 rounded-2xl">
-                  <HandCoins className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                  <p className="text-sm font-bold text-slate-700">Sem pedidos nesta categoria</p>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Não existem pedidos de utilização de saldo que correspondam ao filtro selecionado.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {walletRequests
-                    .filter((r) => walletRequestsFilter === 'ALL' || r.status === walletRequestsFilter)
-                    .map((req) => (
-                      <div
-                        key={req.id}
-                        className={`p-5 rounded-2xl border transition-all ${
-                          req.status === 'PENDING'
-                            ? 'bg-amber-50/40 border-amber-200/80 shadow-clean-sm'
-                            : req.status === 'APPROVED'
-                            ? 'bg-emerald-50/20 border-emerald-200/60'
-                            : 'bg-slate-50/50 border-slate-200/70'
-                        }`}
-                      >
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                          {/* Member info & Request details */}
-                          <div className="space-y-2 flex-1">
-                            <div className="flex items-center gap-3 flex-wrap">
-                              <div className="h-10 w-10 rounded-full bg-[#151e33] text-white flex items-center justify-center text-xs font-bold shrink-0">
-                                {req.user?.fullName
-                                  ?.split(' ')
-                                  .map((n) => n[0])
-                                  .slice(0, 2)
-                                  .join('') || 'MB'}
-                              </div>
-                              <div>
-                                <div className="flex items-center gap-2">
-                                  <h4 className="text-sm font-extrabold text-[#151e33]">
-                                    {req.user?.fullName}
-                                  </h4>
-                                  <span className="text-xs text-slate-400">({req.user?.email})</span>
-                                </div>
-                                <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium mt-0.5">
-                                  <span>{req.user?.department?.name || 'Geral'}</span>
-                                  <span>•</span>
-                                  <span>{req.user?.position}</span>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Financial info badges */}
-                            <div className="flex items-center gap-3 flex-wrap pt-1">
-                              <div className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-2">
-                                <span className="text-[10px] uppercase font-bold text-slate-400">
-                                  Montante Solicitado:
-                                </span>
-                                <span className="text-sm font-black text-[#151e33]">
-                                  {req.amount.toFixed(2)} €
-                                </span>
-                              </div>
-
-                              <div className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-2">
-                                <span className="text-[10px] uppercase font-bold text-slate-400">
-                                  Saldo Atual do Membro:
-                                </span>
-                                <span
-                                  className={`text-xs font-extrabold ${
-                                    (req.currentMemberBalance ?? 0) >= req.amount
-                                      ? 'text-emerald-600'
-                                      : 'text-amber-600'
-                                  }`}
-                                >
-                                  {(req.currentMemberBalance ?? 0).toFixed(2)} €
-                                </span>
-                              </div>
-
-                              {req.status === 'PENDING' && (
-                                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1.5">
-                                  <Clock className="h-3.5 w-3.5" />
-                                  <span>Pendente de Decisão</span>
-                                </span>
-                              )}
-
-                              {req.status === 'APPROVED' && (
-                                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1.5">
-                                  <CheckCircle2 className="h-3.5 w-3.5" />
-                                  <span>Aprovado — Debitado</span>
-                                </span>
-                              )}
-
-                              {req.status === 'REJECTED' && (
-                                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-300 flex items-center gap-1.5">
-                                  <XCircle className="h-3.5 w-3.5" />
-                                  <span>Recusado — Saldo Mantido</span>
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Justification Box */}
-                            <div className="p-3 rounded-xl bg-white border border-slate-200/90 text-xs text-slate-700">
-                              <span className="font-bold text-[#151e33] block mb-1">
-                                Efeito / Justificação do Pedido:
-                              </span>
-                              <p className="whitespace-pre-wrap">{req.justification}</p>
-                            </div>
-
-                            {/* Rejection reason if applicable */}
-                            {req.status === 'REJECTED' && req.rejectionReason && (
-                              <div className="p-2.5 rounded-xl bg-rose-50 text-rose-800 border border-rose-200 text-xs flex items-start gap-1.5">
-                                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />
-                                <div>
-                                  <span className="font-bold">Motivo da Recusa: </span>
-                                  <span>{req.rejectionReason}</span>
-                                </div>
-                              </div>
-                            )}
-
-                            <div className="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
-                              <span>
-                                Solicitado em{' '}
-                                {new Date(req.createdAt).toLocaleDateString('pt-PT', {
-                                  day: '2-digit',
-                                  month: 'short',
-                                  year: 'numeric',
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                })}
-                              </span>
-                              {req.reviewedBy && (
-                                <>
-                                  <span>•</span>
-                                  <span>
-                                    Revisto por: <strong className="text-slate-600">{req.reviewedBy.fullName}</strong>
-                                    {req.reviewedAt && (
-                                      <span>
-                                        {' '}em{' '}
-                                        {new Date(req.reviewedAt).toLocaleDateString('pt-PT', {
-                                          day: '2-digit',
-                                          month: 'short',
-                                          year: 'numeric',
-                                        })}
-                                      </span>
-                                    )}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Action Buttons for PENDING */}
-                          {req.status === 'PENDING' && (
-                            <div className="flex sm:flex-col items-center gap-2 shrink-0 w-full sm:w-auto">
-                              <Button
-                                size="sm"
-                                onClick={() => setApprovingRequest(req)}
-                                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center gap-1.5"
-                              >
-                                <CheckCircle2 className="h-4 w-4" />
-                                <span>Aprovar</span>
-                              </Button>
-
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => {
-                                  setRejectingRequest(req);
-                                  setRejectionReasonInput('');
-                                }}
-                                className="w-full text-rose-600 border-rose-200 hover:bg-rose-50 hover:border-rose-300 font-bold flex items-center justify-center gap-1.5"
-                              >
-                                <XCircle className="h-4 w-4" />
-                                <span>Recusar</span>
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-          )}
-
-          {/* Sub-Section 2: Reembolsos de Despesas YME (Exclusivo Administradores) */}
-          {walletSubView === 'REIMBURSEMENTS' && isAdmin && (
-            <Card className="border-slate-200 p-6 md:p-8">
-              <CardHeader className="p-0 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/5">
                 <div>
-                  <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                    <Receipt className="h-5 w-5 text-[#ff63f6]" />
-                    <span>Pedidos de Reembolso YME (Faturas)</span>
-                    {pendingReimbursementsCount > 0 && (
-                      <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-xs font-black animate-pulse">
-                        {pendingReimbursementsCount} pendente{pendingReimbursementsCount > 1 ? 's' : ''}
-                      </span>
-                    )}
-                  </CardTitle>
-                  <CardDescription className="text-slate-500">
-                    Membros que realizaram compras para a YME e pediram devolução de dinheiro com fatura anexada. Apenas Administradores podem decidir e, para aprovar, é obrigatório submeter o comprovativo da devolução.
-                  </CardDescription>
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+                    <h2 className="text-xl font-bold text-[#151e33] flex items-center gap-2">
+                      <span>Pedidos de Utilização de Saldo</span>
+                      {pendingWalletCount > 0 && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#ff63f6] text-white text-xs font-black">
+                          {pendingWalletCount} pendente{pendingWalletCount > 1 ? 's' : ''}
+                        </span>
+                      )}
+                    </h2>
+                  </div>
+                  <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
+                    Revisão de requisições financeiras feitas pelos membros. Aprovação debita o valor da conta do membro; recusa mantém o saldo intacto.
+                  </p>
                 </div>
 
                 {/* Filter tabs */}
-                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl shrink-0">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
                   {(['PENDING', 'ALL', 'APPROVED', 'REJECTED'] as const).map((filter) => {
                     const count =
                       filter === 'ALL'
-                        ? reimbursements.length
-                        : reimbursements.filter((r) => r.status === filter).length;
+                        ? walletRequests.length
+                        : walletRequests.filter((r) => r.status === filter).length;
                     return (
                       <button
                         key={filter}
-                        onClick={() => setReimbursementsFilter(filter)}
-                        className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                          reimbursementsFilter === filter
-                            ? 'bg-white text-[#151e33] shadow-sm font-bold'
-                            : 'text-slate-500 hover:text-slate-800'
+                        onClick={() => setWalletRequestsFilter(filter)}
+                        className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                          walletRequestsFilter === filter
+                            ? 'bg-[#151e33] text-white shadow-sm'
+                            : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
                         }`}
                       >
                         {filter === 'ALL'
@@ -1536,41 +1300,41 @@ export const Backoffice: React.FC = () => {
                     );
                   })}
                 </div>
-              </CardHeader>
+              </div>
 
-              <CardContent className="p-0">
-                {isLoadingReimbursements ? (
+              <div>
+                {isLoadingWalletRequests ? (
                   <div className="space-y-3 py-8">
                     {[1, 2, 3].map((i) => (
-                      <div key={i} className="h-24 rounded-xl bg-slate-100 animate-pulse" />
+                      <div key={i} className="h-20 rounded-[24px] bg-slate-100 animate-pulse" />
                     ))}
                   </div>
-                ) : reimbursements.filter((r) => reimbursementsFilter === 'ALL' || r.status === reimbursementsFilter).length === 0 ? (
-                  <div className="text-center py-12 border-2 border-dashed border-slate-100 rounded-2xl">
-                    <Receipt className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                    <p className="text-sm font-bold text-slate-700">Sem pedidos de reembolso nesta categoria</p>
-                    <p className="text-xs text-slate-400 mt-1">
-                      Não existem pedidos de reembolso que correspondam ao filtro selecionado.
+                ) : walletRequests.filter((r) => walletRequestsFilter === 'ALL' || r.status === walletRequestsFilter).length === 0 ? (
+                  <div className="text-center py-12 border-2 border-dashed border-[#151e33]/10 rounded-[32px]">
+                    <HandCoins className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
+                    <p className="text-sm font-bold text-[#151e33]">Sem pedidos nesta categoria</p>
+                    <p className="text-xs text-[#151e33]/50 mt-1">
+                      Não existem pedidos de utilização de saldo que correspondam ao filtro selecionado.
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {reimbursements
-                      .filter((r) => reimbursementsFilter === 'ALL' || r.status === reimbursementsFilter)
+                    {walletRequests
+                      .filter((r) => walletRequestsFilter === 'ALL' || r.status === walletRequestsFilter)
                       .map((req) => (
                         <div
                           key={req.id}
-                          className={`p-5 rounded-2xl border transition-all ${
+                          className={`p-6 rounded-[28px] border transition-all ${
                             req.status === 'PENDING'
-                              ? 'bg-amber-50/40 border-amber-200/80 shadow-clean-sm'
+                              ? 'bg-white border-[#ff63f6]/40 shadow-sm'
                               : req.status === 'APPROVED'
-                              ? 'bg-emerald-50/20 border-emerald-200/60'
-                              : 'bg-slate-50/50 border-slate-200/70'
+                              ? 'bg-[#151e33]/[0.02] border-[#151e33]/10'
+                              : 'bg-slate-50 border-[#151e33]/5'
                           }`}
                         >
                           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                            {/* Member info & Reimbursement details */}
-                            <div className="space-y-2 flex-1">
+                            {/* Member info & Request details */}
+                            <div className="space-y-3 flex-1">
                               <div className="flex items-center gap-3 flex-wrap">
                                 <div className="h-10 w-10 rounded-full bg-[#151e33] text-white flex items-center justify-center text-xs font-bold shrink-0">
                                   {req.user?.fullName
@@ -1581,12 +1345,12 @@ export const Backoffice: React.FC = () => {
                                 </div>
                                 <div>
                                   <div className="flex items-center gap-2">
-                                    <h4 className="text-sm font-extrabold text-[#151e33]">
+                                    <h4 className="text-sm font-bold text-[#151e33]">
                                       {req.user?.fullName}
                                     </h4>
-                                    <span className="text-xs text-slate-400">({req.user?.email})</span>
+                                    <span className="text-xs text-[#151e33]/50">({req.user?.email})</span>
                                   </div>
-                                  <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium mt-0.5">
+                                  <div className="flex items-center gap-2 text-[11px] text-[#151e33]/60 font-medium mt-0.5">
                                     <span>{req.user?.department?.name || 'Geral'}</span>
                                     <span>•</span>
                                     <span>{req.user?.position}</span>
@@ -1594,77 +1358,65 @@ export const Backoffice: React.FC = () => {
                                 </div>
                               </div>
 
-                              {/* Value & Status Badges */}
+                              {/* Financial info badges */}
                               <div className="flex items-center gap-3 flex-wrap pt-1">
-                                <div className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-2">
-                                  <span className="text-[10px] uppercase font-bold text-slate-400">
-                                    Valor a Reembolsar:
+                                <div className="px-3.5 py-1.5 rounded-full bg-[#151e33]/5 border border-[#151e33]/10 flex items-center gap-2">
+                                  <span className="text-[10px] uppercase font-bold text-[#151e33]/50">
+                                    Montante Solicitado:
                                   </span>
                                   <span className="text-sm font-black text-[#151e33]">
                                     {req.amount.toFixed(2)} €
                                   </span>
                                 </div>
 
+                                <div className="px-3.5 py-1.5 rounded-full bg-[#151e33]/5 border border-[#151e33]/10 flex items-center gap-2">
+                                  <span className="text-[10px] uppercase font-bold text-[#151e33]/50">
+                                    Saldo Atual do Membro:
+                                  </span>
+                                  <span
+                                    className={`text-xs font-extrabold ${
+                                      (req.currentMemberBalance ?? 0) >= req.amount
+                                        ? 'text-emerald-600'
+                                        : 'text-amber-600'
+                                    }`}
+                                  >
+                                    {(req.currentMemberBalance ?? 0).toFixed(2)} €
+                                  </span>
+                                </div>
+
                                 {req.status === 'PENDING' && (
-                                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 flex items-center gap-1.5">
-                                    <Clock className="h-3.5 w-3.5" />
+                                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30 flex items-center gap-1.5">
+                                    <Clock className="h-3.5 w-3.5 text-[#ff63f6]" />
                                     <span>Pendente de Decisão</span>
                                   </span>
                                 )}
 
                                 {req.status === 'APPROVED' && (
-                                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1.5">
-                                    <CheckCircle2 className="h-3.5 w-3.5" />
-                                    <span>Aprovado & Devolvido</span>
+                                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                                    <span>Aprovado — Debitado</span>
                                   </span>
                                 )}
 
                                 {req.status === 'REJECTED' && (
-                                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-300 flex items-center gap-1.5">
-                                    <XCircle className="h-3.5 w-3.5" />
-                                    <span>Recusado</span>
+                                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1.5">
+                                    <XCircle className="h-3.5 w-3.5 text-rose-600" />
+                                    <span>Recusado — Saldo Mantido</span>
                                   </span>
                                 )}
                               </div>
 
                               {/* Justification Box */}
-                              <div className="p-3 rounded-xl bg-white border border-slate-200/90 text-xs text-slate-700">
+                              <div className="p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10 text-xs text-[#151e33]">
                                 <span className="font-bold text-[#151e33] block mb-1">
-                                  Justificação da Compra:
+                                  Efeito / Justificação do Pedido:
                                 </span>
-                                <p className="whitespace-pre-wrap">{req.justification}</p>
-                              </div>
-
-                              {/* Member Invoice Attachment Link */}
-                              <div className="flex items-center gap-2 pt-1 flex-wrap">
-                                <a
-                                  href={req.receiptUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors"
-                                >
-                                  <Paperclip className="h-3.5 w-3.5 text-slate-500" />
-                                  <span>Ver Fatura / Fatura-Recibo Submetida</span>
-                                  <ExternalLink className="h-3 w-3 text-slate-400" />
-                                </a>
-
-                                {req.status === 'APPROVED' && req.refundProofUrl && (
-                                  <a
-                                    href={req.refundProofUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold border border-emerald-200 transition-colors"
-                                  >
-                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                                    <span>Ver Comprovativo de Devolução (Anexo Admin)</span>
-                                    <ExternalLink className="h-3 w-3 text-emerald-500" />
-                                  </a>
-                                )}
+                                <p className="whitespace-pre-wrap text-[#151e33]/80">{req.justification}</p>
                               </div>
 
                               {/* Rejection reason if applicable */}
                               {req.status === 'REJECTED' && req.rejectionReason && (
-                                <div className="p-2.5 rounded-xl bg-rose-50 text-rose-800 border border-rose-200 text-xs flex items-start gap-1.5">
+                                <div className="p-3 rounded-[20px] bg-rose-50 text-rose-800 border border-rose-200 text-xs flex items-start gap-1.5">
                                   <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />
                                   <div>
                                     <span className="font-bold">Motivo da Recusa: </span>
@@ -1673,7 +1425,7 @@ export const Backoffice: React.FC = () => {
                                 </div>
                               )}
 
-                              <div className="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+                              <div className="flex items-center gap-3 text-[11px] text-[#151e33]/40 pt-1">
                                 <span>
                                   Solicitado em{' '}
                                   {new Date(req.createdAt).toLocaleDateString('pt-PT', {
@@ -1688,7 +1440,7 @@ export const Backoffice: React.FC = () => {
                                   <>
                                     <span>•</span>
                                     <span>
-                                      Decidido por: <strong className="text-slate-600">{req.reviewedBy.fullName}</strong>
+                                      Revisto por: <strong className="text-[#151e33]">{req.reviewedBy.fullName}</strong>
                                       {req.reviewedAt && (
                                         <span>
                                           {' '}em{' '}
@@ -1708,30 +1460,24 @@ export const Backoffice: React.FC = () => {
                             {/* Action Buttons for PENDING */}
                             {req.status === 'PENDING' && (
                               <div className="flex sm:flex-col items-center gap-2 shrink-0 w-full sm:w-auto">
-                                <Button
-                                  size="sm"
-                                  onClick={() => {
-                                    setApprovingReimbursement(req);
-                                    setRefundProofFile(null);
-                                  }}
-                                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center gap-1.5"
+                                <button
+                                  onClick={() => setApprovingRequest(req)}
+                                  className="w-full px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 cursor-pointer transition-all"
                                 >
                                   <CheckCircle2 className="h-4 w-4" />
-                                  <span>Aprovar Devolução</span>
-                                </Button>
+                                  <span>Aprovar</span>
+                                </button>
 
-                                <Button
-                                  size="sm"
-                                  variant="outline"
+                                <button
                                   onClick={() => {
-                                    setRejectingReimbursement(req);
-                                    setReimbursementRejectReason('');
+                                    setRejectingRequest(req);
+                                    setRejectionReasonInput('');
                                   }}
-                                  className="w-full text-rose-600 border-rose-200 hover:bg-rose-50 hover:border-rose-300 font-bold flex items-center justify-center gap-1.5"
+                                  className="w-full px-5 py-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all"
                                 >
                                   <XCircle className="h-4 w-4" />
                                   <span>Recusar</span>
-                                </Button>
+                                </button>
                               </div>
                             )}
                           </div>
@@ -1739,22 +1485,277 @@ export const Backoffice: React.FC = () => {
                       ))}
                   </div>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+          )}
+
+          {/* Sub-Section 2: Reembolsos de Despesas YME (Exclusivo Administradores) */}
+          {walletSubView === 'REIMBURSEMENTS' && isAdmin && (
+            <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#151e33]/5">
+                <div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+                    <h2 className="text-xl font-bold text-[#151e33] flex items-center gap-2">
+                      <span>Pedidos de Reembolso YME (Faturas)</span>
+                      {pendingReimbursementsCount > 0 && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#ff63f6] text-white text-xs font-black animate-pulse">
+                          {pendingReimbursementsCount} pendente{pendingReimbursementsCount > 1 ? 's' : ''}
+                        </span>
+                      )}
+                    </h2>
+                  </div>
+                  <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
+                    Membros que realizaram compras para a YME e pediram devolução de dinheiro com fatura anexada. Apenas Administradores podem decidir e, para aprovar, é obrigatório submeter o comprovativo da devolução.
+                  </p>
+                </div>
+
+                {/* Filter tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+                  {(['PENDING', 'ALL', 'APPROVED', 'REJECTED'] as const).map((filter) => {
+                    const count =
+                      filter === 'ALL'
+                        ? reimbursements.length
+                        : reimbursements.filter((r) => r.status === filter).length;
+                    return (
+                      <button
+                        key={filter}
+                        onClick={() => setReimbursementsFilter(filter)}
+                        className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                          reimbursementsFilter === filter
+                            ? 'bg-[#151e33] text-white shadow-sm'
+                            : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
+                        }`}
+                      >
+                        {filter === 'ALL'
+                          ? `Todos (${count})`
+                          : filter === 'PENDING'
+                          ? `Pendentes (${count})`
+                          : filter === 'APPROVED'
+                          ? `Aprovados (${count})`
+                          : `Recusados (${count})`}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                {isLoadingReimbursements ? (
+                  <div className="space-y-3 py-8">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="h-24 rounded-[24px] bg-slate-100 animate-pulse" />
+                    ))}
+                  </div>
+                ) : reimbursements.filter((r) => reimbursementsFilter === 'ALL' || r.status === reimbursementsFilter).length === 0 ? (
+                  <div className="text-center py-12 border-2 border-dashed border-[#151e33]/10 rounded-[32px]">
+                    <Receipt className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
+                    <p className="text-sm font-bold text-[#151e33]">Sem pedidos de reembolso nesta categoria</p>
+                    <p className="text-xs text-[#151e33]/50 mt-1">
+                      Não existem pedidos de reembolso que correspondam ao filtro selecionado.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {reimbursements
+                      .filter((r) => reimbursementsFilter === 'ALL' || r.status === reimbursementsFilter)
+                      .map((req) => (
+                        <div
+                          key={req.id}
+                          className={`p-6 rounded-[28px] border transition-all ${
+                            req.status === 'PENDING'
+                              ? 'bg-white border-[#ff63f6]/40 shadow-sm'
+                              : req.status === 'APPROVED'
+                              ? 'bg-[#151e33]/[0.02] border-[#151e33]/10'
+                              : 'bg-slate-50 border-[#151e33]/5'
+                          }`}
+                        >
+                          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                            {/* Member info & Reimbursement details */}
+                            <div className="space-y-3 flex-1">
+                              <div className="flex items-center gap-3 flex-wrap">
+                                <div className="h-10 w-10 rounded-full bg-[#151e33] text-white flex items-center justify-center text-xs font-bold shrink-0">
+                                  {req.user?.fullName
+                                    ?.split(' ')
+                                    .map((n) => n[0])
+                                    .slice(0, 2)
+                                    .join('') || 'MB'}
+                                </div>
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <h4 className="text-sm font-bold text-[#151e33]">
+                                      {req.user?.fullName}
+                                    </h4>
+                                    <span className="text-xs text-[#151e33]/50">({req.user?.email})</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 text-[11px] text-[#151e33]/60 font-medium mt-0.5">
+                                    <span>{req.user?.department?.name || 'Geral'}</span>
+                                    <span>•</span>
+                                    <span>{req.user?.position}</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Value & Status Badges */}
+                              <div className="flex items-center gap-3 flex-wrap pt-1">
+                                <div className="px-3.5 py-1.5 rounded-full bg-[#151e33]/5 border border-[#151e33]/10 flex items-center gap-2">
+                                  <span className="text-[10px] uppercase font-bold text-[#151e33]/50">
+                                    Valor a Reembolsar:
+                                  </span>
+                                  <span className="text-sm font-black text-[#151e33]">
+                                    {req.amount.toFixed(2)} €
+                                  </span>
+                                </div>
+
+                                {req.status === 'PENDING' && (
+                                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30 flex items-center gap-1.5">
+                                    <Clock className="h-3.5 w-3.5 text-[#ff63f6]" />
+                                    <span>Pendente de Decisão</span>
+                                  </span>
+                                )}
+
+                                {req.status === 'APPROVED' && (
+                                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                                    <span>Aprovado & Devolvido</span>
+                                  </span>
+                                )}
+
+                                {req.status === 'REJECTED' && (
+                                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1.5">
+                                    <XCircle className="h-3.5 w-3.5 text-rose-600" />
+                                    <span>Recusado</span>
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Justification Box */}
+                              <div className="p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10 text-xs text-[#151e33]">
+                                <span className="font-bold text-[#151e33] block mb-1">
+                                  Justificação da Compra:
+                                </span>
+                                <p className="whitespace-pre-wrap text-[#151e33]/80">{req.justification}</p>
+                              </div>
+
+                              {/* Member Invoice Attachment Link */}
+                              <div className="flex items-center gap-2 pt-1 flex-wrap">
+                                <a
+                                  href={req.receiptUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#151e33]/5 hover:bg-[#151e33]/10 text-[#151e33] text-xs font-bold border border-[#151e33]/10 transition-colors"
+                                >
+                                  <Paperclip className="h-3.5 w-3.5 text-[#ff63f6]" />
+                                  <span>Ver Fatura / Recibo Submetido</span>
+                                  <ExternalLink className="h-3 w-3 text-[#151e33]/40" />
+                                </a>
+
+                                {req.status === 'APPROVED' && req.refundProofUrl && (
+                                  <a
+                                    href={req.refundProofUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200 transition-colors"
+                                  >
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                                    <span>Ver Comprovativo de Devolução (Anexo Admin)</span>
+                                    <ExternalLink className="h-3 w-3 text-emerald-500" />
+                                  </a>
+                                )}
+                              </div>
+
+                              {/* Rejection reason if applicable */}
+                              {req.status === 'REJECTED' && req.rejectionReason && (
+                                <div className="p-3 rounded-[20px] bg-rose-50 text-rose-800 border border-rose-200 text-xs flex items-start gap-1.5">
+                                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />
+                                  <div>
+                                    <span className="font-bold">Motivo da Recusa: </span>
+                                    <span>{req.rejectionReason}</span>
+                                  </div>
+                                </div>
+                              )}
+
+                              <div className="flex items-center gap-3 text-[11px] text-[#151e33]/40 pt-1">
+                                <span>
+                                  Solicitado em{' '}
+                                  {new Date(req.createdAt).toLocaleDateString('pt-PT', {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                  })}
+                                </span>
+                                {req.reviewedBy && (
+                                  <>
+                                    <span>•</span>
+                                    <span>
+                                      Decidido por: <strong className="text-[#151e33]">{req.reviewedBy.fullName}</strong>
+                                      {req.reviewedAt && (
+                                        <span>
+                                          {' '}em{' '}
+                                          {new Date(req.reviewedAt).toLocaleDateString('pt-PT', {
+                                            day: '2-digit',
+                                            month: 'short',
+                                            year: 'numeric',
+                                          })}
+                                        </span>
+                                      )}
+                                    </span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Action Buttons for PENDING */}
+                            {req.status === 'PENDING' && (
+                              <div className="flex sm:flex-col items-center gap-2 shrink-0 w-full sm:w-auto">
+                                <button
+                                  onClick={() => {
+                                    setApprovingReimbursement(req);
+                                    setRefundProofFile(null);
+                                  }}
+                                  className="w-full px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                                >
+                                  <CheckCircle2 className="h-4 w-4" />
+                                  <span>Aprovar Devolução</span>
+                                </button>
+
+                                <button
+                                  onClick={() => {
+                                    setRejectingReimbursement(req);
+                                    setReimbursementRejectReason('');
+                                  }}
+                                  className="w-full px-5 py-2.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                                >
+                                  <XCircle className="h-4 w-4" />
+                                  <span>Recusar</span>
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
           )}
 
           {/* Sub-Section 3: Atribuição e Movimentos Manuais (Admins + Legal Head/Manager) */}
           {walletSubView === 'MANUAL' && canManageWallet && (
-            <Card className="border-slate-200 p-6 md:p-8">
-              <CardHeader className="p-0 pb-6">
-                <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                  <Wallet className="h-5 w-5 text-[#ff63f6]" />
-                  <span>Atribuição & Movimentos Manuais de Carteira</span>
-                </CardTitle>
-                <CardDescription className="text-slate-500">
+            <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 max-w-3xl space-y-6">
+              <div>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-[#151e33]">
+                    Atribuição & Movimentos Manuais de Carteira
+                  </h2>
+                </div>
+                <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
                   Lançamento manual de prémios SAD, bónus de presença ou débitos associativos diretamente na carteira do membro.
-                </CardDescription>
-              </CardHeader>
+                </p>
+              </div>
 
               <form
                 onSubmit={(e) => {
@@ -1815,33 +1816,34 @@ export const Backoffice: React.FC = () => {
                   required
                 />
 
-                <Button
+                <button
                   type="submit"
-                  variant="primary"
-                  className="w-full h-11"
-                  isLoading={createWalletMutation.isPending}
+                  disabled={createWalletMutation.isPending}
+                  className="w-full h-12 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  <Wallet className="h-4 w-4 mr-2" />
-                  <span>Processar Transação na Carteira</span>
-                </Button>
+                  <Wallet className="h-4 w-4" />
+                  <span>{createWalletMutation.isPending ? 'A processar...' : 'Processar Transação na Carteira'}</span>
+                </button>
               </form>
-            </Card>
+            </div>
           )}
         </div>
       )}
 
       {/* TAB 4: ADICIONAR MARCO NA JORNADA (EXECUTIVE BOARD / ADMIN ONLY) */}
       {activeTab === 'TIMELINE' && canManageTimeline && (
-        <Card className="border-slate-200 p-6 md:p-8 max-w-3xl">
-          <CardHeader className="p-0 pb-6">
-            <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-              <Flag className="h-5 w-5 text-[#ff63f6]" />
-              <span>Adicionar Marco à Jornada do Membro</span>
-            </CardTitle>
-            <CardDescription className="text-slate-500">
+        <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 max-w-3xl space-y-6">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+              <h2 className="text-xl font-bold text-[#151e33]">
+                Adicionar Marco à Jornada do Membro
+              </h2>
+            </div>
+            <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
               Competência exclusiva da Executive Board para registar distinções, formações, projetos e momentos-chave.
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
 
           <form
             onSubmit={(e) => {
@@ -1923,28 +1925,29 @@ export const Backoffice: React.FC = () => {
               rows={3}
             />
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              className="w-full h-11"
-              isLoading={createTimelineMutation.isPending}
+              disabled={createTimelineMutation.isPending}
+              className="w-full h-12 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
-              <PlusCircle className="h-4 w-4 mr-2" />
-              <span>Publicar na Jornada</span>
-            </Button>
+              <PlusCircle className="h-4 w-4" />
+              <span>{createTimelineMutation.isPending ? 'A publicar...' : 'Publicar na Jornada'}</span>
+            </button>
           </form>
-        </Card>
+        </div>
       )}
 
       {/* TAB 5: AGENDAR EVENTO NO CALENDÁRIO (ADMIN, HR, CSR, PARTNERSHIPS) */}
       {activeTab === 'CALENDAR' && canCreateEvents && (
-        <Card className="border-slate-200 p-6 md:p-8 max-w-3xl">
-          <CardHeader className="p-0 pb-6">
-            <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-[#ff63f6]" />
-              <span>Agendar Novo Evento Associativo</span>
-            </CardTitle>
-            <CardDescription className="text-slate-500">
+        <div className="bg-white rounded-[44px] p-6 sm:p-9 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 max-w-3xl space-y-6">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+              <h2 className="text-xl font-bold text-[#151e33]">
+                Agendar Novo Evento Associativo
+              </h2>
+            </div>
+            <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
               {isAdmin ? (
                 <span>Como membro da <strong>Executive Board</strong>, tens permissão total para agendar qualquer tipo de evento.</span>
               ) : user?.department?.name === 'Human Resources' ? (
@@ -1956,8 +1959,8 @@ export const Backoffice: React.FC = () => {
               ) : (
                 <span>Cria uma nova atividade no calendário associativo.</span>
               )}
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
 
           <form
             onSubmit={(e) => {
@@ -2020,29 +2023,30 @@ export const Backoffice: React.FC = () => {
               rows={3}
             />
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              className="w-full h-11"
-              isLoading={createCalendarMutation.isPending}
+              disabled={createCalendarMutation.isPending}
+              className="w-full h-12 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
-              <PlusCircle className="h-4 w-4 mr-2" />
-              <span>Publicar no Calendário</span>
-            </Button>
+              <PlusCircle className="h-4 w-4" />
+              <span>{createCalendarMutation.isPending ? 'A agendar...' : 'Publicar no Calendário'}</span>
+            </button>
           </form>
-        </Card>
+        </div>
       )}
 
       {/* TAB 6: SUPORTE & CHATS AOS MEMBROS (ADMIN, HR, LEGAL & FINANCE) */}
       {activeTab === 'SUPPORT' && canAccessSupport && (
-        <div className="space-y-4">
-          <Card className="border-slate-200 p-6 shadow-clean-sm">
-            <CardHeader className="p-0 pb-4">
-              <CardTitle className="text-xl font-bold text-[#151e33] flex items-center gap-2">
-                <MessagesSquare className="h-5 w-5 text-[#ff63f6]" />
-                <span>Fila de Atendimento & Suporte aos Membros</span>
-              </CardTitle>
-              <CardDescription className="text-slate-500">
+        <div className="space-y-6">
+          <div className="bg-white rounded-[36px] p-6 sm:p-7 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#151e33]/5 space-y-4">
+            <div>
+              <div className="flex items-center gap-2.5">
+                <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+                <h2 className="text-xl font-bold text-[#151e33]">
+                  Fila de Atendimento & Suporte aos Membros
+                </h2>
+              </div>
+              <p className="text-xs text-[#151e33]/60 mt-1 ml-3.5">
                 {isAdmin ? (
                   <span>
                     Como membro da <strong>Executive Board</strong>, tens acesso universal a todos os pedidos de suporte (Avaliação SAD, Carteira e Assuntos Gerais).
@@ -2058,31 +2062,31 @@ export const Backoffice: React.FC = () => {
                 ) : (
                   <span>Painel de atendimento e resolução de dúvidas.</span>
                 )}
-              </CardDescription>
-            </CardHeader>
+              </p>
+            </div>
 
             {/* Filter Bar */}
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#151e33]/40" />
                 <input
                   type="text"
                   placeholder="Pesquisar por membro, assunto ou conteúdo..."
                   value={supportSearch}
                   onChange={(e) => setSupportSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 bg-slate-50/50 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#151e33] focus:bg-white"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-full border border-[#151e33]/15 bg-white text-xs font-medium text-[#151e33] placeholder:text-[#151e33]/40 focus:outline-none focus:ring-1 focus:ring-[#ff63f6] focus:border-[#ff63f6] transition-all"
                 />
               </div>
 
               {/* Status Filter */}
-              <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl shrink-0">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar shrink-0">
                 <button
                   type="button"
                   onClick={() => setSupportStatusFilter('ALL')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     supportStatusFilter === 'ALL'
-                      ? 'bg-white text-[#151e33] shadow-clean-sm'
-                      : 'text-slate-600 hover:text-[#151e33]'
+                      ? 'bg-[#151e33] text-white shadow-sm'
+                      : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
                   }`}
                 >
                   Todos ({supportTickets.length})
@@ -2090,10 +2094,10 @@ export const Backoffice: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSupportStatusFilter('OPEN')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     supportStatusFilter === 'OPEN'
-                      ? 'bg-white text-[#151e33] shadow-clean-sm'
-                      : 'text-slate-600 hover:text-[#151e33]'
+                      ? 'bg-[#151e33] text-white shadow-sm'
+                      : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
                   }`}
                 >
                   Abertos ({supportTickets.filter((t) => t.status === 'OPEN' || t.status === 'IN_PROGRESS').length})
@@ -2101,10 +2105,10 @@ export const Backoffice: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSupportStatusFilter('RESOLVED')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     supportStatusFilter === 'RESOLVED'
-                      ? 'bg-white text-[#151e33] shadow-clean-sm'
-                      : 'text-slate-600 hover:text-[#151e33]'
+                      ? 'bg-[#151e33] text-white shadow-sm'
+                      : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
                   }`}
                 >
                   Resolvidos ({supportTickets.filter((t) => t.status === 'RESOLVED' || t.status === 'CLOSED').length})
@@ -2113,14 +2117,14 @@ export const Backoffice: React.FC = () => {
 
               {/* Category Filter for Admins */}
               {isAdmin && (
-                <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl shrink-0">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar shrink-0">
                   <button
                     type="button"
                     onClick={() => setSupportCategoryFilter('ALL')}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                    className={`px-3 py-2 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
                       supportCategoryFilter === 'ALL'
-                        ? 'bg-white text-[#151e33] shadow-clean-sm'
-                        : 'text-slate-600 hover:text-[#151e33]'
+                        ? 'bg-[#151e33] text-white shadow-sm'
+                        : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
                     }`}
                   >
                     Categorias (Todas)
@@ -2128,10 +2132,10 @@ export const Backoffice: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setSupportCategoryFilter('SAD_EVALUATION')}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                    className={`px-3 py-2 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
                       supportCategoryFilter === 'SAD_EVALUATION'
-                        ? 'bg-indigo-600 text-white shadow-clean-sm'
-                        : 'text-slate-600 hover:text-indigo-600'
+                        ? 'bg-[#ff63f6] text-white shadow-sm'
+                        : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#ff63f6]'
                     }`}
                   >
                     SAD
@@ -2139,10 +2143,10 @@ export const Backoffice: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setSupportCategoryFilter('WALLET')}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                    className={`px-3 py-2 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
                       supportCategoryFilter === 'WALLET'
-                        ? 'bg-emerald-600 text-white shadow-clean-sm'
-                        : 'text-slate-600 hover:text-emerald-600'
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-emerald-600'
                     }`}
                   >
                     Carteira
@@ -2150,10 +2154,10 @@ export const Backoffice: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setSupportCategoryFilter('OTHER')}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                    className={`px-3 py-2 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
                       supportCategoryFilter === 'OTHER'
-                        ? 'bg-purple-600 text-white shadow-clean-sm'
-                        : 'text-slate-600 hover:text-purple-600'
+                        ? 'bg-[#151e33] text-white shadow-sm'
+                        : 'bg-white border border-[#151e33]/10 text-[#151e33]/60 hover:text-[#151e33]'
                     }`}
                   >
                     Outros
@@ -2161,30 +2165,30 @@ export const Backoffice: React.FC = () => {
                 </div>
               )}
             </div>
-          </Card>
+          </div>
 
           {/* Split View: Tickets List on Left, Active Chat on Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[560px]">
             {/* Left Column: Tickets Queue */}
             <div className="lg:col-span-5 space-y-3">
               {filteredSupportTickets.length === 0 ? (
-                <Card className="border-slate-200 p-8 text-center bg-slate-50/50">
-                  <HelpCircle className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                  <p className="text-xs font-bold text-slate-700">Sem tickets na fila de atendimento</p>
-                  <p className="text-[11px] text-slate-400 mt-1">
+                <div className="p-8 text-center bg-white rounded-[32px] border border-[#151e33]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+                  <HelpCircle className="h-10 w-10 text-[#151e33]/20 mx-auto mb-2" />
+                  <p className="text-xs font-bold text-[#151e33]">Sem tickets na fila de atendimento</p>
+                  <p className="text-[11px] text-[#151e33]/50 mt-1">
                     Não existem pedidos que correspondam aos filtros selecionados.
                   </p>
-                </Card>
+                </div>
               ) : (
-                <div className="space-y-2.5 max-h-[640px] overflow-y-auto pr-1">
+                <div className="space-y-3 max-h-[640px] overflow-y-auto pr-1">
                   {filteredSupportTickets.map((tk) => {
                     const isSelected = selectedSupportTicket?.id === tk.id;
                     const lastMsg = tk.messages[tk.messages.length - 1];
 
-                    let catBadgeClass = 'bg-purple-50 text-purple-700 border-purple-200';
+                    let catBadgeClass = 'bg-[#151e33]/5 text-[#151e33] border-[#151e33]/10';
                     let catLabel = 'Outros Assuntos';
                     if (tk.category === 'SAD_EVALUATION') {
-                      catBadgeClass = 'bg-indigo-50 text-indigo-700 border-indigo-200';
+                      catBadgeClass = 'bg-[#ff63f6]/10 text-[#151e33] border-[#ff63f6]/30';
                       catLabel = 'Avaliação SAD';
                     } else if (tk.category === 'WALLET') {
                       catBadgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
@@ -2195,32 +2199,32 @@ export const Backoffice: React.FC = () => {
                       <div
                         key={tk.id}
                         onClick={() => setSelectedSupportTicket(tk)}
-                        className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                        className={`p-4 sm:p-5 rounded-[28px] border transition-all cursor-pointer ${
                           isSelected
-                            ? 'border-[#151e33] bg-gradient-to-r from-white to-slate-50 shadow-clean-sm scale-[1.01]'
-                            : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/50'
+                            ? 'border-[#151e33] bg-[#151e33]/[0.03] shadow-sm scale-[1.01]'
+                            : 'border-[#151e33]/10 hover:border-[#ff63f6]/40 bg-white'
                         }`}
                       >
                         <div className="flex items-center justify-between gap-2 mb-2">
                           <span
-                            className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${catBadgeClass}`}
+                            className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${catBadgeClass}`}
                           >
                             {catLabel}
                           </span>
 
                           <div className="flex items-center gap-1.5">
                             {tk.status === 'OPEN' && (
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                <Clock className="h-2.5 w-2.5" /> Aberto
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#ff63f6]/10 text-[#151e33] border border-[#ff63f6]/30">
+                                <Clock className="h-2.5 w-2.5 text-[#ff63f6]" /> Aberto
                               </span>
                             )}
                             {tk.status === 'IN_PROGRESS' && (
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
                                 <RefreshCw className="h-2.5 w-2.5" /> Em análise
                               </span>
                             )}
                             {(tk.status === 'RESOLVED' || tk.status === 'CLOSED') && (
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                 <CheckCircle2 className="h-2.5 w-2.5" /> Resolvido
                               </span>
                             )}
@@ -2228,8 +2232,8 @@ export const Backoffice: React.FC = () => {
                         </div>
 
                         {/* Requester details */}
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="h-6 w-6 rounded-full bg-[#151e33] text-white flex items-center justify-center text-[10px] font-bold">
+                        <div className="flex items-center gap-2.5 mb-2">
+                          <div className="h-7 w-7 rounded-full bg-[#151e33] text-white flex items-center justify-center text-[10px] font-bold">
                             {tk.user.fullName
                               .split(' ')
                               .map((n) => n[0])
@@ -2240,17 +2244,17 @@ export const Backoffice: React.FC = () => {
                             <h4 className="text-xs font-bold text-[#151e33] leading-tight">
                               {tk.user.fullName}
                             </h4>
-                            <p className="text-[10px] text-slate-500 font-medium">
+                            <p className="text-[10px] text-[#151e33]/50 font-medium">
                               {tk.user.department?.name || 'Sem Dept'} • {tk.user.position}
                             </p>
                           </div>
                         </div>
 
-                        <p className="text-xs font-medium text-slate-700 line-clamp-2 bg-slate-50/70 p-2 rounded-xl border border-slate-100">
+                        <p className="text-xs font-medium text-[#151e33]/80 line-clamp-2 bg-slate-50 p-2.5 rounded-[18px] border border-[#151e33]/5">
                           {lastMsg?.content || tk.subject}
                         </p>
 
-                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-400 font-semibold">
+                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#151e33]/5 text-[10px] text-[#151e33]/40 font-semibold">
                           <span>
                             {new Date(tk.updatedAt || tk.createdAt).toLocaleDateString('pt-PT', {
                               day: '2-digit',
@@ -2259,7 +2263,7 @@ export const Backoffice: React.FC = () => {
                               minute: '2-digit',
                             })}
                           </span>
-                          <span className="text-[#151e33] font-bold flex items-center gap-1">
+                          <span className="text-[#ff63f6] font-bold flex items-center gap-1">
                             {tk.messages.length} {tk.messages.length === 1 ? 'msg' : 'msgs'} →
                           </span>
                         </div>
@@ -2273,11 +2277,11 @@ export const Backoffice: React.FC = () => {
             {/* Right Column: Active Live Chat with Member */}
             <div className="lg:col-span-7">
               {selectedSupportTicket ? (
-                <Card className="border-slate-200 flex flex-col h-full shadow-clean-sm overflow-hidden">
+                <div className="bg-white rounded-[36px] border border-[#151e33]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] flex flex-col h-full overflow-hidden">
                   {/* Chat Header */}
-                  <CardHeader className="p-4 border-b border-slate-100 bg-gradient-to-r from-white to-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="p-4 sm:p-5 border-b border-[#151e33]/5 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-[#151e33] text-white flex items-center justify-center text-xs font-bold shadow-clean-sm">
+                      <div className="h-10 w-10 rounded-full bg-[#151e33] text-white flex items-center justify-center text-xs font-bold shadow-sm">
                         {selectedSupportTicket.user.fullName
                           .split(' ')
                           .map((n) => n[0])
@@ -2286,12 +2290,12 @@ export const Backoffice: React.FC = () => {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <CardTitle className="text-sm font-bold text-[#151e33]">
+                          <h3 className="text-sm font-bold text-[#151e33]">
                             {selectedSupportTicket.user.fullName}
-                          </CardTitle>
+                          </h3>
                           <RoleBadge role={selectedSupportTicket.user.role} />
                         </div>
-                        <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                        <p className="text-[11px] text-[#151e33]/50 font-medium mt-0.5">
                           {selectedSupportTicket.user.email} • {selectedSupportTicket.user.department?.name} ({selectedSupportTicket.user.position})
                         </p>
                       </div>
@@ -2299,43 +2303,39 @@ export const Backoffice: React.FC = () => {
 
                     <div className="flex items-center gap-2 self-end sm:self-auto">
                       {selectedSupportTicket.status !== 'RESOLVED' && selectedSupportTicket.status !== 'CLOSED' ? (
-                        <Button
-                          variant="outline"
-                          size="sm"
+                        <button
                           onClick={() =>
                             updateSupportStatusMutation.mutate({
                               ticketId: selectedSupportTicket.id,
                               status: 'RESOLVED',
                             })
                           }
-                          isLoading={updateSupportStatusMutation.isPending}
-                          className="h-8 text-xs font-bold text-emerald-700 border-emerald-300 hover:bg-emerald-50"
+                          disabled={updateSupportStatusMutation.isPending}
+                          className="px-4 py-2 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-300 hover:bg-emerald-100 flex items-center gap-1.5 transition-all cursor-pointer"
                         >
-                          <CheckCircle2 className="h-3.5 w-3.5 mr-1 text-emerald-600" />
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                           <span>Marcar como Resolvido</span>
-                        </Button>
+                        </button>
                       ) : (
-                        <Button
-                          variant="outline"
-                          size="sm"
+                        <button
                           onClick={() =>
                             updateSupportStatusMutation.mutate({
                               ticketId: selectedSupportTicket.id,
                               status: 'IN_PROGRESS',
                             })
                           }
-                          isLoading={updateSupportStatusMutation.isPending}
-                          className="h-8 text-xs font-bold text-slate-700 border-slate-300 hover:bg-slate-100"
+                          disabled={updateSupportStatusMutation.isPending}
+                          className="px-4 py-2 rounded-full text-xs font-bold text-[#151e33] bg-[#151e33]/5 border border-[#151e33]/15 hover:bg-[#151e33]/10 flex items-center gap-1.5 transition-all cursor-pointer"
                         >
-                          <RefreshCw className="h-3.5 w-3.5 mr-1" />
+                          <RefreshCw className="h-3.5 w-3.5" />
                           <span>Reabrir Pedido</span>
-                        </Button>
+                        </button>
                       )}
                     </div>
-                  </CardHeader>
+                  </div>
 
                   {/* Chat Messages Stream */}
-                  <CardContent className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-slate-50/40 via-white to-slate-50/40 max-h-[380px] min-h-[300px]">
+                  <div className="flex-1 p-5 overflow-y-auto space-y-3.5 bg-slate-50/40 max-h-[380px] min-h-[300px]">
                     {selectedSupportTicket.messages.map((msg) => {
                       const isStaff = msg.senderId !== selectedSupportTicket.userId;
                       return (
@@ -2343,15 +2343,15 @@ export const Backoffice: React.FC = () => {
                           key={msg.id}
                           className={`flex flex-col ${isStaff ? 'items-end' : 'items-start'}`}
                         >
-                          <div className="flex items-center gap-1.5 mb-1 text-[10px] font-semibold text-slate-400">
+                          <div className="flex items-center gap-1.5 mb-1 text-[10px] font-semibold text-[#151e33]/40">
                             <span>{msg.sender?.fullName || 'Utilizador'}</span>
                             {msg.sender?.department?.name && (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-bold">
+                              <span className="text-[9px] px-2 py-0.2 rounded-full bg-[#151e33]/5 text-[#151e33] font-bold">
                                 {msg.sender.department.name}
                               </span>
                             )}
                             {isStaff && (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#ff63f6]/20 text-[#151e33] font-bold">
+                              <span className="text-[9px] px-2 py-0.2 rounded-full bg-[#ff63f6]/20 text-[#151e33] font-bold">
                                 Equipa de Resposta
                               </span>
                             )}
@@ -2365,10 +2365,10 @@ export const Backoffice: React.FC = () => {
                           </div>
 
                           <div
-                            className={`p-3.5 rounded-2xl max-w-[85%] text-xs leading-relaxed font-medium shadow-clean-sm ${
+                            className={`p-4 rounded-[22px] max-w-[85%] text-xs leading-relaxed font-medium shadow-sm ${
                               isStaff
                                 ? 'bg-[#151e33] text-white rounded-tr-none'
-                                : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                                : 'bg-white text-[#151e33] border border-[#151e33]/10 rounded-tl-none'
                             }`}
                           >
                             <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -2377,10 +2377,10 @@ export const Backoffice: React.FC = () => {
                       );
                     })}
                     <div ref={supportChatEndRef} />
-                  </CardContent>
+                  </div>
 
                   {/* Staff Reply Form */}
-                  <div className="p-4 border-t border-slate-100 bg-white">
+                  <div className="p-4 border-t border-[#151e33]/5 bg-white">
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -2397,31 +2397,29 @@ export const Backoffice: React.FC = () => {
                         placeholder="Escreve a resposta oficial para o membro..."
                         value={supportReplyMessage}
                         onChange={(e) => setSupportReplyMessage(e.target.value)}
-                        className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#151e33] focus:bg-white"
+                        className="flex-1 px-4 py-2.5 rounded-full border border-[#151e33]/15 bg-white text-xs font-medium text-[#151e33] placeholder:text-[#151e33]/40 focus:outline-none focus:ring-1 focus:ring-[#ff63f6] focus:border-[#ff63f6] transition-all"
                       />
-                      <Button
+                      <button
                         type="submit"
-                        variant="primary"
-                        className="h-10 px-4"
                         disabled={!supportReplyMessage.trim() || sendSupportReplyMutation.isPending}
-                        isLoading={sendSupportReplyMutation.isPending}
+                        className="h-10 px-5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                       >
-                        <Send className="h-4 w-4 mr-1 text-[#ff63f6]" />
+                        <Send className="h-4 w-4" />
                         <span>Responder</span>
-                      </Button>
+                      </button>
                     </form>
                   </div>
-                </Card>
+                </div>
               ) : (
-                <Card className="border-slate-200 h-full flex flex-col items-center justify-center p-12 text-center bg-slate-50/30">
-                  <div className="h-14 w-14 rounded-2xl bg-white border border-slate-200 shadow-clean-sm flex items-center justify-center text-[#151e33] mb-3">
-                    <MessagesSquare className="h-7 w-7 text-[#ff63f6]" />
+                <div className="h-full rounded-[36px] bg-white border border-[#151e33]/10 shadow-[0px_4px_24px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center p-12 text-center">
+                  <div className="h-14 w-14 rounded-full bg-[#ff63f6]/10 flex items-center justify-center text-[#ff63f6] mb-3">
+                    <MessagesSquare className="h-7 w-7" />
                   </div>
                   <h3 className="text-sm font-bold text-[#151e33]">Nenhum pedido de suporte selecionado</h3>
-                  <p className="text-xs text-slate-500 max-w-sm mt-1">
+                  <p className="text-xs text-[#151e33]/50 max-w-sm mt-1">
                     Seleciona um ticket na lista à esquerda para analisar a dúvida, ver o perfil do membro e responder diretamente no chat.
                   </p>
-                </Card>
+                </div>
               )}
             </div>
           </div>
@@ -2516,11 +2514,11 @@ export const Backoffice: React.FC = () => {
           </div>
 
           {newRole === 'DIRECTOR' && (
-            <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-200">
+            <div className="p-4 bg-[#ff63f6]/10 rounded-[20px] border border-[#ff63f6]/30">
               <label className="text-xs font-bold text-[#151e33] block mb-1">
                 Cargo mais alto antes de ser Diretor *
               </label>
-              <p className="text-[11px] text-slate-500 mb-2">
+              <p className="text-[11px] text-[#151e33]/70 mb-2">
                 Um diretor pode ter sido no máximo Junior Consultant antes de ser diretor. Isto define as etapas do seu percurso.
               </p>
               <Select
@@ -2536,11 +2534,11 @@ export const Backoffice: React.FC = () => {
           )}
 
           {newRole === 'ADMIN' && (
-            <div className="p-3.5 bg-pink-50/70 rounded-xl border border-pink-200 space-y-2">
+            <div className="p-4 bg-[#ff63f6]/10 rounded-[20px] border border-[#ff63f6]/30 space-y-2">
               <label className="text-xs font-bold text-[#151e33] block">
                 Cargos anteriores na YME (Executive Board) *
               </label>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-[#151e33]/70">
                 Seleciona todos os cargos que teve anteriormente para que a sua linha temporal fique correta:
               </p>
               <div className="flex flex-wrap gap-3">
@@ -2566,11 +2564,11 @@ export const Backoffice: React.FC = () => {
           )}
 
           <div>
-            <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+            <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block mb-1.5">
               Taskgroups Associadas
             </label>
-            <div className="flex flex-wrap gap-4 p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700">
+            <div className="flex flex-wrap gap-4 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
+              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
                 <input
                   type="checkbox"
                   checked={newTaskgroups.includes('CSR')}
@@ -2581,12 +2579,12 @@ export const Backoffice: React.FC = () => {
                       setNewTaskgroups(newTaskgroups.filter((t) => t !== 'CSR'));
                     }
                   }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#151e33] focus:ring-[#151e33]"
+                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
                 />
                 <span>🌱 Taskgroup CSR (RSC)</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700">
+              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
                 <input
                   type="checkbox"
                   checked={newTaskgroups.includes('PARTNERSHIPS')}
@@ -2597,29 +2595,29 @@ export const Backoffice: React.FC = () => {
                       setNewTaskgroups(newTaskgroups.filter((t) => t !== 'PARTNERSHIPS'));
                     }
                   }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#151e33] focus:ring-[#151e33]"
+                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
                 />
                 <span>🤝 Taskgroup Partnerships</span>
               </label>
             </div>
           </div>
 
-          <div className="pt-4 flex items-center justify-end gap-2">
-            <Button
+          <div className="pt-4 flex items-center justify-end gap-2.5">
+            <button
               type="button"
-              variant="outline"
               onClick={() => setIsCreateUserOpen(false)}
+              className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
             >
               Cancelar
-            </Button>
-            <Button
+            </button>
+            <button
               type="submit"
-              variant="primary"
-              isLoading={createUserMutation.isPending}
+              disabled={createUserMutation.isPending}
+              className="px-6 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
-              <UserPlus className="h-4 w-4 mr-2" />
-              <span>Criar Membro</span>
-            </Button>
+              <UserPlus className="h-4 w-4" />
+              <span>{createUserMutation.isPending ? 'A criar...' : 'Criar Membro'}</span>
+            </button>
           </div>
         </form>
       </Dialog>
@@ -2687,11 +2685,11 @@ export const Backoffice: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+            <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block mb-1.5">
               Taskgroups Associadas
             </label>
-            <div className="flex flex-wrap gap-4 p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700">
+            <div className="flex flex-wrap gap-4 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
+              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
                 <input
                   type="checkbox"
                   checked={editTaskgroups.includes('CSR')}
@@ -2702,12 +2700,12 @@ export const Backoffice: React.FC = () => {
                       setEditTaskgroups(editTaskgroups.filter((t) => t !== 'CSR'));
                     }
                   }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#151e33] focus:ring-[#151e33]"
+                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
                 />
                 <span>🌱 Taskgroup CSR (RSC)</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-700">
+              <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-[#151e33]">
                 <input
                   type="checkbox"
                   checked={editTaskgroups.includes('PARTNERSHIPS')}
@@ -2718,7 +2716,7 @@ export const Backoffice: React.FC = () => {
                       setEditTaskgroups(editTaskgroups.filter((t) => t !== 'PARTNERSHIPS'));
                     }
                   }}
-                  className="h-4 w-4 rounded border-slate-300 text-[#151e33] focus:ring-[#151e33]"
+                  className="h-4 w-4 rounded border-slate-300 text-[#ff63f6] focus:ring-[#ff63f6]"
                 />
                 <span>🤝 Taskgroup Partnerships</span>
               </label>
@@ -2726,10 +2724,10 @@ export const Backoffice: React.FC = () => {
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-700 block mb-1">
+            <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block mb-1">
               Etapas do Percurso do Membro (uma por linha)
             </label>
-            <p className="text-[11px] text-slate-500 mb-1.5">
+            <p className="text-[11px] text-[#151e33]/60 mb-1.5">
               Define os títulos a rosa na linha temporal do Menu Principal (ex: Trainee of Brand Strategy, Junior Consultant of Brand Strategy, etc.).
             </p>
             <Textarea
@@ -2740,34 +2738,34 @@ export const Backoffice: React.FC = () => {
             />
           </div>
 
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="flex items-center gap-3 p-3.5 rounded-[20px] bg-slate-50 border border-[#151e33]/10">
             <input
               type="checkbox"
               id="isActiveCheck"
               checked={editIsActive}
               onChange={(e) => setEditIsActive(e.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 bg-white text-[#151e33] focus:ring-[#151e33]"
+              className="h-4 w-4 rounded border-slate-300 bg-white text-[#ff63f6] focus:ring-[#ff63f6]"
             />
-            <label htmlFor="isActiveCheck" className="text-xs font-semibold text-slate-700">
+            <label htmlFor="isActiveCheck" className="text-xs font-bold text-[#151e33] cursor-pointer">
               Conta de Membro Ativa na YME APP
             </label>
           </div>
 
-          <div className="pt-4 flex items-center justify-end gap-2">
-            <Button
+          <div className="pt-4 flex items-center justify-end gap-2.5">
+            <button
               type="button"
-              variant="outline"
               onClick={() => setEditingUser(null)}
+              className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
             >
               Cancelar
-            </Button>
-            <Button
+            </button>
+            <button
               type="submit"
-              variant="primary"
-              isLoading={updateUserMutation.isPending}
+              disabled={updateUserMutation.isPending}
+              className="px-6 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
-              Guardar Alterações
-            </Button>
+              {updateUserMutation.isPending ? 'A guardar...' : 'Guardar Alterações'}
+            </button>
           </div>
         </form>
       </Dialog>
@@ -2776,7 +2774,7 @@ export const Backoffice: React.FC = () => {
       <Dialog
         isOpen={!!passwordResetUser}
         onClose={() => setPasswordResetUser(null)}
-        title={`Redefinir Palavra-passe`}
+        title="Redefinir Palavra-passe"
         description={`Introduz uma nova palavra-passe para o membro ${passwordResetUser?.fullName} (${passwordResetUser?.email}).`}
       >
         <form
@@ -2800,21 +2798,21 @@ export const Backoffice: React.FC = () => {
             required
           />
 
-          <div className="pt-4 flex items-center justify-end gap-2">
-            <Button
+          <div className="pt-4 flex items-center justify-end gap-2.5">
+            <button
               type="button"
-              variant="outline"
               onClick={() => setPasswordResetUser(null)}
+              className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
             >
               Cancelar
-            </Button>
-            <Button
+            </button>
+            <button
               type="submit"
-              variant="primary"
-              isLoading={resetPasswordMutation.isPending}
+              disabled={resetPasswordMutation.isPending}
+              className="px-6 py-2.5 rounded-full bg-[#ff63f6] hover:bg-[#e045d6] text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
-              Atualizar Palavra-passe
-            </Button>
+              {resetPasswordMutation.isPending ? 'A atualizar...' : 'Atualizar Palavra-passe'}
+            </button>
           </div>
         </form>
       </Dialog>
@@ -2826,31 +2824,31 @@ export const Backoffice: React.FC = () => {
         title="Confirmar Exclusão de Membro"
       >
         <div className="space-y-4 pt-2">
-          <p className="text-xs sm:text-sm text-slate-700">
+          <p className="text-xs sm:text-sm text-[#151e33]">
             Tens a certeza de que pretendes excluir o membro{' '}
             <strong className="text-[#151e33]">{deleteConfirmUser?.fullName}</strong> (
             {deleteConfirmUser?.email})?
           </p>
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700">
+          <div className="p-3.5 rounded-[20px] bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium">
             ⚠️ Esta ação apagará permanentemente o perfil, avaliações associadas e histórico de movimentos.
           </div>
 
-          <div className="pt-4 flex items-center justify-end gap-2">
-            <Button
+          <div className="pt-4 flex items-center justify-end gap-2.5">
+            <button
               type="button"
-              variant="outline"
               onClick={() => setDeleteConfirmUser(null)}
+              className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
             >
               Cancelar
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
-              variant="danger"
               onClick={() => deleteUserMutation.mutate()}
-              isLoading={deleteUserMutation.isPending}
+              disabled={deleteUserMutation.isPending}
+              className="px-6 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
-              Confirmar Exclusão
-            </Button>
+              {deleteUserMutation.isPending ? 'A excluir...' : 'Confirmar Exclusão'}
+            </button>
           </div>
         </div>
       </Dialog>
@@ -2864,32 +2862,32 @@ export const Backoffice: React.FC = () => {
       >
         {approvingRequest && (
           <div className="space-y-4 pt-2">
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs">
+            <div className="bg-slate-50 p-4 rounded-[20px] border border-[#151e33]/10 space-y-2 text-xs">
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Membro Requerente:</span>
-                <span className="font-extrabold text-[#151e33]">{approvingRequest.user?.fullName}</span>
+                <span className="text-[#151e33]/60 font-semibold">Membro Requerente:</span>
+                <span className="font-bold text-[#151e33]">{approvingRequest.user?.fullName}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Saldo Atual Disponível:</span>
-                <span className="font-extrabold text-emerald-600">
+                <span className="text-[#151e33]/60 font-semibold">Saldo Atual Disponível:</span>
+                <span className="font-bold text-emerald-600">
                   {(approvingRequest.currentMemberBalance ?? 0).toFixed(2)} €
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Montante a Debitar:</span>
+                <span className="text-[#151e33]/60 font-semibold">Montante a Debitar:</span>
                 <span className="font-black text-rose-600 text-sm">
                   -{approvingRequest.amount.toFixed(2)} €
                 </span>
               </div>
-              <div className="pt-2 border-t border-slate-200">
-                <span className="text-slate-500 font-bold block mb-1">Justificação do Membro:</span>
-                <p className="text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200">
+              <div className="pt-2 border-t border-[#151e33]/10">
+                <span className="text-[#151e33]/60 font-bold block mb-1">Justificação do Membro:</span>
+                <p className="text-[#151e33] bg-white p-3 rounded-[16px] border border-[#151e33]/10">
                   {approvingRequest.justification}
                 </p>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 space-y-1">
+            <div className="p-3.5 rounded-[20px] bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 space-y-1">
               <p className="font-bold flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                 <span>Impacto Financeiro:</span>
@@ -2899,23 +2897,23 @@ export const Backoffice: React.FC = () => {
               </p>
             </div>
 
-            <div className="pt-4 flex items-center justify-end gap-2">
-              <Button
+            <div className="pt-4 flex items-center justify-end gap-2.5">
+              <button
                 type="button"
-                variant="outline"
                 onClick={() => setApprovingRequest(null)}
                 disabled={approveWalletRequestMutation.isPending}
+                className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
               >
                 Cancelar
-              </Button>
-              <Button
+              </button>
+              <button
                 type="button"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
                 onClick={() => approveWalletRequestMutation.mutate(approvingRequest.id)}
-                isLoading={approveWalletRequestMutation.isPending}
+                disabled={approveWalletRequestMutation.isPending}
+                className="px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
               >
-                Confirmar Aprovação & Débito
-              </Button>
+                {approveWalletRequestMutation.isPending ? 'A aprovar...' : 'Confirmar Aprovação & Débito'}
+              </button>
             </div>
           </div>
         )}
@@ -2939,24 +2937,24 @@ export const Backoffice: React.FC = () => {
             }}
             className="space-y-4 pt-2"
           >
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs">
+            <div className="bg-slate-50 p-4 rounded-[20px] border border-[#151e33]/10 space-y-2 text-xs">
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Membro Requerente:</span>
-                <span className="font-extrabold text-[#151e33]">{rejectingRequest.user?.fullName}</span>
+                <span className="text-[#151e33]/60 font-semibold">Membro Requerente:</span>
+                <span className="font-bold text-[#151e33]">{rejectingRequest.user?.fullName}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Montante Solicitado:</span>
-                <span className="font-extrabold text-[#151e33]">{rejectingRequest.amount.toFixed(2)} €</span>
+                <span className="text-[#151e33]/60 font-semibold">Montante Solicitado:</span>
+                <span className="font-bold text-[#151e33]">{rejectingRequest.amount.toFixed(2)} €</span>
               </div>
-              <div className="pt-2 border-t border-slate-200">
-                <span className="text-slate-500 font-bold block mb-1">Justificação do Membro:</span>
-                <p className="text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200">
+              <div className="pt-2 border-t border-[#151e33]/10">
+                <span className="text-[#151e33]/60 font-bold block mb-1">Justificação do Membro:</span>
+                <p className="text-[#151e33] bg-white p-3 rounded-[16px] border border-[#151e33]/10">
                   {rejectingRequest.justification}
                 </p>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-1">
+            <div className="p-3.5 rounded-[20px] bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-1">
               <p className="font-bold flex items-center gap-1.5">
                 <AlertCircle className="h-4 w-4 text-amber-600" />
                 <span>Sem impacto no saldo:</span>
@@ -2967,7 +2965,7 @@ export const Backoffice: React.FC = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#151e33]">
+              <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block">
                 Motivo da Recusa (opcional / justificação para o membro)
               </label>
               <Textarea
@@ -2979,22 +2977,22 @@ export const Backoffice: React.FC = () => {
               />
             </div>
 
-            <div className="pt-4 flex items-center justify-end gap-2">
-              <Button
+            <div className="pt-4 flex items-center justify-end gap-2.5">
+              <button
                 type="button"
-                variant="outline"
                 onClick={() => setRejectingRequest(null)}
                 disabled={rejectWalletRequestMutation.isPending}
+                className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
               >
                 Cancelar
-              </Button>
-              <Button
+              </button>
+              <button
                 type="submit"
-                variant="danger"
-                isLoading={rejectWalletRequestMutation.isPending}
+                disabled={rejectWalletRequestMutation.isPending}
+                className="px-6 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
               >
-                Confirmar Recusa
-              </Button>
+                {rejectWalletRequestMutation.isPending ? 'A recusar...' : 'Confirmar Recusa'}
+              </button>
             </div>
           </form>
         )}
@@ -3022,29 +3020,29 @@ export const Backoffice: React.FC = () => {
             }}
             className="space-y-4 pt-2"
           >
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs">
+            <div className="bg-slate-50 p-4 rounded-[20px] border border-[#151e33]/10 space-y-2 text-xs">
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Membro Requerente:</span>
-                <span className="font-extrabold text-[#151e33]">{approvingReimbursement.user?.fullName}</span>
+                <span className="text-[#151e33]/60 font-semibold">Membro Requerente:</span>
+                <span className="font-bold text-[#151e33]">{approvingReimbursement.user?.fullName}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Valor da Despesa a Devolver:</span>
+                <span className="text-[#151e33]/60 font-semibold">Valor da Despesa a Devolver:</span>
                 <span className="font-black text-emerald-600 text-sm">
                   {approvingReimbursement.amount.toFixed(2)} €
                 </span>
               </div>
-              <div className="pt-2 border-t border-slate-200">
-                <span className="text-slate-500 font-bold block mb-1">Justificação da Despesa:</span>
-                <p className="text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200 whitespace-pre-wrap">
+              <div className="pt-2 border-t border-[#151e33]/10">
+                <span className="text-[#151e33]/60 font-bold block mb-1">Justificação da Despesa:</span>
+                <p className="text-[#151e33] bg-white p-3 rounded-[16px] border border-[#151e33]/10 whitespace-pre-wrap">
                   {approvingReimbursement.justification}
                 </p>
               </div>
-              <div className="pt-2 border-t border-slate-200">
+              <div className="pt-2 border-t border-[#151e33]/10">
                 <a
                   href={approvingReimbursement.receiptUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-sky-600 hover:text-sky-700 font-bold underline"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#ff63f6] hover:underline font-bold"
                 >
                   <Paperclip className="h-3.5 w-3.5" />
                   <span>Consultar Fatura Submetida pelo Membro</span>
@@ -3054,12 +3052,12 @@ export const Backoffice: React.FC = () => {
             </div>
 
             {/* Mandatory Proof Upload Field */}
-            <div className="space-y-2 p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80">
+            <div className="space-y-2 p-4 rounded-[20px] bg-[#ff63f6]/5 border border-[#ff63f6]/20">
               <label className="text-xs font-bold text-[#151e33] flex items-center justify-between">
                 <span>Comprovativo da Devolução (Transferência) *</span>
-                <span className="text-[10px] text-amber-700 uppercase font-black">Obrigatório</span>
+                <span className="text-[10px] text-[#ff63f6] uppercase font-black">Obrigatório</span>
               </label>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-[#151e33]/60">
                 Para poder clicar no botão de confirmação, é obrigatório submeter o comprovativo da devolução ou transferência efetuada (PDF ou Imagem).
               </p>
 
@@ -3082,10 +3080,10 @@ export const Backoffice: React.FC = () => {
 
               <div
                 onClick={() => refundProofInputRef.current?.click()}
-                className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-colors ${
+                className={`border-2 border-dashed rounded-[18px] p-5 text-center cursor-pointer transition-colors ${
                   refundProofFile
                     ? 'border-emerald-300 bg-emerald-50/50'
-                    : 'border-slate-300 hover:border-slate-400 bg-white'
+                    : 'border-[#151e33]/20 hover:border-[#ff63f6] bg-white'
                 }`}
               >
                 {refundProofFile ? (
@@ -3098,36 +3096,35 @@ export const Backoffice: React.FC = () => {
                   </div>
                 ) : (
                   <div className="space-y-1">
-                    <Paperclip className="h-5 w-5 text-slate-400 mx-auto" />
-                    <p className="text-xs font-semibold text-slate-700">
+                    <Paperclip className="h-5 w-5 text-[#ff63f6] mx-auto" />
+                    <p className="text-xs font-bold text-[#151e33]">
                       Clica para anexar o comprovativo da devolução
                     </p>
-                    <p className="text-[10px] text-slate-400">PDF, JPG, PNG até 25MB</p>
+                    <p className="text-[10px] text-[#151e33]/50">PDF, JPG, PNG até 25MB</p>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="pt-4 flex items-center justify-end gap-2">
-              <Button
+            <div className="pt-4 flex items-center justify-end gap-2.5">
+              <button
                 type="button"
-                variant="outline"
                 onClick={() => {
                   setApprovingReimbursement(null);
                   setRefundProofFile(null);
                 }}
                 disabled={approveReimbursementMutation.isPending}
+                className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
               >
                 Cancelar
-              </Button>
-              <Button
+              </button>
+              <button
                 type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={!refundProofFile || approveReimbursementMutation.isPending}
-                isLoading={approveReimbursementMutation.isPending}
+                className="px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Confirmar Reembolso & Enviar Comprovativo
-              </Button>
+                {approveReimbursementMutation.isPending ? 'A enviar...' : 'Confirmar Reembolso & Enviar Comprovativo'}
+              </button>
             </div>
           </form>
         )}
@@ -3151,25 +3148,25 @@ export const Backoffice: React.FC = () => {
             }}
             className="space-y-4 pt-2"
           >
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs">
+            <div className="bg-slate-50 p-4 rounded-[20px] border border-[#151e33]/10 space-y-2 text-xs">
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Membro Requerente:</span>
-                <span className="font-extrabold text-[#151e33]">{rejectingReimbursement.user?.fullName}</span>
+                <span className="text-[#151e33]/60 font-semibold">Membro Requerente:</span>
+                <span className="font-bold text-[#151e33]">{rejectingReimbursement.user?.fullName}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-semibold">Valor da Despesa:</span>
-                <span className="font-extrabold text-[#151e33]">{rejectingReimbursement.amount.toFixed(2)} €</span>
+                <span className="text-[#151e33]/60 font-semibold">Valor da Despesa:</span>
+                <span className="font-bold text-[#151e33]">{rejectingReimbursement.amount.toFixed(2)} €</span>
               </div>
-              <div className="pt-2 border-t border-slate-200">
-                <span className="text-slate-500 font-bold block mb-1">Justificação do Membro:</span>
-                <p className="text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200 whitespace-pre-wrap">
+              <div className="pt-2 border-t border-[#151e33]/10">
+                <span className="text-[#151e33]/60 font-bold block mb-1">Justificação do Membro:</span>
+                <p className="text-[#151e33] bg-white p-3 rounded-[16px] border border-[#151e33]/10 whitespace-pre-wrap">
                   {rejectingReimbursement.justification}
                 </p>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#151e33]">
+              <label className="text-xs font-bold text-[#151e33] uppercase tracking-wider block">
                 Motivo da Recusa (opcional / justificação para o membro)
               </label>
               <Textarea
@@ -3181,22 +3178,22 @@ export const Backoffice: React.FC = () => {
               />
             </div>
 
-            <div className="pt-4 flex items-center justify-end gap-2">
-              <Button
+            <div className="pt-4 flex items-center justify-end gap-2.5">
+              <button
                 type="button"
-                variant="outline"
                 onClick={() => setRejectingReimbursement(null)}
                 disabled={rejectReimbursementMutation.isPending}
+                className="px-5 py-2.5 rounded-full border border-[#151e33]/20 hover:border-[#151e33]/40 text-[#151e33] text-xs font-bold transition-all cursor-pointer"
               >
                 Cancelar
-              </Button>
-              <Button
+              </button>
+              <button
                 type="submit"
-                variant="danger"
-                isLoading={rejectReimbursementMutation.isPending}
+                disabled={rejectReimbursementMutation.isPending}
+                className="px-6 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
               >
-                Confirmar Recusa
-              </Button>
+                {rejectReimbursementMutation.isPending ? 'A recusar...' : 'Confirmar Recusa'}
+              </button>
             </div>
           </form>
         )}

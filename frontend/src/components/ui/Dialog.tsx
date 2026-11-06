@@ -47,26 +47,29 @@ export const Dialog: React.FC<DialogProps> = ({
       {/* Modal Dialog Card */}
       <div
         className={cn(
-          'relative w-full rounded-2xl bg-white border border-[#151e33]/15 p-6 shadow-2xl z-10 animate-fade-in overflow-hidden max-h-[90vh] overflow-y-auto',
+          'relative w-full rounded-[32px] bg-white border border-[#151e33]/10 p-7 shadow-2xl z-10 animate-fade-in overflow-hidden max-h-[90vh] overflow-y-auto',
           maxWidths[maxWidth]
         )}
       >
         <div className="flex items-start justify-between pb-4 border-b border-[#151e33]/10">
           <div>
-            <h2 className="text-lg font-bold text-[#151e33]">{title}</h2>
+            <div className="flex items-center gap-2.5">
+              <span className="w-[3px] h-[18px] bg-[#ff63f6] rounded-full flex-shrink-0" />
+              <h2 className="text-lg font-bold text-[#151e33]">{title}</h2>
+            </div>
             {description && (
-              <p className="text-xs text-[#151e33]/60 mt-0.5">{description}</p>
+              <p className="text-xs text-[#151e33]/60 mt-1 ml-3">{description}</p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#151e33]/40 hover:text-[#151e33] hover:bg-[#ff63f6]/10 transition-colors"
+            className="p-2 rounded-full text-[#151e33]/40 hover:text-[#151e33] hover:bg-[#151e33]/5 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="mt-4">{children}</div>
+        <div className="mt-5">{children}</div>
       </div>
     </div>
   );

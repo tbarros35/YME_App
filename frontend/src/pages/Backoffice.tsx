@@ -2700,7 +2700,7 @@ export const Backoffice: React.FC = () => {
                   Departamento a que está alocado *
                 </label>
                 <p className="text-[11px] text-[#151e33]/70">
-                  Como membro de RH, este consultor terá acesso e poderá responder aos tickets de SAD submetidos pelos membros do departamento selecionado.
+                  Como membro de RH, este consultor terá acesso aos tickets e poderá lançar relatórios SAD dos membros do departamento selecionado (incluindo o próprio departamento de RH).
                 </p>
                 <Select
                   value={newAssignedDepartmentId}
@@ -2709,7 +2709,7 @@ export const Backoffice: React.FC = () => {
                 >
                   <option value="">-- Selecionar Departamento Alocado --</option>
                   {departments
-                    .filter((d) => d.name !== 'Executive Board' && d.name !== 'Human Resources')
+                    .filter((d) => d.name !== 'Executive Board')
                     .map((d) => (
                       <option key={d.id} value={d.id}>
                         {d.name}
@@ -2902,7 +2902,7 @@ export const Backoffice: React.FC = () => {
                   Departamento a que está alocado *
                 </label>
                 <p className="text-[11px] text-[#151e33]/70">
-                  Como membro de RH, este consultor terá acesso e poderá responder aos tickets de SAD submetidos pelos membros do departamento selecionado.
+                  Como membro de RH, este consultor terá acesso aos tickets e poderá lançar relatórios SAD dos membros do departamento selecionado (incluindo o próprio departamento de RH).
                 </p>
                 <Select
                   value={editAssignedDepartmentId}
@@ -2911,7 +2911,7 @@ export const Backoffice: React.FC = () => {
                 >
                   <option value="">-- Selecionar Departamento Alocado --</option>
                   {departments
-                    .filter((d) => d.name !== 'Executive Board' && d.name !== 'Human Resources')
+                    .filter((d) => d.name !== 'Executive Board')
                     .map((d) => (
                       <option key={d.id} value={d.id}>
                         {d.name}

@@ -32,12 +32,14 @@ export type TimelineCategory =
 
 export type CalendarCategory =
   | 'GENERAL_ASSEMBLY'
+  | 'GENERAL_MEETING'
   | 'FORMATION'
-  | 'TEAMBUILDING'
-  | 'DEADLINE'
   | 'HR_ACTIVITY'
   | 'CSR_ACTIVITY'
-  | 'OPEN_DAY';
+  | 'OPEN_DAY'
+  | 'OTHER'
+  | 'TEAMBUILDING'
+  | 'DEADLINE';
 
 export interface Department {
   id: string;

@@ -46,12 +46,12 @@ export const Calendar: React.FC = () => {
   const categories: { label: string; value: string }[] = [
     { label: 'Todos os Eventos', value: 'ALL' },
     { label: 'Assembleias Gerais', value: 'GENERAL_ASSEMBLY' },
+    { label: 'Reuniões Gerais', value: 'GENERAL_MEETING' },
     { label: 'Formações & Workshops', value: 'FORMATION' },
-    { label: 'Team Building & Social', value: 'TEAMBUILDING' },
-    { label: 'Prazos & Deadlines', value: 'DEADLINE' },
     { label: '👥 Atividades de RH', value: 'HR_ACTIVITY' },
     { label: '🌱 Atividades de RSC (CSR)', value: 'CSR_ACTIVITY' },
     { label: '🤝 Open Days', value: 'OPEN_DAY' },
+    { label: 'Outros', value: 'OTHER' },
   ];
 
   return (

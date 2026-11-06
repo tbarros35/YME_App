@@ -80,18 +80,18 @@ const getCategoryLabel = (category: CalendarCategory): string => {
   switch (category) {
     case 'GENERAL_ASSEMBLY':
       return 'Assembleia Geral';
+    case 'GENERAL_MEETING':
+      return 'Reunião Geral';
     case 'FORMATION':
       return 'Formação & Workshops';
-    case 'TEAMBUILDING':
-      return 'Teambuilding & Social';
-    case 'DEADLINE':
-      return 'Prazo Limite / Deadline';
     case 'HR_ACTIVITY':
       return '👥 Atividade de RH';
     case 'CSR_ACTIVITY':
       return '🌱 Atividade de RSC (CSR)';
     case 'OPEN_DAY':
       return '🤝 Open Day';
+    case 'OTHER':
+      return 'Outros';
     default:
       return category;
   }

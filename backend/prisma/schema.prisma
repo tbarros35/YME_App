@@ -47,12 +47,14 @@ enum TimelineCategory {
 
 enum CalendarCategory {
   GENERAL_ASSEMBLY
+  GENERAL_MEETING
   FORMATION
   TEAMBUILDING
   DEADLINE
   HR_ACTIVITY
   CSR_ACTIVITY
   OPEN_DAY
+  OTHER
 }
 
 enum SupportCategory {

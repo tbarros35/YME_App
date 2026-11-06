@@ -121,12 +121,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (isAdmin) {
       return [
         'GENERAL_ASSEMBLY',
+        'GENERAL_MEETING',
         'FORMATION',
-        'TEAMBUILDING',
-        'DEADLINE',
         'HR_ACTIVITY',
         'CSR_ACTIVITY',
         'OPEN_DAY',
+        'OTHER',
       ];
     }
     const categories: CalendarCategory[] = [];

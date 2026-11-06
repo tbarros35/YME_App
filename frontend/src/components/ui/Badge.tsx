@@ -159,40 +159,52 @@ export const CalendarCategoryBadge: React.FC<{ category: CalendarCategory }> = (
           Assembleia Geral
         </span>
       );
+    case 'GENERAL_MEETING':
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#151e33] text-white shadow-xs">
+          Reunião Geral
+        </span>
+      );
     case 'FORMATION':
       return (
         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-white text-[#151e33] border border-[#151e33]/20 shadow-xs">
-          Formação
+          Formação & Workshops
+        </span>
+      );
+    case 'HR_ACTIVITY':
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#ff63f6]/20 text-[#151e33] border border-[#ff63f6]/40 shadow-xs">
+          👥 Atividade de RH
+        </span>
+      );
+    case 'CSR_ACTIVITY':
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#151e33]/5 text-[#151e33] border border-[#151e33]/20 shadow-xs">
+          🌱 Atividade de RSC (CSR)
+        </span>
+      );
+    case 'OPEN_DAY':
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#ff63f6] text-[#151e33] shadow-xs">
+          🤝 Open Day
+        </span>
+      );
+    case 'OTHER':
+      return (
+        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#151e33]/5 text-[#151e33] border border-[#151e33]/15 shadow-xs">
+          Outros
         </span>
       );
     case 'TEAMBUILDING':
       return (
         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#ff63f6]/15 text-[#151e33] border border-[#ff63f6]/40 shadow-xs">
-          Team Building
+          Team Building & Social
         </span>
       );
     case 'DEADLINE':
       return (
         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#151e33] text-[#ff63f6] border border-[#ff63f6]/30 shadow-xs">
           Prazo Limite
-        </span>
-      );
-    case 'HR_ACTIVITY':
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#ff63f6]/20 text-[#151e33] border border-[#ff63f6]/40 shadow-xs">
-          Recursos Humanos
-        </span>
-      );
-    case 'CSR_ACTIVITY':
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#151e33]/5 text-[#151e33] border border-[#151e33]/20 shadow-xs">
-          Iniciativa RSC
-        </span>
-      );
-    case 'OPEN_DAY':
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold bg-[#ff63f6] text-[#151e33] shadow-xs">
-          Open Day
         </span>
       );
     default:

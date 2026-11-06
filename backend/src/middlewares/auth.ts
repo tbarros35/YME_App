@@ -219,12 +219,12 @@ export const requireCalendarCreatePermission = (req: Request, res: Response, nex
   if (isAdmin) {
     allowedCategories.push(
       'GENERAL_ASSEMBLY',
+      'GENERAL_MEETING',
       'FORMATION',
-      'TEAMBUILDING',
-      'DEADLINE',
       'HR_ACTIVITY',
       'CSR_ACTIVITY',
-      'OPEN_DAY'
+      'OPEN_DAY',
+      'OTHER'
     );
   } else {
     if (isHR) allowedCategories.push('HR_ACTIVITY');

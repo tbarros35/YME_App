@@ -28,6 +28,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Secrets & Keys
+*.key
+*.key.pub
+*.pem
+NAO METER NO GITHUB/
+
 # Editor and OS files
 .vscode/
 .idea/

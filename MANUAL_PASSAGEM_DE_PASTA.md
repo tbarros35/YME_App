@@ -23,7 +23,9 @@ A aplicação corre de forma contentorizada e isolada com **Docker Compose**:
 
 | Recurso | Detalhes |
 |---|---|
-| **Endereço Web** | `http://79.72.63.191` |
+| **Endereço Web Oficial** | `https://app.yme.pt` |
+| **Endereço IP Direto** | `http://79.72.63.191` |
+| **Gestor de DNS & SSL** | Cloudflare (Conta: `digitaldevelopment@yme.pt`) |
 | **Utilizador Admin Inicial** | `admin@yme.pt` |
 | **Utilizador SSH do Servidor** | `opc` |
 | **IP do Servidor** | `79.72.63.191` |

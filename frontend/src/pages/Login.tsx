@@ -3,9 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
 import { YmeLogo } from '@/components/ui/YmeLogo';
-import { Mail, Lock, Shield, User, ArrowRight, AlertCircle, Scale, Users } from 'lucide-react';
+import { Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const { login, user } = useAuth();
@@ -45,12 +45,6 @@ export const Login: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleQuickLogin = (demoEmail: string) => {
-    setEmail(demoEmail);
-    setPassword('password123');
-    setErrorMessage(null);
   };
 
   return (
@@ -123,54 +117,6 @@ export const Login: React.FC = () => {
               </Button>
             </CardContent>
           </form>
-
-          {/* Quick Demo Login Presets */}
-          <CardFooter className="flex flex-col border-t border-[#151e33]/10 pt-4 pb-4">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#151e33]/50 mb-2.5 text-center w-full">
-              ⚡ Acesso Rápido de Demonstração
-            </span>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
-              >
-                <Shield className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
-                <span className="text-[11px] font-bold text-[#151e33]">Admin</span>
-                <span className="text-[9px] text-[#151e33]/50">Board</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('hr.manager@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
-              >
-                <Users className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
-                <span className="text-[11px] font-bold text-[#151e33]">HR</span>
-                <span className="text-[9px] text-[#151e33]/50">SAD</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('legal.head@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
-              >
-                <Scale className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
-                <span className="text-[11px] font-bold text-[#151e33]">Legal</span>
-                <span className="text-[9px] text-[#151e33]/50">Carteira</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('member@yme.pt')}
-                className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#151e33]/5 hover:bg-[#ff63f6]/15 border border-[#151e33]/10 hover:border-[#ff63f6]/40 transition-all text-center group"
-              >
-                <User className="h-4 w-4 text-[#151e33] mb-1 group-hover:text-[#ff63f6] transition-colors" />
-                <span className="text-[11px] font-bold text-[#151e33]">Membro</span>
-                <span className="text-[9px] text-[#151e33]/50">Consultor</span>
-              </button>
-            </div>
-          </CardFooter>
         </Card>
       </div>
     </div>

@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
 import { YmeLogo } from '@/components/ui/YmeLogo';
-import { Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { Mail, Lock, ArrowRight, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const { login, user } = useAuth();
@@ -14,6 +11,7 @@ export const Login: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -48,76 +46,106 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#f8fafc] relative">
-      {/* Subtle brand ambient accents */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#ff63f6]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#151e33]/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="w-full max-w-md relative z-10 animate-fade-in">
-        {/* Brand Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <YmeLogo className="h-24 sm:h-28 w-auto transition-transform hover:scale-105" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#151e33]">
-            YME APP
-          </h1>
-          <p className="text-xs sm:text-sm text-[#151e33]/60 mt-1 font-medium">
-            Plataforma Integrada de Gestão de Membros & Progressão
-          </p>
+    <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#fafbfc] text-[#151e33] selection:bg-[#ff63f6] selection:text-[#151e33]">
+      <div className="w-full max-w-md animate-fade-in">
+        {/* Brand Header: Logo + "app" in seamless lockup */}
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-8 select-none group">
+          <YmeLogo className="h-14 sm:h-16 w-auto transition-transform duration-200 group-hover:scale-105" />
+          <span className="text-3xl sm:text-4xl font-black tracking-tight text-[#151e33] lowercase select-none">
+            app
+          </span>
         </div>
 
-        <Card className="bg-white border-[#151e33]/15 shadow-clean-lg">
-          <CardHeader className="pb-4 text-center sm:text-left">
-            <CardTitle className="text-xl font-bold text-[#151e33]">
+        {/* Login Card styled identically to dashboard/wallet surfaces */}
+        <div className="bg-white rounded-[36px] p-8 sm:p-10 shadow-[0px_4px_24px_rgba(21,30,51,0.06)] border border-[#151e33]/10">
+          {/* Card Header with trademark vertical pink bar */}
+          <div className="flex items-center gap-2.5 mb-1.5">
+            <span className="w-[3px] h-[20px] bg-[#ff63f6] rounded-full inline-block shrink-0" />
+            <h2 className="text-xl sm:text-2xl font-bold text-[#151e33] tracking-tight">
               Entrar na Conta
-            </CardTitle>
-            <CardDescription className="text-[#151e33]/60">
-              Utiliza o teu email institucional <span className="text-[#151e33] font-semibold font-mono">@yme.pt</span>
-            </CardDescription>
-          </CardHeader>
+            </h2>
+          </div>
+          <p className="text-xs sm:text-sm text-[#151e33]/60 mb-6 font-medium">
+            Utiliza o teu email institucional{' '}
+            <span className="text-[#151e33] font-bold">@yme.pt</span>
+          </p>
 
-          <form onSubmit={handleSubmit}>
-            <CardContent className="space-y-4">
-              {errorMessage && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#ff63f6]/10 border border-[#ff63f6]/40 text-[#151e33] text-xs animate-fade-in">
-                  <AlertCircle className="h-4 w-4 shrink-0 text-[#ff63f6]" />
-                  <span className="font-semibold">{errorMessage}</span>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {errorMessage && (
+              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold animate-fade-in">
+                <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {/* Email Input */}
+            <div className="space-y-1.5 text-left">
+              <label className="block text-xs font-bold text-[#151e33] uppercase tracking-wider">
+                Email Institucional
+              </label>
+              <div className="relative flex items-center">
+                <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-400">
+                  <Mail className="h-4 w-4 text-[#151e33]/60" />
                 </div>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="nome.apelido@yme.pt"
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm text-[#151e33] placeholder:text-slate-400 focus:outline-none focus:border-[#ff63f6] focus:ring-2 focus:ring-[#ff63f6]/20 transition-all font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Password Input with show/hide toggle */}
+            <div className="space-y-1.5 text-left">
+              <label className="block text-xs font-bold text-[#151e33] uppercase tracking-wider">
+                Palavra-passe
+              </label>
+              <div className="relative flex items-center">
+                <div className="absolute left-3.5 flex items-center pointer-events-none text-slate-400">
+                  <Lock className="h-4 w-4 text-[#151e33]/60" />
+                </div>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full h-11 pl-10 pr-10 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm text-[#151e33] placeholder:text-slate-400 focus:outline-none focus:border-[#ff63f6] focus:ring-2 focus:ring-[#ff63f6]/20 transition-all font-medium"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 flex items-center text-slate-400 hover:text-[#151e33] transition-colors"
+                  title={showPassword ? 'Ocultar palavra-passe' : 'Mostrar palavra-passe'}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-11 mt-2 inline-flex items-center justify-center gap-2 bg-[#151e33] hover:bg-[#1e2a47] text-white text-xs sm:text-sm font-bold rounded-xl shadow-clean-sm hover:shadow-clean-md transition-all active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span>A autenticar...</span>
+                </span>
+              ) : (
+                <>
+                  <span>Aceder à APP</span>
+                  <ArrowRight className="h-4 w-4 ml-0.5" />
+                </>
               )}
-
-              <Input
-                label="Email Institucional"
-                type="email"
-                placeholder="nome.apelido@yme.pt"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                icon={<Mail className="h-4 w-4 text-[#151e33]" />}
-                required
-              />
-
-              <Input
-                label="Palavra-passe"
-                type="password"
-                placeholder="••••••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                icon={<Lock className="h-4 w-4 text-[#151e33]" />}
-                required
-              />
-
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-full h-11 text-sm font-semibold"
-                isLoading={isLoading}
-              >
-                <span>Aceder à APP</span>
-                <ArrowRight className="h-4 w-4 ml-1" />
-              </Button>
-            </CardContent>
+            </button>
           </form>
-        </Card>
+        </div>
       </div>
     </div>
   );

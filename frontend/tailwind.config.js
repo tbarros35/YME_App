@@ -24,7 +24,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Open Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['"Open Sans"', 'Open Sans', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       boxShadow: {
         'clean-sm': '0 1px 3px 0 rgba(21, 30, 51, 0.05)',

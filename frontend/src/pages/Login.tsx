@@ -48,11 +48,11 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-[#fafbfc] text-[#151e33] selection:bg-[#ff63f6] selection:text-[#151e33]">
       <div className="w-full max-w-md animate-fade-in">
-        {/* Brand Header: Logo + "app" in seamless lockup */}
-        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-8 select-none group">
-          <YmeLogo className="h-14 sm:h-16 w-auto transition-transform duration-200 group-hover:scale-105" />
-          <span className="text-3xl sm:text-4xl font-black tracking-tight text-[#151e33] lowercase select-none">
-            app
+        {/* Brand Header: Logo on top, "App" underneath in pink */}
+        <div className="flex flex-col items-center justify-center mb-8 select-none group">
+          <YmeLogo className="h-20 sm:h-24 w-auto transition-transform duration-200 group-hover:scale-105" />
+          <span className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#ff63f6] mt-2 select-none">
+            App
           </span>
         </div>
 

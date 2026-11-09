@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { prisma } from '../config/prisma';
 import { Role } from '@prisma/client';
+import { EmailService } from './email.service';
 
 export function resolveCareerHistory(user: {
   position?: string;
@@ -302,6 +303,17 @@ export class UserService {
       },
     });
 
+    // Envio assíncrono do email de boas-vindas com dados de acesso
+    EmailService.sendWelcomeEmail({
+      to: newUser.email,
+      fullName: newUser.fullName,
+      tempPassword: data.passwordPlain,
+      departmentName: newUser.department.name,
+      position: newUser.position,
+    }).catch((err) => {
+      console.error('[UserService] Falha ao despachar email de boas-vindas:', err);
+    });
+
     return {
       id: newUser.id,
       email: newUser.email,
@@ -403,6 +415,15 @@ export class UserService {
     await prisma.user.update({
       where: { id: userId },
       data: { passwordHash },
+    });
+
+    // Envio assíncrono do email de notificação com a nova palavra-passe
+    EmailService.sendPasswordResetEmail({
+      to: user.email,
+      fullName: user.fullName,
+      newPassword: newPasswordPlain,
+    }).catch((err) => {
+      console.error('[UserService] Falha ao despachar email de reset de password:', err);
     });
 
     return { message: `Palavra-passe do membro ${user.fullName} atualizada com sucesso.` };

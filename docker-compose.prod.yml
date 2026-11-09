@@ -34,6 +34,12 @@ services:
       SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Direção YME}
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@yme.pt}
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD}
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      SMTP_FROM: ${SMTP_FROM}
+      APP_URL: ${APP_URL:-https://app.yme.pt}
     volumes:
       - backend_uploads_prod:/app/uploads
     depends_on:

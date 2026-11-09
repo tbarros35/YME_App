@@ -414,7 +414,10 @@ export class UserService {
 
     await prisma.user.update({
       where: { id: userId },
-      data: { passwordHash },
+      data: {
+        passwordHash,
+        mustChangePassword: true,
+      },
     });
 
     // Envio assíncrono do email de notificação com a nova palavra-passe
@@ -427,6 +430,42 @@ export class UserService {
     });
 
     return { message: `Palavra-passe do membro ${user.fullName} atualizada com sucesso.` };
+  }
+
+  static async updateAvatar(userId: string, avatarUrl: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user || !user.isActive) {
+      const error: any = new Error('Membro não encontrado.');
+      error.statusCode = 404;
+      error.code = 'NOT_FOUND';
+      throw error;
+    }
+
+    const updated = await prisma.user.update({
+      where: { id: userId },
+      data: { avatarUrl },
+      include: {
+        department: { select: { id: true, name: true } },
+        assignedDepartment: { select: { id: true, name: true } },
+      },
+    });
+
+    return {
+      id: updated.id,
+      email: updated.email,
+      fullName: updated.fullName,
+      role: updated.role,
+      position: updated.position,
+      careerHistory: resolveCareerHistory(updated),
+      taskgroups: updated.taskgroups,
+      department: updated.department,
+      assignedDepartment: updated.assignedDepartment,
+      assignedDepartmentId: updated.assignedDepartmentId,
+      mustChangePassword: updated.mustChangePassword,
+      avatarUrl: updated.avatarUrl,
+      isActive: updated.isActive,
+      createdAt: updated.createdAt,
+    };
   }
 
   static async deleteUser(userId: string) {

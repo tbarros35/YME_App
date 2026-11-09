@@ -5,9 +5,10 @@ import fs from 'fs';
 const sadUploadsDir = path.resolve(__dirname, '../../uploads/sad');
 const receiptsUploadsDir = path.resolve(__dirname, '../../uploads/receipts');
 const proofsUploadsDir = path.resolve(__dirname, '../../uploads/proofs');
+const avatarsUploadsDir = path.resolve(__dirname, '../../uploads/avatars');
 
 // Ensure upload directories exist
-[sadUploadsDir, receiptsUploadsDir, proofsUploadsDir].forEach((dir) => {
+[sadUploadsDir, receiptsUploadsDir, proofsUploadsDir, avatarsUploadsDir].forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -128,5 +129,47 @@ export const uploadRefundProof = multer({
   fileFilter: docOrImageFilter,
   limits: {
     fileSize: 25 * 1024 * 1024,
+  },
+});
+
+// Storage for User Profile Avatars
+const avatarStorage = multer.diskStorage({
+  destination: (_req, _file, cb) => {
+    if (!fs.existsSync(avatarsUploadsDir)) {
+      fs.mkdirSync(avatarsUploadsDir, { recursive: true });
+    }
+    cb(null, avatarsUploadsDir);
+  },
+  filename: (_req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e6)}`;
+    const ext = path.extname(file.originalname).toLowerCase() || '.png';
+    cb(null, `avatar_${uniqueSuffix}${ext}`);
+  },
+});
+
+const avatarImageFilter = (
+  _req: any,
+  file: Express.Multer.File,
+  cb: multer.FileFilterCallback
+) => {
+  const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+  const ext = path.extname(file.originalname).toLowerCase();
+
+  if (allowedMimeTypes.includes(file.mimetype) || allowedExtensions.includes(ext)) {
+    cb(null, true);
+  } else {
+    const err: any = new Error('Formato inválido. A foto de perfil deve ser uma imagem (.png, .jpg, .jpeg, .webp).');
+    err.statusCode = 400;
+    err.code = 'INVALID_FILE_TYPE';
+    cb(err);
+  }
+};
+
+export const uploadAvatar = multer({
+  storage: avatarStorage,
+  fileFilter: avatarImageFilter,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10 MB max
   },
 });

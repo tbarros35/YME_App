@@ -69,6 +69,8 @@ export interface User {
   position: string;
   careerHistory?: string[];
   taskgroups?: Taskgroup[];
+  mustChangePassword?: boolean;
+  avatarUrl?: string | null;
   isActive?: boolean;
   createdAt?: string;
 }

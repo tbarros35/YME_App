@@ -124,4 +124,22 @@ export class UserController {
       next(error);
     }
   }
+
+  static async uploadAvatar(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.user) {
+        res.status(401).json({ error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } });
+        return;
+      }
+      if (!req.file) {
+        res.status(400).json({ error: { code: 'NO_FILE', message: 'Nenhuma imagem foi enviada.' } });
+        return;
+      }
+      const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+      const user = await UserService.updateAvatar(req.user.id, avatarUrl);
+      res.status(200).json({ user, message: 'Foto de perfil atualizada com sucesso!' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

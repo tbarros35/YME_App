@@ -17,11 +17,14 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SupportModal } from './support/SupportModal';
+import { FirstLoginModal } from './auth/FirstLoginModal';
+import { ProfileModal } from './profile/ProfileModal';
 
 export const Layout: React.FC = () => {
   const { user, isAdmin, logout, canAccessBackoffice, canReviewWalletRequests } = useAuth();
   const navigate = useNavigate();
   const [isSupportOpen, setIsSupportOpen] = React.useState<boolean>(false);
+  const [isProfileOpen, setIsProfileOpen] = React.useState<boolean>(false);
 
   // Poll for pending wallet requests if user is Admin or Legal & Finance
   const { data: pendingWalletCount = 0 } = useQuery({
@@ -156,15 +159,29 @@ export const Layout: React.FC = () => {
                 </div>
 
                 {/* Avatar with Stitch Indicator */}
-                <div className="relative">
-                  <div className="h-10 w-10 rounded-full bg-[#151e33] p-0.5 shadow-clean-sm cursor-pointer transition-all hover:ring-2 hover:ring-[#ff63f6]">
-                    <div className="h-full w-full rounded-full bg-white flex items-center justify-center text-xs font-bold text-[#151e33] border border-slate-100">
-                      {user.fullName
-                        .split(' ')
-                        .map((n) => n[0])
-                        .slice(0, 2)
-                        .join('')}
-                    </div>
+                <div
+                  className="relative cursor-pointer group"
+                  onClick={() => setIsProfileOpen(true)}
+                  title="Ver Perfil"
+                >
+                  <div className="h-10 w-10 rounded-full bg-[#151e33] p-0.5 shadow-clean-sm transition-all group-hover:ring-2 group-hover:ring-[#ff63f6] overflow-hidden">
+                    {user.avatarUrl ? (
+                      <img
+                        src={user.avatarUrl}
+                        alt={user.fullName}
+                        className="h-full w-full rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full rounded-full bg-white flex items-center justify-center text-xs font-bold text-[#151e33] border border-slate-100">
+                        {user.fullName
+                          .split(' ')
+                          .filter(Boolean)
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join('')
+                          .toUpperCase()}
+                      </div>
+                    )}
                   </div>
                   <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-[#ff63f6] border-2 border-white shadow-stitch-subtle" />
                 </div>
@@ -196,6 +213,15 @@ export const Layout: React.FC = () => {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <Outlet />
       </main>
+
+      {/* First Login Mandatory Password Change Modal */}
+      <FirstLoginModal />
+
+      {/* Member Profile Modal */}
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+      />
 
       {/* Global Support Modal */}
       <SupportModal

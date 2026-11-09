@@ -86,4 +86,18 @@ export class AuthController {
       next(error);
     }
   }
+
+  static async changeFirstPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.user) {
+        res.status(401).json({ error: { code: 'UNAUTHORIZED', message: 'Not authenticated' } });
+        return;
+      }
+      const { newPassword } = req.body;
+      const result = await AuthService.changeFirstPassword(req.user.id, newPassword);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

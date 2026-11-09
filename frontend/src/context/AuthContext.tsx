@@ -8,6 +8,8 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, passwordPlain: string) => Promise<void>;
   logout: () => Promise<void>;
+  changeFirstPassword: (newPassword: string) => Promise<void>;
+  updateUserAvatar: (avatarUrl: string) => void;
   isAdmin: boolean;
   isDirector: boolean;
   canManageSAD: boolean;
@@ -86,6 +88,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('yme_user');
       window.location.href = '/login';
     }
+  };
+
+  const changeFirstPassword = async (newPassword: string) => {
+    const response = await api.post('/auth/change-first-password', {
+      newPassword,
+    });
+    const updatedUser = response.data?.user;
+    if (updatedUser) {
+      setUser(updatedUser);
+      localStorage.setItem('yme_user', JSON.stringify(updatedUser));
+    } else if (user) {
+      const merged = { ...user, mustChangePassword: false };
+      setUser(merged);
+      localStorage.setItem('yme_user', JSON.stringify(merged));
+    }
+  };
+
+  const updateUserAvatar = (avatarUrl: string) => {
+    setUser((prev) => {
+      if (!prev) return null;
+      const updated = { ...prev, avatarUrl };
+      localStorage.setItem('yme_user', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   // Fine-grained RBAC and functional authorization
@@ -169,6 +195,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isLoading,
         login,
         logout,
+        changeFirstPassword,
+        updateUserAvatar,
         isAdmin,
         isDirector,
         canManageSAD,

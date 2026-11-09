@@ -128,6 +128,7 @@ async function main() {
           'CEO',
         ],
         isActive: true,
+        mustChangePassword: false,
       },
     });
     console.log(`👑 Conta Administrador Principal (CEO - Executive Board) criada: ${adminEmail}`);
@@ -138,6 +139,7 @@ async function main() {
       data: {
         departmentId: departmentMap['Executive Board'],
         position: 'CEO',
+        mustChangePassword: false,
         role: Role.ADMIN,
       },
     });

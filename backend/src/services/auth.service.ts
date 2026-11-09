@@ -68,6 +68,8 @@ export class AuthService {
         position: user.position,
         careerHistory: resolveCareerHistory(user),
         taskgroups: user.taskgroups || [],
+        mustChangePassword: user.mustChangePassword,
+        avatarUrl: user.avatarUrl,
       },
       accessToken,
       refreshToken,
@@ -126,6 +128,8 @@ export class AuthService {
           position: user.position,
           careerHistory: resolveCareerHistory(user),
           taskgroups: user.taskgroups || [],
+          mustChangePassword: user.mustChangePassword,
+          avatarUrl: user.avatarUrl,
         },
       };
     } catch (err) {
@@ -174,8 +178,78 @@ export class AuthService {
       position: user.position,
       careerHistory: resolveCareerHistory(user),
       taskgroups: user.taskgroups || [],
+      mustChangePassword: user.mustChangePassword,
+      avatarUrl: user.avatarUrl,
       isActive: user.isActive,
       createdAt: user.createdAt,
+    };
+  }
+
+  static async changeFirstPassword(userId: string, newPasswordPlain: string) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        department: { select: { id: true, name: true } },
+        assignedDepartment: { select: { id: true, name: true } },
+      },
+    });
+
+    if (!user || !user.isActive) {
+      const error: any = new Error('Utilizador não encontrado ou inativo.');
+      error.statusCode = 404;
+      error.code = 'USER_NOT_FOUND';
+      throw error;
+    }
+
+    if (!user.mustChangePassword) {
+      const error: any = new Error(
+        'A palavra-passe já foi definida e não pode ser alterada diretamente. Contacte um administrador.'
+      );
+      error.statusCode = 403;
+      error.code = 'PASSWORD_CHANGE_NOT_ALLOWED';
+      throw error;
+    }
+
+    if (!newPasswordPlain || newPasswordPlain.trim().length < 6) {
+      const error: any = new Error('A nova palavra-passe deve ter pelo menos 6 caracteres.');
+      error.statusCode = 400;
+      error.code = 'INVALID_PASSWORD_LENGTH';
+      throw error;
+    }
+
+    const passwordHash = await bcrypt.hash(newPasswordPlain, 10);
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        passwordHash,
+        mustChangePassword: false,
+      },
+      include: {
+        department: { select: { id: true, name: true } },
+        assignedDepartment: { select: { id: true, name: true } },
+      },
+    });
+
+    return {
+      message: 'Palavra-passe alterada com sucesso!',
+      user: {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        fullName: updatedUser.fullName,
+        role: updatedUser.role,
+        departmentId: updatedUser.departmentId,
+        department: updatedUser.department,
+        assignedDepartmentId: updatedUser.assignedDepartmentId,
+        assignedDepartment: updatedUser.assignedDepartment,
+        position: updatedUser.position,
+        careerHistory: resolveCareerHistory(updatedUser),
+        taskgroups: updatedUser.taskgroups || [],
+        mustChangePassword: false,
+        avatarUrl: updatedUser.avatarUrl,
+        isActive: updatedUser.isActive,
+        createdAt: updatedUser.createdAt,
+      },
     };
   }
 }

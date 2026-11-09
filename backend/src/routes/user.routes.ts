@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
 import { authenticate, requireRole } from '../middlewares/auth';
+import { uploadAvatar } from '../middlewares/upload';
 import { Role } from '@prisma/client';
 
 const router = Router();
@@ -8,6 +9,7 @@ const router = Router();
 // Member access
 router.get('/dashboard', authenticate, UserController.getDashboardSummary);
 router.get('/departments', authenticate, UserController.getDepartments);
+router.post('/profile/avatar', authenticate, uploadAvatar.single('avatar'), UserController.uploadAvatar);
 
 // Directory access (Admins, Directors, or HR members)
 router.get(

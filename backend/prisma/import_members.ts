@@ -3,12 +3,11 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-let EmailService: any;
-try {
-  EmailService = require('../src/services/email.service').EmailService;
-} catch {
-  EmailService = require('../dist/services/email.service').EmailService;
-}
+const emailServicePath = fs.existsSync(path.resolve(__dirname, '../src/services/email.service.ts'))
+  ? path.resolve(__dirname, '../src/services/email.service.ts')
+  : path.resolve(__dirname, '../dist/services/email.service.js');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { EmailService } = require(emailServicePath);
 
 const prisma = new PrismaClient();
 

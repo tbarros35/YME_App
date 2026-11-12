@@ -51,14 +51,20 @@ interface MemberRecord {
   }>;
 }
 
-export async function importMembers(dryRun = false) {
+export async function importMembers(dryRun = false, filter?: string) {
   const jsonPath = path.resolve(__dirname, '../scripts/processed_members.json');
   if (!fs.existsSync(jsonPath)) {
     throw new Error(`Ficheiro de dados não encontrado: ${jsonPath}`);
   }
 
-  const members: MemberRecord[] = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-  console.log(`📋 Total de membros a importar: ${members.length}`);
+  let members: MemberRecord[] = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  if (filter) {
+    const f = filter.toLowerCase().trim();
+    members = members.filter((m) => m.email.toLowerCase() === f || m.name.toLowerCase().includes(f));
+    console.log(`🔍 Filtro aplicado: "${filter}" -> ${members.length} membro(s) selecionado(s)`);
+  } else {
+    console.log(`📋 Total de membros a importar: ${members.length}`);
+  }
 
   // Fetch departments map
   const depts = await prisma.department.findMany();
@@ -194,6 +200,7 @@ export async function importMembers(dryRun = false) {
 
       summary.created++;
       console.log(`✅ Membro criado com sucesso: ${user.fullName} (${user.email})`);
+      console.log(`🔑 Credenciais geradas -> Email: ${user.email} | Palavra-passe provisória: ${tempPassword}`);
     } catch (err: any) {
       console.error(`❌ Erro ao criar utilizador ${m.name}:`, err);
       summary.errors.push(`${m.name}: ${err.message}`);
@@ -212,8 +219,14 @@ export async function importMembers(dryRun = false) {
 // If run directly via command line
 if (require.main === module) {
   const isDryRun = process.argv.includes('--dry-run');
-  importMembers(isDryRun)
-    .then(() => prisma.$disconnect())
+  const filterArgIdx = process.argv.findIndex((a) => a === '--filter' || a === '--email' || a === '--name');
+  const filter = filterArgIdx !== -1 ? process.argv[filterArgIdx + 1] : undefined;
+
+  importMembers(isDryRun, filter)
+    .then((summary) => {
+      console.log('Resultados:', summary);
+      return prisma.$disconnect();
+    })
     .catch((err) => {
       console.error(err);
       prisma.$disconnect();

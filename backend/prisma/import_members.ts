@@ -3,7 +3,12 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { EmailService } from '../src/services/email.service';
+let EmailService: any;
+try {
+  EmailService = require('../src/services/email.service').EmailService;
+} catch {
+  EmailService = require('../dist/services/email.service').EmailService;
+}
 
 const prisma = new PrismaClient();
 

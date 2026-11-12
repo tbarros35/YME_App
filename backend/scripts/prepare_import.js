@@ -81,25 +81,21 @@ function processMember(row) {
   const name = row['Nome'];
   const email = row['Email'].toLowerCase().trim();
   const department = row['Departamento'].trim();
-  const rawPos = row['Cargo / Posição'];
-  const rawTG = row['Taskgroups'];
-  const rawEvents = row['Eventos do Movimento Júnior'];
+  const rawPos = row['Cargo / Posição'] || '';
+  const rawTG = row['Taskgroups'] || '';
+  const rawEvents = row['Eventos do Movimento Júnior'] || '';
+  const rawProjects = row['Projetos Externos'] || '';
 
-  // Parse Career Steps & Admission
-  // e.g.:
-  // Trainee (Brand Strategy) | 16/07/2025
-  // Junior Consultant (Brand Strategy) | 24/10/2025
-  // Head of Brand Strategy | 13/07/2026
+  // Parse Career Steps & Dates
   const posLines = rawPos.split('\n').map(l => l.trim()).filter(Boolean);
   
   const careerHistory = [];
-  const careerMilestones = [];
+  const careerDates = []; // { step: string, date: Date }
   let admissionDate = null;
   let currentPosition = 'Consultant';
   let role = 'MEMBER';
 
   posLines.forEach((line) => {
-    // split by | or I
     const parts = line.split(/[|I]/);
     const titleRaw = (parts[0] || '').trim();
     const dateRaw = (parts[1] || '').trim();
@@ -125,24 +121,31 @@ function processMember(row) {
     }
 
     if (d) {
-      careerMilestones.push({
-        title: cleanTitle,
-        category: cleanTitle.toLowerCase().includes('trainee') ? 'RECRUITMENT' : 'FORMATION',
-        description: `Promoção a ${titleRaw} no departamento de ${department}.`,
-        roleStep: cleanTitle,
-        eventDate: d.toISOString(),
-      });
+      careerDates.push({ step: cleanTitle, date: d });
     }
   });
 
-  // Taskgroups parsing
+  // Helper to determine the roleStep at any given date based on career progression
+  function getRoleStepAtDate(targetDate) {
+    if (!targetDate || careerDates.length === 0) {
+      return careerHistory[0] || `Trainee of ${department}`;
+    }
+    const sorted = [...careerDates].sort((a, b) => a.date.getTime() - b.date.getTime());
+    let matchedStep = sorted[0].step;
+    for (const entry of sorted) {
+      if (targetDate.getTime() >= entry.date.getTime()) {
+        matchedStep = entry.step;
+      }
+    }
+    return matchedStep;
+  }
+
+  // 1. Taskgroups parsing
   const tgLines = rawTG.split('\n').map(l => l.trim()).filter(Boolean);
   const activeTaskgroups = new Set();
   const taskgroupMilestones = [];
 
   tgLines.forEach((line) => {
-    // e.g. "HIVE | PM | 17/03/2026 - 13/07/2026 | 118 Dias"
-    // or "Concerto Solidário | Membro Comunicação | 13/07/2026 - 14/11/2025" (2025 is typo for 2026)
     const parts = line.split('|').map(p => p.trim());
     if (parts.length < 2) return;
 
@@ -150,10 +153,8 @@ function processMember(row) {
     const tgRole = parts[1] || 'Membro';
     const dateRange = parts[2] || '';
 
-    // Check if current (ends around 14/11/2026 or mentions 14/11/2025 as typo)
     const isCurrent = dateRange.includes('14/11/2026') || dateRange.includes('14/11/2025') || dateRange.includes('Presente');
 
-    // Canonical TG name (e.g. CSR, Partnerships, HIVE, Concerto Solidário, Evento Solidário)
     let canonicalTG = tgName;
     if (tgName.toUpperCase().includes('CSR')) canonicalTG = 'CSR';
     else if (tgName.toUpperCase().includes('PARTNERSHIP')) canonicalTG = 'Partnerships';
@@ -165,80 +166,62 @@ function processMember(row) {
       activeTaskgroups.add(canonicalTG);
     }
 
-    // Dates for milestone
     const dates = dateRange.split('-').map(s => s.trim());
     const startDate = parseDate(dates[0]);
-
-    // Determine which roleStep this taskgroup milestone belonged to
-    let assignedStep = careerHistory[careerHistory.length - 1];
-    if (startDate && careerMilestones.length > 0) {
-      for (let i = careerMilestones.length - 1; i >= 0; i--) {
-        if (startDate >= new Date(careerMilestones[i].eventDate)) {
-          assignedStep = careerMilestones[i].roleStep;
-          break;
-        }
-      }
-    }
+    const assignedStep = getRoleStepAtDate(startDate);
 
     taskgroupMilestones.push({
       title: `${canonicalTG} (${tgRole})`,
       category: 'TASKGROUP',
       description: `Participação na taskgroup ${canonicalTG} como ${tgRole} (${dateRange || 'Duração do mandato'}).`,
-      roleStep: assignedStep || careerHistory[0],
-      eventDate: startDate ? startDate.toISOString() : new Date().toISOString(),
+      roleStep: assignedStep,
+      eventDate: startDate ? startDate.toISOString() : (admissionDate ? admissionDate.toISOString() : new Date().toISOString()),
       isCurrent,
     });
   });
 
-  // Eventos Movimento Júnior
+  // 2. Eventos Movimento Júnior
   const eventLines = rawEvents.split('\n').map(l => l.trim()).filter(Boolean);
   const eventMilestones = [];
 
   eventLines.forEach((ev) => {
-    // e.g. "XII JENC | 2026", "ExBo Meeting | 2026", "XI JENC | 2026", "X JENC | 2026", "IX JENC | 2025", "JE Europe Winter Conference | 2026", "jeniAL | 2026", "JEday | 2025"
     let eventName = ev;
-    let eventDate = new Date(Date.UTC(2026, 5, 1, 12, 0, 0)); // default mid-2026
+    let eventDate = new Date(Date.UTC(2026, 5, 1, 12, 0, 0));
     let assignedStep = careerHistory[careerHistory.length - 1];
 
     const evUpper = ev.toUpperCase();
 
     if (evUpper.includes('IX JENC')) {
-      // O IX JENC ocorreu quando os membros que entraram em julho de 2025 eram ainda trainees
       eventName = 'IX JENC (2025)';
-      eventDate = new Date(Date.UTC(2025, 9, 15, 12, 0, 0)); // Oct 2025
+      eventDate = new Date(Date.UTC(2025, 9, 15, 12, 0, 0));
       assignedStep = careerHistory.find(s => s.toLowerCase().includes('trainee')) || careerHistory[0];
     } else if (evUpper.includes('JEDAY')) {
       eventName = 'JEday (2025)';
-      eventDate = new Date(Date.UTC(2025, 10, 20, 12, 0, 0)); // Nov 2025
+      eventDate = new Date(Date.UTC(2025, 10, 20, 12, 0, 0));
       assignedStep = careerHistory.find(s => s.toLowerCase().includes('junior consultant')) || careerHistory[0];
     } else if (evUpper.includes('X JENC')) {
-      // O X JENC ocorreu quando membros de nov/2025 eram trainees e jul/2025 eram junior consultants
       eventName = 'X JENC (2026)';
-      eventDate = new Date(Date.UTC(2026, 0, 20, 12, 0, 0)); // Jan 2026
+      eventDate = new Date(Date.UTC(2026, 0, 20, 12, 0, 0));
       if (admissionDate && admissionDate >= new Date(Date.UTC(2025, 10, 1))) {
-        // Nov 2025 cohort -> Trainee
         assignedStep = careerHistory.find(s => s.toLowerCase().includes('trainee')) || careerHistory[0];
       } else {
-        // Jul 2025 cohort -> Junior Consultant
         assignedStep = careerHistory.find(s => s.toLowerCase().includes('junior consultant')) || careerHistory[0];
       }
     } else if (evUpper.includes('WINTER CONFERENCE')) {
-      // O JEE Winter Conference ocorreu em março de 2026
       eventName = 'JE Europe Winter Conference (2026)';
-      eventDate = new Date(Date.UTC(2026, 2, 15, 12, 0, 0)); // Mar 2026
+      eventDate = new Date(Date.UTC(2026, 2, 15, 12, 0, 0));
       assignedStep = careerHistory.find(s => s.toLowerCase().includes('junior consultant')) || careerHistory[0];
     } else if (evUpper.includes('XI JENC') || evUpper.includes('JENIAL')) {
-      // O XI JENC e o Jenial ocorreram quando os membros que entraram em julho e novembro de 2025 eram já todos junior consultants
       eventName = evUpper.includes('XI JENC') ? 'XI JENC (2026)' : 'jeniAL (2026)';
-      eventDate = new Date(Date.UTC(2026, 4, 15, 12, 0, 0)); // May 2026
+      eventDate = new Date(Date.UTC(2026, 4, 15, 12, 0, 0));
       assignedStep = careerHistory.find(s => s.toLowerCase().includes('junior consultant')) || careerHistory[0];
     } else if (evUpper.includes('EXBO MEETING')) {
       eventName = 'ExBo Meeting (2026)';
-      eventDate = new Date(Date.UTC(2026, 6, 20, 12, 0, 0)); // Jul 2026
+      eventDate = new Date(Date.UTC(2026, 6, 20, 12, 0, 0));
       assignedStep = careerHistory.find(s => s.toLowerCase().includes('head')) || careerHistory[careerHistory.length - 1];
     } else if (evUpper.includes('XII JENC')) {
       eventName = 'XII JENC (2026)';
-      eventDate = new Date(Date.UTC(2026, 9, 20, 12, 0, 0)); // Oct 2026
+      eventDate = new Date(Date.UTC(2026, 9, 20, 12, 0, 0));
       assignedStep = careerHistory[careerHistory.length - 1];
     }
 
@@ -251,6 +234,32 @@ function processMember(row) {
     });
   });
 
+  // 3. Projetos Externos (Serviços)
+  const projectLines = rawProjects.split('\n').map(l => l.trim()).filter(Boolean);
+  const projectMilestones = [];
+
+  projectLines.forEach((line) => {
+    const parts = line.split('|').map(p => p.trim());
+    if (parts.length < 3) return;
+
+    const projCode = parts[0];
+    const projScope = parts[1];
+    const projRole = parts[2];
+    const dateRange = parts[3] || '';
+
+    const dates = dateRange.split('-').map(s => s.trim());
+    const startDate = parseDate(dates[0]);
+    const assignedStep = getRoleStepAtDate(startDate);
+
+    projectMilestones.push({
+      title: `${projCode} - ${projScope} (${projRole})`,
+      category: 'PROJECT',
+      description: `Participação no serviço externo ${projCode} (${projScope}) como ${projRole} (${dateRange || 'Em curso'}).`,
+      roleStep: assignedStep,
+      eventDate: startDate ? startDate.toISOString() : (admissionDate ? admissionDate.toISOString() : new Date().toISOString()),
+    });
+  });
+
   return {
     name,
     email,
@@ -260,9 +269,9 @@ function processMember(row) {
     careerHistory: careerHistory.length > 0 ? careerHistory : [`Consultant of ${department}`],
     admissionDate: admissionDate ? admissionDate.toISOString() : new Date(Date.UTC(2025, 6, 16)).toISOString(),
     activeTaskgroups: Array.from(activeTaskgroups),
-    careerMilestones,
     taskgroupMilestones,
     eventMilestones,
+    projectMilestones,
   };
 }
 
@@ -276,5 +285,12 @@ fs.writeFileSync(
 );
 
 console.log('✅ Processed', processedMembers.length, 'members.');
-console.log('Sample Member #1:');
-console.log(JSON.stringify(processedMembers[0], null, 2));
+
+const withProjects = processedMembers.filter(m => m.projectMilestones.length > 0);
+console.log(`\n📁 Membros com Projetos Externos: ${withProjects.length}`);
+withProjects.forEach(m => {
+  console.log(`\n• ${m.name} (${m.department}):`);
+  m.projectMilestones.forEach(p => {
+    console.log(`  - [${p.roleStep}] ${p.title} (${p.eventDate.slice(0, 10)})`);
+  });
+});

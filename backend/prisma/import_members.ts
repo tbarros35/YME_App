@@ -38,6 +38,13 @@ interface MemberRecord {
     roleStep?: string;
     eventDate: string;
   }>;
+  projectMilestones?: Array<{
+    title: string;
+    category: string;
+    description: string;
+    roleStep?: string;
+    eventDate: string;
+  }>;
 }
 
 export async function importMembers(dryRun = false) {
@@ -150,7 +157,23 @@ export async function importMembers(dryRun = false) {
         });
       }
 
-      // 5. Send Welcome Email with temporary password
+      // 5. External Projects Milestones (Serviços)
+      if (m.projectMilestones && m.projectMilestones.length > 0) {
+        for (const prj of m.projectMilestones) {
+          await prisma.timelineEvent.create({
+            data: {
+              userId: user.id,
+              title: prj.title,
+              category: TimelineCategory.PROJECT,
+              roleStep: prj.roleStep || m.careerHistory[0],
+              description: prj.description,
+              eventDate: new Date(prj.eventDate),
+            },
+          });
+        }
+      }
+
+      // 6. Send Welcome Email with temporary password
       try {
         await EmailService.sendWelcomeEmail({
           to: user.email,

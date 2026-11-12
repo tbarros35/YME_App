@@ -319,7 +319,9 @@ export const Dashboard: React.FC = () => {
                 <div className="absolute left-[6.5px] top-2 bottom-3 w-[2px] bg-[#ff63f6]" />
 
                 {careerSteps.map((step, idx) => {
-                  const stepMilestones = getMilestonesForStep(step, idx);
+                  const stepMilestones = getMilestonesForStep(step, idx).filter(
+                    (m) => m.title.toLowerCase().trim() !== step.toLowerCase().trim()
+                  );
 
                   return (
                     <div key={idx} className="relative">

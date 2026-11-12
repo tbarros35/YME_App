@@ -64,30 +64,7 @@ async function main() {
     },
   });
 
-  // 6. Timeline - Career Progressions
-  await prisma.timelineEvent.create({
-    data: {
-      userId: user.id,
-      title: 'Junior Consultant of Brand Strategy',
-      category: TimelineCategory.FORMATION,
-      roleStep: 'Junior Consultant of Brand Strategy',
-      description: 'Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.',
-      eventDate: new Date('2025-10-24T12:00:00.000Z'),
-    },
-  });
-
-  await prisma.timelineEvent.create({
-    data: {
-      userId: user.id,
-      title: 'Head of Brand Strategy',
-      category: TimelineCategory.FORMATION,
-      roleStep: 'Head of Brand Strategy',
-      description: 'Promoção a Head of Brand Strategy no departamento de Brand Strategy.',
-      eventDate: new Date('2026-07-13T12:00:00.000Z'),
-    },
-  });
-
-  // 7. Timeline - Taskgroup Milestones
+  // 6. Timeline - Taskgroup Milestones
   const taskgroupMilestones = [
     {
       title: 'HIVE (Membro)',

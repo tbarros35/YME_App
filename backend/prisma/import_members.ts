@@ -122,23 +122,7 @@ export async function importMembers(dryRun = false) {
         },
       });
 
-      // 2. Career Progression Milestones
-      for (const cm of m.careerMilestones) {
-        // Skip duplicate recruitment if same title
-        if (cm.title === 'Entrada na YME') continue;
-        await prisma.timelineEvent.create({
-          data: {
-            userId: user.id,
-            title: cm.title,
-            category: cm.category as TimelineCategory,
-            roleStep: cm.roleStep,
-            description: cm.description,
-            eventDate: new Date(cm.eventDate),
-          },
-        });
-      }
-
-      // 3. Taskgroup Milestones
+      // 2. Taskgroup Milestones
       for (const tgm of m.taskgroupMilestones) {
         await prisma.timelineEvent.create({
           data: {

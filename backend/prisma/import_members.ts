@@ -1,0 +1,211 @@
+import { PrismaClient, Role, TimelineCategory } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import { EmailService } from '../src/services/email.service';
+
+const prisma = new PrismaClient();
+
+interface MemberRecord {
+  name: string;
+  email: string;
+  department: string;
+  position: string;
+  role: string;
+  careerHistory: string[];
+  admissionDate: string;
+  activeTaskgroups: string[];
+  careerMilestones: Array<{
+    title: string;
+    category: string;
+    description: string;
+    roleStep: string;
+    eventDate: string;
+  }>;
+  taskgroupMilestones: Array<{
+    title: string;
+    category: string;
+    description: string;
+    roleStep?: string;
+    eventDate: string;
+    isCurrent: boolean;
+  }>;
+  eventMilestones: Array<{
+    title: string;
+    category: string;
+    description: string;
+    roleStep?: string;
+    eventDate: string;
+  }>;
+}
+
+export async function importMembers(dryRun = false) {
+  const jsonPath = path.resolve(__dirname, '../scripts/processed_members.json');
+  if (!fs.existsSync(jsonPath)) {
+    throw new Error(`Ficheiro de dados não encontrado: ${jsonPath}`);
+  }
+
+  const members: MemberRecord[] = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  console.log(`📋 Total de membros a importar: ${members.length}`);
+
+  // Fetch departments map
+  const depts = await prisma.department.findMany();
+  const deptMap: Record<string, string> = {};
+  depts.forEach((d) => {
+    deptMap[d.name.toLowerCase().trim()] = d.id;
+  });
+
+  const summary = {
+    created: 0,
+    skipped: 0,
+    emailsSent: 0,
+    errors: [] as string[],
+  };
+
+  for (const m of members) {
+    const deptId = deptMap[m.department.toLowerCase().trim()];
+    if (!deptId) {
+      console.warn(`⚠️ Departamento não encontrado para ${m.name}: "${m.department}"`);
+      summary.errors.push(`Dept não encontrado: ${m.name} (${m.department})`);
+      continue;
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { email: m.email },
+    });
+
+    if (existingUser) {
+      console.log(`⏩ Membro já existente: ${m.name} (${m.email}) - a ignorar criação`);
+      summary.skipped++;
+      continue;
+    }
+
+    // Generate readable random temp password: Yme2026! + 4 random digits
+    const randomDigits = Math.floor(1000 + Math.random() * 9000);
+    const tempPassword = `Yme2026!${randomDigits}`;
+    const passwordHash = await bcrypt.hash(tempPassword, 10);
+
+    const userRole = m.role === 'DIRECTOR' ? Role.DIRECTOR : Role.MEMBER;
+
+    if (dryRun) {
+      console.log(`[DRY-RUN] Criaria membro: ${m.name} (${m.email}) - ${m.position} [${m.department}]`);
+      summary.created++;
+      continue;
+    }
+
+    try {
+      const user = await prisma.user.create({
+        data: {
+          fullName: m.name,
+          email: m.email,
+          passwordHash,
+          departmentId: deptId,
+          position: m.position,
+          role: userRole,
+          taskgroups: m.activeTaskgroups,
+          careerHistory: m.careerHistory,
+          mustChangePassword: true,
+          isActive: true,
+        },
+      });
+
+      // 1. Initial Recruitment Milestone
+      await prisma.timelineEvent.create({
+        data: {
+          userId: user.id,
+          title: 'Entrada na YME',
+          category: TimelineCategory.RECRUITMENT,
+          roleStep: m.careerHistory[0] || `${m.position} of ${m.department}`,
+          description: `Admissão oficial na YME no departamento de ${m.department}.`,
+          eventDate: new Date(m.admissionDate),
+        },
+      });
+
+      // 2. Career Progression Milestones
+      for (const cm of m.careerMilestones) {
+        // Skip duplicate recruitment if same title
+        if (cm.title === 'Entrada na YME') continue;
+        await prisma.timelineEvent.create({
+          data: {
+            userId: user.id,
+            title: cm.title,
+            category: cm.category as TimelineCategory,
+            roleStep: cm.roleStep,
+            description: cm.description,
+            eventDate: new Date(cm.eventDate),
+          },
+        });
+      }
+
+      // 3. Taskgroup Milestones
+      for (const tgm of m.taskgroupMilestones) {
+        await prisma.timelineEvent.create({
+          data: {
+            userId: user.id,
+            title: tgm.title,
+            category: TimelineCategory.TASKGROUP,
+            roleStep: tgm.roleStep || m.careerHistory[0],
+            description: tgm.description,
+            eventDate: new Date(tgm.eventDate),
+          },
+        });
+      }
+
+      // 4. Junior Movement Event Milestones
+      for (const evm of m.eventMilestones) {
+        await prisma.timelineEvent.create({
+          data: {
+            userId: user.id,
+            title: evm.title,
+            category: TimelineCategory.FORMATION,
+            roleStep: evm.roleStep || m.careerHistory[0],
+            description: evm.description,
+            eventDate: new Date(evm.eventDate),
+          },
+        });
+      }
+
+      // 5. Send Welcome Email with temporary password
+      try {
+        await EmailService.sendWelcomeEmail({
+          to: user.email,
+          fullName: user.fullName,
+          tempPassword,
+          departmentName: m.department,
+          position: m.position,
+        });
+        summary.emailsSent++;
+        console.log(`✉️ Email de boas-vindas enviado para ${user.email}`);
+      } catch (mailErr) {
+        console.error(`❌ Erro ao enviar email para ${user.email}:`, mailErr);
+      }
+
+      summary.created++;
+      console.log(`✅ Membro criado com sucesso: ${user.fullName} (${user.email})`);
+    } catch (err: any) {
+      console.error(`❌ Erro ao criar utilizador ${m.name}:`, err);
+      summary.errors.push(`${m.name}: ${err.message}`);
+    }
+  }
+
+  console.log('\n📊 Resumo da Importação:');
+  console.log(`- Criados: ${summary.created}`);
+  console.log(`- Ignorados (já existiam): ${summary.skipped}`);
+  console.log(`- Emails enviados: ${summary.emailsSent}`);
+  console.log(`- Erros: ${summary.errors.length}`);
+
+  return summary;
+}
+
+// If run directly via command line
+if (require.main === module) {
+  const isDryRun = process.argv.includes('--dry-run');
+  importMembers(isDryRun)
+    .then(() => prisma.$disconnect())
+    .catch((err) => {
+      console.error(err);
+      prisma.$disconnect();
+      process.exit(1);
+    });
+}

@@ -1,0 +1,2825 @@
+[
+  {
+    "name": "Gustavo Dias",
+    "email": "gustavo29dias@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Head of Brand Strategy",
+    "role": "DIRECTOR",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy",
+      "Head of Brand Strategy"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Head of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Head of Brand Strategy no departamento de Brand Strategy.",
+        "roleStep": "Head of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (PM)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como PM (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (16/07/2025 - 16/11/2025).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-07-16T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Head of Brand Strategy",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "ExBo Meeting (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: ExBo Meeting (2026).",
+        "roleStep": "Head of Brand Strategy",
+        "eventDate": "2026-07-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Bernardo Domingos da Cruz Alves Cunha",
+    "email": "bernardo.domingos05@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Communication Manager",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy",
+      "Communication Manager of Brand Strategy"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Communication Manager of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Communication Manager no departamento de Brand Strategy.",
+        "roleStep": "Communication Manager of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (16/07/2025 - 16/11/2025).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-07-16T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Joana Machado Pereira",
+    "email": "joanampereira06@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Partnerships"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee  (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "Evento Solidário (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Evento Solidário como Membro (17/11/2025 - 13/07/2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Sofia Lopes Milhases Ferreira",
+    "email": "sofiamilhases@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Partnerships"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee  (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Bárbara Filipa Costa Faria",
+    "email": "bafaria2004@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee  (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Concerto Solidário (Membro Comunicação)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como Membro Comunicação (13/07/2026 - 14/11/2025).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Lara Castro Leão",
+    "email": "laraleao2506@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [],
+    "eventMilestones": []
+  },
+  {
+    "name": "Luana Barbosa Felgueiras",
+    "email": "luana.felgueiras2006@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Inês Gomes Ferreira",
+    "email": "ines.gomes112005@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Beatriz Almendra Bandeira Aires",
+    "email": "beatrizbandeira2024@gmail.com",
+    "department": "Brand Strategy",
+    "position": "Junior Consultant (Brand Strategy)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Brand Strategy",
+      "Junior Consultant of Brand Strategy"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "HIVE"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Brand Strategy",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Brand Strategy.",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Brand Strategy",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Brand Strategy) no departamento de Brand Strategy.",
+        "roleStep": "Junior Consultant of Brand Strategy",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Brand Strategy",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Tânia Filipa Lopes Silva",
+    "email": "taniasilva.filipalopes@gmail.com",
+    "department": "Digital Development",
+    "position": "Head of Digital Development",
+    "role": "DIRECTOR",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development",
+      "Head of Digital Development"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Head of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Head of Digital Development no departamento de Digital Development.",
+        "roleStep": "Head of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Líder (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "ExBo Meeting (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: ExBo Meeting (2026).",
+        "roleStep": "Head of Digital Development",
+        "eventDate": "2026-07-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      },
+      {
+        "title": "JEday (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JEday (2025).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2025-11-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Tiago Santos",
+    "email": "tiagoosantoswork@gmail.com",
+    "department": "Digital Development",
+    "position": "Design Manager (Digital Development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development",
+      "Design Manager (Digital Development) of Digital Development"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      },
+      {
+        "title": "Design Manager (Digital Development) of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Design Manager (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Design Manager (Digital Development) of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (TL Comunicação)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como TL Comunicação (13/07/2026 - 14/11/2025).",
+        "roleStep": "Design Manager (Digital Development) of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "Evento Solidário (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Evento Solidário como Membro (17/11/2025 - 13/07/2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Hugo Ferreira Vila Real",
+    "email": "villarealhugof@gmail.com",
+    "department": "Digital Development",
+    "position": "Tech Manager (Digital Development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development",
+      "Tech Manager (Digital Development) of Digital Development"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      },
+      {
+        "title": "Tech Manager (Digital Development) of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Tech Manager (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Tech Manager (Digital Development) of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Mafalda Miguel Fernandes Silva",
+    "email": "mafaldamiguelsilva@gmail.com",
+    "department": "Digital Development",
+    "position": "Junior Consultant (Digital Development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Líder (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "JEday (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JEday (2025).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2025-11-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Leonor Pereira Mendes",
+    "email": "leonor.pereira.mendes@gmail.com",
+    "department": "Digital Development",
+    "position": "Junior Consultant (Digital Development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital Development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Sofia Filipa Miranda Silva",
+    "email": "sofia.2006sfms@gmail.com",
+    "department": "Digital Development",
+    "position": "Junior Consultant (Digital development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "HIVE"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Miguel Silva de Sousa",
+    "email": "miguelssousa.06@gmail.com",
+    "department": "Digital Development",
+    "position": "Junior Consultant (Digital development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "HIVE"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Raquel Martins Lopes",
+    "email": "raquelmlopes8@gmail.com",
+    "department": "Digital Development",
+    "position": "Junior Consultant (Digital development)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Digital Development",
+      "Junior Consultant of Digital Development"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Digital Development",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Digital Development.",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Digital Development",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Digital development) no departamento de Digital Development.",
+        "roleStep": "Junior Consultant of Digital Development",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Digital Development",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Joana Vilaça Pereira",
+    "email": "jnavilacapereira@gmail.com",
+    "department": "Legal & Finance",
+    "position": "Head of Legal & Finance",
+    "role": "DIRECTOR",
+    "careerHistory": [
+      "Trainee of Legal & Finance",
+      "Junior Consultant of Legal & Finance",
+      "Head of Legal & Finance"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Legal & Finance",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Head of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Head of Legal & Finance no departamento de Legal & Finance.",
+        "roleStep": "Head of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Head of Legal & Finance",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "ExBo Meeting (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: ExBo Meeting (2026).",
+        "roleStep": "Head of Legal & Finance",
+        "eventDate": "2026-07-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "JE Europe Winter Conference (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JE Europe Winter Conference (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-03-15T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Duarte José Baptista Felgueiras",
+    "email": "duartefelgueiras2805@gmail.com",
+    "department": "Legal & Finance",
+    "position": "Finance Manager",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Legal & Finance",
+      "Junior Consultant of Legal & Finance",
+      "Finance Manager of Legal & Finance"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Legal & Finance",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      },
+      {
+        "title": "Finance Manager of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Finance Manager no departamento de Legal & Finance.",
+        "roleStep": "Finance Manager of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Finance Manager of Legal & Finance",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "JE Europe Winter Conference (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JE Europe Winter Conference (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-03-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Inês Sofia Silva Martins",
+    "email": "inesssmartins26@gmail.com",
+    "department": "Legal & Finance",
+    "position": "Junior Consultant (Legal & Finance)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Legal & Finance",
+      "Junior Consultant of Legal & Finance"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Legal & Finance",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Francisca dos Santos Frasco",
+    "email": "franciscasantosfrasco@gmail.com",
+    "department": "Legal & Finance",
+    "position": "Junior Consultant (Legal & Finance)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Legal & Finance",
+      "Junior Consultant of Legal & Finance"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Legal & Finance",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Legal & Finance.",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Martim Simaria Évora Marques Ribeiro",
+    "email": "martimsimaria@gmail.com",
+    "department": "Legal & Finance",
+    "position": "Junior Consultant (Legal & Finance)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Legal & Finance",
+      "Junior Consultant of Legal & Finance"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Legal & Finance",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Legal & Finance.",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (Membro RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como Membro RE (13/07/2026 - 14/11/2025).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Mafalda Torres Loureiro Álvares Pereira",
+    "email": "mafaldaalvarespereira@gmail.com",
+    "department": "Legal & Finance",
+    "position": "Junior Consultant (Legal & Finance)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Legal & Finance",
+      "Junior Consultant of Legal & Finance"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Partnerships"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Legal & Finance",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Legal & Finance.",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Legal & Finance",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Legal & Finance) no departamento de Legal & Finance.",
+        "roleStep": "Junior Consultant of Legal & Finance",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Legal & Finance",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Mariana Oliveira Lopes",
+    "email": "marianalopes.pvl@gmail.com",
+    "department": "Human Resources",
+    "position": "Head of Human Resources",
+    "role": "DIRECTOR",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources",
+      "Head of Human Resources"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Head of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Head of Human Resources no departamento de Human Resources.",
+        "roleStep": "Head of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Evento Solidário (TL Logística)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Evento Solidário como TL Logística (17/11/2025 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Head of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "ExBo Meeting (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: ExBo Meeting (2026).",
+        "roleStep": "Head of Human Resources",
+        "eventDate": "2026-07-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Filipa Figueiredo Furtado",
+    "email": "filipafurtadoyt@gmail.com",
+    "department": "Human Resources",
+    "position": "Talent Aquisition Manager",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources",
+      "Talent Aquisition Manager of Human Resources"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      },
+      {
+        "title": "Talent Aquisition Manager of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Talent Aquisition Manager no departamento de Human Resources.",
+        "roleStep": "Talent Aquisition Manager of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Líder (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Talent Aquisition Manager of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "JE Europe Winter Conference (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JE Europe Winter Conference (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-03-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Catarina José Camacho Lamego",
+    "email": "catarina.lamego@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [
+      "HIVE"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Líder (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "CSR (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Líder (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Ana José da Cunha Pereira",
+    "email": "anajose.pereira2006@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "Concerto Solidário (TL RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como TL RE (13/07/2026 - 14/11/2025).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Joana Vanessa Ferreira Furtado",
+    "email": "joanavffurtado2005@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Carlota da Silva Baptista",
+    "email": "carlota.baptista2019@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2026-03-28T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-03-28T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-06-12T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Lara Alexis Cunha da Costa",
+    "email": "laraaccosta06@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (Membro RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como Membro RE (13/07/2026 - 14/11/2025).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Lia Alves Fortes",
+    "email": "liatrabalhos2006@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Andreia Teixeira Freitas",
+    "email": "andreiatf7@gmail.com",
+    "department": "Human Resources",
+    "position": "Junior Consultant (Human Resources)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Human Resources",
+      "Junior Consultant of Human Resources"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Human Resources",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Human Resources.",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Human Resources",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Human Resources) no departamento de Human Resources.",
+        "roleStep": "Junior Consultant of Human Resources",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (Membro RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como Membro RE (13/07/2026 - 14/11/2025).",
+        "roleStep": "Trainee of Human Resources",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Tiago André Gomes Costa",
+    "email": "tiagoandregomescosta@gmail.com",
+    "department": "Quality Management",
+    "position": "Head of Quality Management",
+    "role": "DIRECTOR",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management",
+      "Head of Quality Management"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Head of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Head of Quality Management no departamento de Quality Management.",
+        "roleStep": "Head of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "ExBo Meeting (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: ExBo Meeting (2026).",
+        "roleStep": "Head of Quality Management",
+        "eventDate": "2026-07-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      },
+      {
+        "title": "JEday (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JEday (2025).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-11-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "João Pedro Ferreira Novo",
+    "email": "jp81novo@gmail.com",
+    "department": "Quality Management",
+    "position": "Consulting Manager",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management",
+      "Consulting Manager of Quality Management"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Consulting Manager of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Consulting Manager no departamento de Quality Management.",
+        "roleStep": "Consulting Manager of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Líder (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Consulting Manager of Quality Management",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "JEday (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JEday (2025).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-11-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Mariana Gonçalves Silva",
+    "email": "mariana.g.silva05@gmail.com",
+    "department": "Quality Management",
+    "position": "Junior Consultant (Quality Management)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Carolina da Silva Gonçalves",
+    "email": "carolinagoncalves355@gmail.com",
+    "department": "Quality Management",
+    "position": "Junior Consultant (Quality Management)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Maria Inês Bragança Machado Mendes",
+    "email": "maria.ines.braganca.mendes@gmail.com",
+    "department": "Quality Management",
+    "position": "Junior Consultant (Quality Management)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Partnerships"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Ema Pereira Novais",
+    "email": "emanovais29@gmail.com",
+    "department": "Quality Management",
+    "position": "Junior Consultant (Quality Management)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "CSR"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "CSR (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup CSR como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Manuel Antunes Corais",
+    "email": "manuel.corais@gmail.com",
+    "department": "Quality Management",
+    "position": "Junior Consultant (Quality Management)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "HIVE"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Sara Milena Cunha Correia",
+    "email": "correiasara043@gmail.com",
+    "department": "Quality Management",
+    "position": "Junior Consultant (Quality Management)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Quality Management",
+      "Junior Consultant of Quality Management"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Quality Management",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Quality Management.",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Quality Management",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Quality Management) no departamento de Quality Management.",
+        "roleStep": "Junior Consultant of Quality Management",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (Membro RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como Membro RE (13/07/2026 - 14/11/2025).",
+        "roleStep": "Trainee of Quality Management",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Tomás Antas da Costa",
+    "email": "tomas.antas.costa@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Head of Sales & Commercial)",
+    "role": "DIRECTOR",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial",
+      "Head of Sales & Commercial"
+    ],
+    "admissionDate": "2025-07-16T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-07-16T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2025-10-24T12:00:00.000Z"
+      },
+      {
+        "title": "Head of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Head of Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Head of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Evento Solidário (TL RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Evento Solidário como TL RE (17/11/2025 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Head of Sales & Commercial",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      },
+      {
+        "title": "ExBo Meeting (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: ExBo Meeting (2026).",
+        "roleStep": "Head of Sales & Commercial",
+        "eventDate": "2026-07-20T12:00:00.000Z"
+      },
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      },
+      {
+        "title": "JEday (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: JEday (2025).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2025-11-20T12:00:00.000Z"
+      },
+      {
+        "title": "IX JENC (2025)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: IX JENC (2025).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-10-15T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Gonçalo Daniel Gonçalves da Silva Martins",
+    "email": "goncalo.silva.sb@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Sales Manager",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial",
+      "Sales Manager of Sales & Commercial"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      },
+      {
+        "title": "Sales Manager of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Sales Manager no departamento de Sales & Commercial.",
+        "roleStep": "Sales Manager of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Martim António Pereira de Abreu Rodrigues",
+    "email": "martimabreuster@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Junior Consultant (Sales & Commercial)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Partnerships"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Líder)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Líder (13/07/2026 - 14/11/2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/03/2026 - 13/07/2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-03-17T12:00:00.000Z",
+        "isCurrent": false
+      },
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (17/11/2025 - 16/03/2026).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": []
+  },
+  {
+    "name": "Maria Rita Ribeiro Pereira Coelho",
+    "email": "mariarpereiracoelho@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Junior Consultant (Sales & Commercial)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial"
+    ],
+    "admissionDate": "2025-11-08T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-11-08T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-02-20T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (PM)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como PM (13/07/2026 - 14/11/2025).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      },
+      {
+        "title": "Evento Solidário (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Evento Solidário como Membro (17/11/2025 - 13/07/2026).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2025-11-17T12:00:00.000Z",
+        "isCurrent": false
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XI JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XI JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "jeniAL (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: jeniAL (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-05-15T12:00:00.000Z"
+      },
+      {
+        "title": "X JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: X JENC (2026).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-01-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Jonathan Filipe Gomes dos Santos",
+    "email": "jtsantos003@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Junior Consultant (Sales & Commercial)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Concerto Solidário"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Concerto Solidário (Membro RE)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Concerto Solidário como Membro RE (13/07/2026 - 14/11/2025).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "António Francisco Linhares Ferreira",
+    "email": "antoniolinharesferreira@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Junior Consultant (Sales & Commercial)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "HIVE"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "HIVE (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup HIVE como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "name": "Duarte Fernando Salgueiro Morgado",
+    "email": "duartemorgado06@gmail.com",
+    "department": "Sales & Commercial",
+    "position": "Junior Consultant (Sales & Commercial)",
+    "role": "MEMBER",
+    "careerHistory": [
+      "Trainee of Sales & Commercial",
+      "Junior Consultant of Sales & Commercial"
+    ],
+    "admissionDate": "2026-07-13T12:00:00.000Z",
+    "activeTaskgroups": [
+      "Partnerships"
+    ],
+    "careerMilestones": [
+      {
+        "title": "Trainee of Sales & Commercial",
+        "category": "RECRUITMENT",
+        "description": "Promoção a Trainee no departamento de Sales & Commercial.",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z"
+      },
+      {
+        "title": "Junior Consultant of Sales & Commercial",
+        "category": "FORMATION",
+        "description": "Promoção a Junior Consultant (Sales & Commercial) no departamento de Sales & Commercial.",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-10-29T12:00:00.000Z"
+      }
+    ],
+    "taskgroupMilestones": [
+      {
+        "title": "Partnerships (Membro)",
+        "category": "TASKGROUP",
+        "description": "Participação na taskgroup Partnerships como Membro (13/07/2026 - 14/11/2026).",
+        "roleStep": "Trainee of Sales & Commercial",
+        "eventDate": "2026-07-13T12:00:00.000Z",
+        "isCurrent": true
+      }
+    ],
+    "eventMilestones": [
+      {
+        "title": "XII JENC (2026)",
+        "category": "FORMATION",
+        "description": "Participação no evento nacional/europeu do Movimento Júnior: XII JENC (2026).",
+        "roleStep": "Junior Consultant of Sales & Commercial",
+        "eventDate": "2026-10-20T12:00:00.000Z"
+      }
+    ]
+  }
+]

@@ -38,7 +38,7 @@ export const Layout: React.FC = () => {
       }
     },
     enabled: !!user && !!canReviewWalletRequests,
-    refetchInterval: 15000,
+    refetchInterval: 30000,
   });
 
   // Poll for pending reimbursement requests ONLY for Admins
@@ -53,7 +53,7 @@ export const Layout: React.FC = () => {
       }
     },
     enabled: !!user && !!isAdmin,
-    refetchInterval: 15000,
+    refetchInterval: 30000,
   });
 
   const totalBackofficePending = pendingWalletCount + (isAdmin ? pendingReimbursementsCount : 0);

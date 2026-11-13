@@ -8,9 +8,15 @@ const router = Router();
 // Stricter rate limiter for authentication endpoints to prevent brute-force attacks
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'production' ? 25 : 1000,
+  max: process.env.NODE_ENV === 'production' ? 100 : 1000,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
+  keyGenerator: (req) => {
+    const cfIp = req.headers['cf-connecting-ip'] || req.headers['x-real-ip'];
+    if (typeof cfIp === 'string' && cfIp.trim()) return cfIp.trim();
+    return req.ip || '127.0.0.1';
+  },
   message: {
     error: {
       code: 'TOO_MANY_REQUESTS',

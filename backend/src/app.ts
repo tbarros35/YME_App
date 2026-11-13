@@ -10,8 +10,8 @@ import { errorHandler } from './middlewares/error';
 
 const app = express();
 
-// Enable trust proxy so Express reads X-Forwarded-For headers from Nginx reverse proxy
-app.set('trust proxy', 1);
+// Enable trust proxy so Express reads X-Forwarded-For / CF-Connecting-IP headers from Cloudflare & Nginx reverse proxy
+app.set('trust proxy', true);
 
 // Security Headers (allow cross-origin resource policy for uploaded PDFs/images)
 app.use(
@@ -65,12 +65,18 @@ app.get(['/health', '/api/health'], (_req, res) => {
   });
 });
 
-// General API Rate Limiter: 300 requests per 15 minutes per IP
+// General API Rate Limiter: Generous limit for internal app with multiple members on university/shared Wi-Fi
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 300,
+  max: 10000, // 10,000 requests per 15 minutes
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
+  keyGenerator: (req) => {
+    const cfIp = req.headers['cf-connecting-ip'] || req.headers['x-real-ip'];
+    if (typeof cfIp === 'string' && cfIp.trim()) return cfIp.trim();
+    return req.ip || '127.0.0.1';
+  },
   message: {
     error: {
       code: 'TOO_MANY_REQUESTS',

@@ -613,7 +613,7 @@ export const Backoffice: React.FC = () => {
       return (res.data.requests || res.data.data || []) as WalletRequest[];
     },
     enabled: !!(canManageWallet || canReviewWalletRequests),
-    refetchInterval: 10000,
+    refetchInterval: 30000,
   });
 
   const walletRequests: WalletRequest[] = walletRequestsData || [];
@@ -676,7 +676,7 @@ export const Backoffice: React.FC = () => {
       return (res.data.reimbursements || res.data.data || []) as ReimbursementRequest[];
     },
     enabled: !!isAdmin,
-    refetchInterval: 10000,
+    refetchInterval: 30000,
   });
 
   const reimbursements: ReimbursementRequest[] = reimbursementsData || [];
@@ -810,7 +810,7 @@ export const Backoffice: React.FC = () => {
       return res.data;
     },
     enabled: canAccessSupport,
-    refetchInterval: 5000,
+    refetchInterval: 15000,
   });
 
   const supportTickets = supportData?.tickets || [];

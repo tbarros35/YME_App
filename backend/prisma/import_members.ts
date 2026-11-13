@@ -60,8 +60,13 @@ export async function importMembers(dryRun = false, filter?: string) {
   let members: MemberRecord[] = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
   if (filter) {
     const f = filter.toLowerCase().trim();
-    members = members.filter((m) => m.email.toLowerCase() === f || m.name.toLowerCase().includes(f));
-    console.log(`🔍 Filtro aplicado: "${filter}" -> ${members.length} membro(s) selecionado(s)`);
+    if (f === 'directors' || f === 'diretores' || f === 'director') {
+      members = members.filter((m) => m.role === 'DIRECTOR' || m.position.toLowerCase().startsWith('head'));
+      console.log(`🔍 Filtro aplicado: Diretores -> ${members.length} membro(s) selecionado(s)`);
+    } else {
+      members = members.filter((m) => m.email.toLowerCase() === f || m.name.toLowerCase().includes(f));
+      console.log(`🔍 Filtro aplicado: "${filter}" -> ${members.length} membro(s) selecionado(s)`);
+    }
   } else {
     console.log(`📋 Total de membros a importar: ${members.length}`);
   }
@@ -185,15 +190,19 @@ export async function importMembers(dryRun = false, filter?: string) {
 
       // 6. Send Welcome Email with temporary password
       try {
-        await EmailService.sendWelcomeEmail({
+        const sent = await EmailService.sendWelcomeEmail({
           to: user.email,
           fullName: user.fullName,
           tempPassword,
           departmentName: m.department,
           position: m.position,
         });
-        summary.emailsSent++;
-        console.log(`✉️ Email de boas-vindas enviado para ${user.email}`);
+        if (sent) {
+          summary.emailsSent++;
+          console.log(`✉️ Email de boas-vindas enviado para ${user.email}`);
+        } else {
+          console.warn(`⚠️ Falha no envio do email para ${user.email}`);
+        }
       } catch (mailErr) {
         console.error(`❌ Erro ao enviar email para ${user.email}:`, mailErr);
       }
